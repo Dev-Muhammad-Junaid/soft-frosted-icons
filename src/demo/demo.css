@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap");
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Manrope, system-ui, sans-serif;
+  background: var(--bg, #e6ebf3);
+  color: var(--ink, #2b3445);
+}
+
+.demo {
+  min-height: 100vh;
+  padding: 32px 22px 48px;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  gap: 28px;
+}
+
+.demo__hero h1 {
+  margin: 6px 0 10px;
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -0.03em;
+}
+
+.demo__eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.demo__lede {
+  margin: 0 0 16px;
+  max-width: 62ch;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.demo__lede a,
+.demo__foot a {
+  color: var(--accent);
+}
+
+.demo__install,
+.demo__code {
+  margin: 0 0 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
+  overflow-x: auto;
+  font-size: 13px;
+}
+
+.demo__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+}
+
+.demo__search {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.demo__search input {
+  width: min(240px, 70vw);
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg-elevated);
+}
+
+.demo__seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.demo__seg span {
+  padding: 0 8px 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.demo__seg button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.demo__seg button.is-on {
+  background: color-mix(in srgb, var(--accent) 22%, var(--bg-elevated));
+  color: var(--ink);
+}
+
+.demo__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ink-muted);
+}
+
+.demo__preview {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg-elevated) 70%, transparent);
+}
+
+.demo__results h2,
+.demo__foot {
+  font-size: 14px;
+}
+
+.demo__foot {
+  display: flex;
+  gap: 16px;
+  color: var(--ink-muted);
+}
