@@ -35,17 +35,19 @@ export const data = {
     label: "Report",
     shapes: [rect(10, 7, 28, 34, 5)],
     lines: ["M17 33v-5", "M24 33V18", "M31 33v-9"],
+    duo: { hug: false },
   },
   wallet: {
     label: "Wallet",
     shapes: [rect(8, 13, 32, 27, 5)],
     lines: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13", "M40 20h-8a6 6 0 0 0 0 12h8", { d: dot(32, 26), w: 3.4 }],
-    duo: { cuts: ["M40 20h-8a6 6 0 0 0 0 12h8", { d: dot(32, 26), w: 3.4 }], frost: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13"] },
+    duo: { bodies: [{ d: "M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13Z", core: false }, rect(8, 13, 32, 27, 5)], cuts: ["M40 20h-8a6 6 0 0 0 0 12h8"] },
   },
   creditCard: {
     label: "Card",
     shapes: [rect(8, 12, 32, 24, 5)],
     lines: ["M8 20h32", "M14 29h7"],
+    duo: { hug: false },
   },
   dollar: {
     label: "Dollar",
@@ -66,6 +68,7 @@ export const data = {
     label: "Receipt",
     shapes: [receiptBody],
     lines: ["M17 16h14", "M17 23h14", "M17 30h8"],
+    duo: { hug: false },
   },
   package: {
     label: "Package",

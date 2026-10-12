@@ -53,7 +53,7 @@ export const objects = {
     label: "Battery",
     shapes: [rect(7, 14, 29, 20, 5)],
     lines: ["M40.5 21v6", "M14 21v6", "M20 21v6"],
-    duo: { cuts: ["M14 21v6", "M20 21v6"], frost: ["M40.5 21v6"] },
+    duo: { cuts: ["M14 21v6", "M20 21v6"], frost: ["M40.5 21v6"], hug: false },
   },
   gift: {
     label: "Gift",
@@ -83,11 +83,13 @@ export const objects = {
     label: "Building",
     shapes: [rect(10, 7, 28, 34, 5)],
     lines: [...windows, "M20.5 41v-6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v6"],
+    duo: { hug: false },
   },
   compass: {
     label: "Compass",
     shapes: [circle(24, 24, 15)],
     lines: [poly([[30.5, 17.5], [26.8, 26.8], [17.5, 30.5], [21.2, 21.2]], [1.5, 2, 1.5, 2])],
+    duo: { hug: false },
   },
   coffee: {
     label: "Coffee",
@@ -127,7 +129,7 @@ export const objects = {
     label: "Newspaper",
     shapes: [],
     lines: [sheet, "M22 15h12", "M22 22h12", "M22 29h8"],
-    duo: { bodies: [{ d: "M16 21h-4a3 3 0 0 0-3 3v12.5a3.5 3.5 0 0 0 7 0Z", opacity: 0.7, core: false }, "M16 12a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v23a5 5 0 0 1-5 5H12.5a3.5 3.5 0 0 0 3.5-3.5Z"], cuts: ["M22 15h12", "M22 22h12", "M22 29h8"] },
+    duo: { bodies: [{ d: "M16 21h-4a3 3 0 0 0-3 3v12.5a3.5 3.5 0 0 0 7 0Z", opacity: 0.7, core: false }, "M16 12a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v23a5 5 0 0 1-5 5H12.5a3.5 3.5 0 0 0 3.5-3.5Z"], cuts: ["M22 15h12", "M22 22h12", "M22 29h8"], hug: false },
   },
   map: {
     label: "Map",
@@ -138,7 +140,7 @@ export const objects = {
     label: "Film",
     shapes: [rect(8, 8, 32, 32, 5)],
     lines: ["M16 8v32", "M32 8v32", "M8 24h32", "M8 16h8", "M8 32h8", "M32 16h8", "M32 32h8"],
-    duo: { cuts: ["M16 8v32", "M32 8v32", ...[12, 36].flatMap((x) => [15, 24, 33].map((y) => ({ d: dot(x, y), w: 3.4 })))] },
+    duo: { cuts: ["M16 8v32", "M32 8v32", ...[12, 36].flatMap((x) => [15, 24, 33].map((y) => ({ d: dot(x, y), w: 3.4 })))], hug: false },
   },
   cast: {
     label: "Cast",

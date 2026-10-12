@@ -47,21 +47,25 @@ export const system = {
     label: "Info",
     shapes: [ring],
     lines: ["M24 22v9", { d: dot(24, 16.5), w: 3.6 }],
+    duo: { hug: false },
   },
   help: {
     label: "Help",
     shapes: [ring],
     lines: ["M19.2 19.5a5 5 0 0 1 9.7 1.6c0 3.3-4.9 4.6-4.9 4.6v1", { d: dot(24, 32), w: 3.6 }],
+    duo: { hug: false },
   },
   alert: {
     label: "Alert",
     shapes: [ring],
     lines: ["M24 15.5V26", { d: dot(24, 32), w: 3.6 }],
+    duo: { hug: false },
   },
   warning: {
     label: "Warning",
     shapes: [poly([[24, 8.5], [41, 38.5], [7, 38.5]], [4, 3.5, 3.5])],
     lines: ["M24 20v8", { d: dot(24, 33), w: 3.6 }],
+    duo: { hug: false },
   },
   ban: {
     label: "Ban",
@@ -78,11 +82,12 @@ export const system = {
     label: "Rocket",
     shapes: [rocketBody],
     lines: [rocketWindow, finL, finR, "M21 40h6"],
-    duo: { bodies: [{ d: `${finL}Z`, inset: 1.8 }, { d: `${finR}Z`, inset: 1.8 }, rocketBody], cuts: [rocketWindow], frost: ["M21 40h6"] },
+    duo: { bodies: [{ d: `${finL}Z`, inset: 1.8 }, { d: `${finR}Z`, inset: 1.8 }, rocketBody], cuts: [{ d: "M24 23h0.01", w: 7.4 }], frost: ["M21 40h6"], hug: false },
   },
   zap: {
     label: "Zap",
     shapes: [poly([[27, 7], [10, 27], [23, 27], [21, 41], [38, 21], [25, 21]], [1.5, 1.5, 0.8, 1.5, 1.5, 0.8])],
+    duo: { inset: 1.9 },
   },
   layers: {
     label: "Layers",
@@ -99,6 +104,7 @@ export const system = {
     label: "Terminal",
     shapes: [rect(8, 10, 32, 28, 5)],
     lines: ["M15 19l5.5 5-5.5 5", "M24 30h9"],
+    duo: { hug: false },
   },
   support: {
     label: "Support",

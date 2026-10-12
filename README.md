@@ -120,7 +120,7 @@ bell: {
 
 1. Draw it on the grid above, reusing a keyshape where one fits.
 2. Add a spec to the right group in `src/lib/icons/` using the helpers in `geometry.js` (`rect`, `circle`, `poly` with true corner radii, `arc`, `dot`, `rotate`, `flipX`, …).
-3. Decide the duo read. By default, lines inside a shape are cut through it. Use a `duo` override to turn outside lines into `rods` (primary) or `frost` (secondary), or to recompose `bodies` as separate rounded tiles. Overriding `bodies` or `rods` means listing `cuts` explicitly.
+3. Decide the duo read. By default, lines inside a shape are cut through it. Use a `duo` override to turn outside lines into `rods` (primary) or `frost` (secondary), or to recompose `bodies` as separate rounded tiles. Set `hug: false` when the cuts are a glyph (a symbol, text lines, dots, a window): the core stays whole and the glyph is stencilled through it. Leave it on when cuts split the object into parts (package faces, mail flap, map folds). Overriding `bodies` or `rods` means listing `cuts` explicitly.
 4. Run `npm test` and `npm run build:svg`, then check both finishes in `npm run dev`.
 
 ## Scripts

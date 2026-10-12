@@ -54,7 +54,7 @@ export const actions = {
     label: "Trash",
     shapes: [poly([[11.5, 13], [36.5, 13], [34.5, 40], [13.5, 40]], [0, 0, 4, 4])],
     lines: ["M8 13h32", "M18 13v-2.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V13", "M20 20.5v12", "M28 20.5v12"],
-    duo: { cuts: ["M20 20.5v12", "M28 20.5v12"], rods: ["M8 13h32"], frost: ["M18 13v-2.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V13"] },
+    duo: { cuts: ["M20 20.5v12", "M28 20.5v12"], rods: ["M8 13h32"], frost: ["M18 13v-2.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V13"], hug: false },
   },
   copy: {
     label: "Copy",

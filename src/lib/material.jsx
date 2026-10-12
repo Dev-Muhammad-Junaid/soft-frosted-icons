@@ -52,7 +52,7 @@ const TUBE = {
 /* Duo recipe. */
 /* Duo recipe. Edge and rim widths are the visible band inside the body. */
 const BODY = { dx: 1, dy: 1.3, shadowOpacity: 0.42, edge: 0.9, rim: 0.55 };
-const ROD = { pad: 1.9, edge: 0.65, core: 0.4, spec: 0.16 };
+const ROD = { pad: 1.9, edge: 0.65, core: 0.4, tint: 0.42, tintOpacity: 0.26, spec: 0.85, catch: [-0.55, -0.75] };
 /** A cut is a little narrower than the stroke it replaces, so walls keep the line weight. */
 const CUT_SHRINK = 0.2;
 
@@ -258,7 +258,9 @@ export function OutlineGlyph({ uid, paths, cut }) {
  */
 
 function Body({ uid, item, index, cuts }) {
-  const { d, opacity = 1, core = true, fillRule, inset = GRID.coreInset } = item;
+  // hug: the core keeps its inset around cuts too (pieces get their own cores). With hug off the
+  // core only follows the outline and interior glyphs are stencilled straight through it.
+  const { d, opacity = 1, core = true, fillRule, inset = GRID.coreInset, hug = true } = item;
   const shape = `${uid}-b${index}`;
   const coreMask = `${uid}-c${index}`;
   const cutStrokes = (extra, color) =>
@@ -294,7 +296,7 @@ function Body({ uid, item, index, cuts }) {
                 <rect x="-4" y="-4" width="56" height="56" fill="black" />
                 <path d={d} fillRule={fillRule} fill="white" />
                 <path d={d} fill="none" stroke="black" strokeWidth={inset * 2} strokeLinejoin="round" />
-                {cutStrokes(inset * 2, "black")}
+                {hug ? cutStrokes(inset * 2, "black") : cutStrokes(BODY.edge * 2, "black")}
               </g>
             </mask>
             <path
@@ -343,15 +345,22 @@ function Rods({ uid, items, tone = "core" }) {
       />
       <StrokeLayer items={items} layer="edge" stroke={`url(#${uid}-s-edge)`} width={(w) => r(w)} />
       <StrokeLayer items={items} layer="face" stroke={`url(#${uid}-s-face)`} width={(w) => r(w) - ROD.edge * 2} />
-      {tone === "core" ? (
-        <StrokeLayer items={items} layer="glyph" stroke={`url(#${uid}-s-core)`} width={(w) => r(w) * ROD.core} />
-      ) : null}
+      {/* Primary rods carry the accent core; frost rods keep a faint tint so the glass has body. */}
+      <StrokeLayer
+        items={items}
+        layer="glyph"
+        stroke={`url(#${uid}-s-core)`}
+        width={(w) => r(w) * (tone === "core" ? ROD.core : ROD.tint)}
+        opacity={tone === "core" ? undefined : ROD.tintOpacity}
+      />
+      {/* Light catch along the upper-left wall, inside the rod — the rods' version of the body rim. */}
       <StrokeLayer
         items={items}
         layer="specular"
         stroke={`url(#${uid}-s-rim)`}
-        width={(w) => r(w) * ROD.spec}
-        opacity={0.6}
+        width={() => ROD.spec}
+        opacity={0.9}
+        transform={`translate(${ROD.catch[0]} ${ROD.catch[1]})`}
       />
     </g>
   );
@@ -391,7 +400,7 @@ export function DuoGlyph({ uid, bodies = [], cuts = [], rods = [], frost = [], c
  *   shapes  closed silhouettes (outline: tubes · duo: glass bodies)
  *   lines   open strokes / details (outline: tubes · duo: cuts when the icon has bodies, else rods)
  *   outline full outline path list override
- *   duo     override { bodies, cuts, rods, frost, inset } — bodies take { d, inset, opacity, core, fillRule }.
+ *   duo     override { bodies, cuts, rods, frost, inset, hug } — bodies take { d, inset, opacity, core, fillRule }.
  *           rods = primary lines (accent core) · frost = secondary lines (clear glass, behind bodies).
  *           Overriding bodies or rods means cuts must be listed explicitly.
  *   cut     slash path drawn over a knocked-out gap (both finishes)
@@ -401,7 +410,9 @@ export function resolveSpec(spec, finish) {
   const lines = (spec.lines ?? []).map(norm);
   if (finish === "duo") {
     const o = spec.duo ?? {};
-    const bodies = (o.bodies ?? shapes).map(norm).map((b) => (o.inset ? { inset: o.inset, ...b } : b));
+    const bodies = (o.bodies ?? shapes)
+      .map(norm)
+      .map((b) => ({ ...(o.inset ? { inset: o.inset } : null), ...(o.hug === false ? { hug: false } : null), ...b }));
     const solid = bodies.length > 0;
     // Lines become cuts only when the override leaves the composition alone.
     const derived = !o.bodies && !o.rods && !o.frost;

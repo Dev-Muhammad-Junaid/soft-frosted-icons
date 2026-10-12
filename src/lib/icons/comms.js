@@ -34,6 +34,7 @@ export const comms = {
     label: "Chat",
     shapes: [bubble],
     lines: [{ d: dot(16, 20.5), w: 4 }, { d: dot(24, 20.5), w: 4 }, { d: dot(32, 20.5), w: 4 }],
+    duo: { hug: false },
   },
   bell: {
     label: "Bell",

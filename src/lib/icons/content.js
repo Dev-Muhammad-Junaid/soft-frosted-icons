@@ -36,12 +36,13 @@ export const content = {
       { d: dot(16, 33.5), w: 3.6 },
       { d: dot(24, 33.5), w: 3.6 },
     ],
-    duo: { cuts: ["M8 20h32", { d: dot(16, 27.5), w: 3.6 }, { d: dot(24, 27.5), w: 3.6 }, { d: dot(32, 27.5), w: 3.6 }, { d: dot(16, 33.5), w: 3.6 }, { d: dot(24, 33.5), w: 3.6 }], rods: ["M16 7.5v7", "M32 7.5v7"] },
+    duo: { bodies: [{ d: rect(8, 11, 32, 8, 3.5), inset: 2.1 }, rect(8, 22, 32, 18, 4.5)], cuts: [{ d: dot(16, 28), w: 3.6 }, { d: dot(24, 28), w: 3.6 }, { d: dot(32, 28), w: 3.6 }, { d: dot(16, 34), w: 3.6 }, { d: dot(24, 34), w: 3.6 }], frost: ["M16 7.5v7", "M32 7.5v7"], hug: false },
   },
   clock: {
     label: "Clock",
     shapes: [circle(24, 24, 15)],
     lines: ["M24 14.5V24l6.5 4"],
+    duo: { hug: false },
   },
   folder: {
     label: "Folder",
@@ -77,11 +78,13 @@ export const content = {
     label: "Server",
     shapes: [rect(8, 8, 32, 13, 4), rect(8, 27, 32, 13, 4)],
     lines: [{ d: dot(15, 14.5), w: 3.6 }, { d: dot(15, 33.5), w: 3.6 }, "M22 14.5h11", "M22 33.5h11"],
+    duo: { hug: false },
   },
   tag: {
     label: "Tag",
     shapes: [tagBody],
     lines: [{ d: dot(16, 16), w: 4.2 }],
+    duo: { hug: false },
   },
   bookmark: {
     label: "Bookmark",

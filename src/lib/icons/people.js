@@ -44,24 +44,25 @@ export const people = {
     label: "Lock",
     shapes: [lockBody],
     lines: ["M16 21v-5a8 8 0 0 1 16 0v5", "M24 28.5v4"],
-    duo: { cuts: ["M24 28.5v4"], frost: ["M16 22v-6a8 8 0 0 1 16 0v6"] },
+    duo: { cuts: ["M24 28.5v4"], frost: ["M16 22v-6a8 8 0 0 1 16 0v6"], hug: false },
   },
   unlock: {
     label: "Unlock",
     shapes: [lockBody],
     lines: ["M16 21v-5a8 8 0 0 1 15.4-3", "M24 28.5v4"],
-    duo: { cuts: ["M24 28.5v4"], frost: ["M16 22v-6a8 8 0 0 1 15.4-3"] },
+    duo: { cuts: ["M24 28.5v4"], frost: ["M16 22v-6a8 8 0 0 1 15.4-3"], hug: false },
   },
   shield: {
     label: "Shield",
     shapes: [shieldBody],
     lines: ["M18.5 24l4 4 7.5-7.5"],
+    duo: { hug: false },
   },
   key: {
     label: "Key",
     shapes: [circle(16.5, 31.5, 8)],
     lines: ["M22.2 25.8 39.5 8.5", "M34 14l4.5 4.5", "M28.5 19.5l3.5 3.5"],
-    duo: { cuts: [{ d: "M16.5 31.5h0.01", w: 4.6 }], frost: ["M21 27 39.5 8.5", "M34 14l4.5 4.5", "M28.5 19.5l3.5 3.5"] },
+    duo: { cuts: [{ d: "M16.5 31.5h0.01", w: 4.6 }], frost: ["M21 27 39.5 8.5", "M34 14l4.5 4.5", "M28.5 19.5l3.5 3.5"], hug: false },
   },
   eye: {
     label: "Eye",
