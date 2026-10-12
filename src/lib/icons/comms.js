@@ -24,7 +24,6 @@ export const comms = {
     label: "Send",
     shapes: [plane],
     lines: ["M22.5 25.5 33.5 14.5"],
-    duo: { lines: [], accent: [poly([[40, 8], [28.5, 40], [22.5, 25.5]], [2, 2.5, 1])] },
   },
   inbox: {
     label: "Inbox",
@@ -40,7 +39,7 @@ export const comms = {
     label: "Bell",
     shapes: [bellDome],
     lines: ["M20.5 38.5a3.8 3.8 0 0 0 7 0"],
-    core: true,
+    duo: { cuts: [], rods: ["M20.5 38.5a3.8 3.8 0 0 0 7 0"] },
   },
   phone: {
     label: "Phone",
@@ -54,12 +53,12 @@ export const comms = {
     label: "Share",
     shapes: nodes,
     lines: edges,
-    core: true,
+    duo: { bodies: nodes.map((d) => ({ d, inset: 1.9 })), cuts: [], rods: edges },
   },
   at: {
     label: "Mention",
     shapes: [circle(24, 24, 6.5)],
     lines: ["M30.5 17.5v8a4.5 4.5 0 0 0 9 0V24A15.5 15.5 0 1 0 33 36.5"],
-    core: true,
+    duo: { cuts: [], rods: ["M30.5 17.5v8a4.5 4.5 0 0 0 9 0V24A15.5 15.5 0 1 0 33 36.5"] },
   },
 };

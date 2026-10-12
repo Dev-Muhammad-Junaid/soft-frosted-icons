@@ -1,4 +1,4 @@
-import { arc, circle, dot, flipX, flipY, line, move, polar, poly, rect, rotate } from "../geometry.js";
+import { arc, circle, dot, flipX, flipY, join, line, move, polar, poly, rect, rotate } from "../geometry.js";
 
 const playTri = poly([[15.5, 9.5], [38.5, 24], [15.5, 38.5]], [4, 3.5, 4]);
 const skipTri = poly([[11, 10], [31, 24], [11, 38]], [3.5, 3, 3.5]);
@@ -23,7 +23,7 @@ export const media = {
   pause: {
     label: "Pause",
     shapes: [rect(13, 10, 8, 28, 3.5), rect(27, 10, 8, 28, 3.5)],
-    duo: { shapes: [{ d: rect(13, 10, 8, 28, 3.5), inset: 2.4 }, { d: rect(27, 10, 8, 28, 3.5), inset: 2.4 }] },
+    duo: { bodies: [rect(13, 10, 8, 28, 3.5), rect(27, 10, 8, 28, 3.5)].map((d) => ({ d, inset: 2.4 })) },
   },
   stop: {
     label: "Stop",
@@ -33,25 +33,25 @@ export const media = {
     label: "Skip next",
     shapes: [skipTri],
     lines: ["M37 10v28"],
-    core: true,
+    duo: { cuts: [], rods: ["M37 10v28"] },
   },
   skipPrev: {
     label: "Skip previous",
     shapes: [flipX(skipTri)],
     lines: ["M11 10v28"],
-    core: true,
+    duo: { cuts: [], rods: ["M11 10v28"] },
   },
   volume: {
     label: "Volume",
     shapes: [speaker],
     lines: [arc(26, 24, 7, -50, 50), arc(26, 24, 14, -50, 50)],
-    core: true,
+    duo: { cuts: [], rods: [arc(26, 24, 7, -50, 50), arc(26, 24, 14, -50, 50)] },
   },
   mic: {
     label: "Mic",
     shapes: [rect(17, 7, 14, 20, 7)],
     lines: ["M11 22a13 13 0 0 0 26 0", "M24 35v6"],
-    core: true,
+    duo: { cuts: [], rods: ["M11 22a13 13 0 0 0 26 0", "M24 35v6"] },
   },
   wifi: {
     label: "Wifi",
@@ -78,7 +78,7 @@ export const media = {
     label: "Scissors",
     shapes: [circle(13, 13, 5), circle(13, 35, 5)],
     lines: ["M16.5 31.5 40 8", "M16.5 16.5 20.5 20.5", "M27.5 27.5 40 40"],
-    core: true,
+    duo: { bodies: [[13, 13], [13, 35]].map(([x, y]) => ({ d: join(circle(x, y, 5.5), circle(x, y, 2)), fillRule: "evenodd", inset: 1.2 })), cuts: [], rods: ["M17.2 30.8 40 8", "M17.2 17.2 20.5 20.5", "M27.5 27.5 40 40"] },
   },
   repeat: {
     label: "Repeat",
@@ -97,18 +97,18 @@ export const media = {
   thumbsUp: {
     label: "Thumbs up",
     shapes: [thumbCuff, thumbHand],
-    duo: { shapes: [{ d: thumbHand, core: true }], accent: [thumbCuff] },
+    duo: { bodies: [{ d: thumbCuff, inset: 2 }, thumbHand] },
   },
   thumbsDown: {
     label: "Thumbs down",
     shapes: [flipY(thumbCuff), flipY(thumbHand)],
-    duo: { shapes: [{ d: flipY(thumbHand), core: true }], accent: [flipY(thumbCuff)] },
+    duo: { bodies: [{ d: flipY(thumbCuff), inset: 2 }, flipY(thumbHand)] },
   },
   megaphone: {
     label: "Megaphone",
     shapes: [horn],
     lines: ["M23 32.1a6 6 0 1 1-11-3.6"],
-    core: true,
+    duo: { cuts: [], rods: ["M23 32.1a6 6 0 1 1-11-3.6"] },
   },
   bluetooth: {
     label: "Bluetooth",
@@ -118,7 +118,7 @@ export const media = {
     label: "Sun",
     shapes: [circle(24, 24, 6.5)],
     lines: rays,
-    core: true,
+    duo: { cuts: [], rods: rays },
   },
   moon: {
     label: "Moon",

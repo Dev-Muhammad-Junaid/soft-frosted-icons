@@ -8,9 +8,9 @@
  *             (all shadows, then all faces, …) so crossings fuse like one piece of
  *             glass instead of one stroke's halo painting over another's core.
  *
- *   duo     — closed shapes become frost-glass bodies (shadow + face + rim) with an
- *             accent core inset by a uniform distance; detail lines and small parts
- *             are solid accent ink on top.
+ *   duo     — filled glass. Closed shapes become glass bodies with an accent core;
+ *             interior details are cut through them; outside lines become glass rods.
+ *             Every part uses the same body material (see "Duo finish" below).
  *
  * Paints resolve from currentColor (--accent / color prop) and the theme tokens
  * --soft-cx-frost / --soft-cx-mark. No raw colours live in the artwork.
@@ -34,7 +34,7 @@ export const GRID = {
   /** Minimum distance between parallel stroke centrelines so glass faces never weld. */
   minGap: 6,
   /** Duo accent core inset from the body edge. */
-  coreInset: 3.4,
+  coreInset: 2.9,
   /** Clear space either side of a knockout slash. */
   cutGap: 1.6,
 };
@@ -50,8 +50,11 @@ const TUBE = {
 };
 
 /* Duo recipe. */
-const BODY = { dx: 1, dy: 1.3, shadowOpacity: 0.42, edge: 1.4, rim: 0.9 };
-const INK = { shadowPad: 1.2, dx: 0.7, dy: 0.9, shadowOpacity: 0.28, spec: 0.26, specOpacity: 0.5 };
+/* Duo recipe. Edge and rim widths are the visible band inside the body. */
+const BODY = { dx: 1, dy: 1.3, shadowOpacity: 0.42, edge: 0.9, rim: 0.55 };
+const ROD = { pad: 2.4, core: 0.5, spec: 0.16 };
+/** A cut is a little narrower than the stroke it replaces, so walls keep the line weight. */
+const CUT_SHRINK = 0.2;
 
 function norm(item) {
   if (typeof item === "string") return { d: item };
@@ -107,10 +110,6 @@ export function GlassDefs({ uid }) {
         <stop offset="0" stopColor="currentColor" stopOpacity="0.98" />
         <stop offset="1" stopColor="currentColor" stopOpacity="0.62" />
       </linearGradient>
-      <linearGradient id={`${uid}-edge`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stopColor="currentColor" stopOpacity="0.3" />
-        <stop offset="1" stopColor="currentColor" stopOpacity="0.62" />
-      </linearGradient>
       <linearGradient id={`${uid}-rim`} x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stopColor={FROST} stopOpacity="0.95" />
         <stop offset="0.55" stopColor={FROST} stopOpacity="0.3" />
@@ -131,6 +130,31 @@ export function GlassDefs({ uid }) {
         <stop offset="0" stopColor="currentColor" stopOpacity="1" />
         <stop offset="1" stopColor="currentColor" stopOpacity="0.68" />
       </linearGradient>
+      <linearGradient id={`${uid}-s-edge`} {...box} x1="24" y1={min} x2="24" y2={max}>
+        <stop offset="0" stopColor="currentColor" stopOpacity="0.42" />
+        <stop offset="1" stopColor="currentColor" stopOpacity="0.78" />
+      </linearGradient>
+      <linearGradient id={`${uid}-s-edge-rod`} {...box} x1="24" y1={min} x2="24" y2={max}>
+        <stop offset="0" stopColor="currentColor" stopOpacity="0.55" />
+        <stop offset="1" stopColor="currentColor" stopOpacity="0.85" />
+      </linearGradient>
+      {/* Smooths the duo core mask: blur + threshold rounds every corner the inset creates. */}
+      <filter
+        id={`${uid}-round`}
+        filterUnits="userSpaceOnUse"
+        x="-4"
+        y="-4"
+        width="56"
+        height="56"
+        colorInterpolationFilters="sRGB"
+      >
+        <feGaussianBlur stdDeviation="0.9" />
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="5" intercept="-2" />
+          <feFuncG type="linear" slope="5" intercept="-2" />
+          <feFuncB type="linear" slope="5" intercept="-2" />
+        </feComponentTransfer>
+      </filter>
       <linearGradient id={`${uid}-s-rim`} {...box} x1={min} y1={min} x2={max} y2={max}>
         <stop offset="0" stopColor={FROST} stopOpacity="0.95" />
         <stop offset="0.55" stopColor={FROST} stopOpacity="0.32" />
@@ -204,112 +228,127 @@ export function OutlineGlyph({ uid, paths, cut }) {
 
 /* ── Duo finish ────────────────────────────────────────── */
 
-function Body({ uid, item, index }) {
+/*
+ * Duo is "filled glass": one material for every part of every icon.
+ *
+ *   body  closed glass piece — shadow, frost face, accent edge, white rim and an
+ *         accent core inset by a uniform distance (corners rounded by a smoothing pass)
+ *   cut   a detail line knocked THROUGH the bodies; the gap gets glass walls and every
+ *         piece it creates gets its own core (package faces, mail flap, clock hands …)
+ *   rod   an open line outside the bodies, built from the same layers as a body
+ *
+ * No flat ink or flat accent fills — that mix is what made duo read inconsistent.
+ */
+
+function Body({ uid, item, index, cuts }) {
   const { d, opacity = 1, core = true, fillRule, inset = GRID.coreInset } = item;
-  const maskId = `${uid}-m${index}`;
+  const shape = `${uid}-b${index}`;
+  const coreMask = `${uid}-c${index}`;
+  const cutStrokes = (extra, color) =>
+    cuts.map((c, k) => (
+      <path key={k} d={c.d} fill="none" stroke={color} strokeWidth={c.gap + extra} strokeLinecap="round" strokeLinejoin="round" />
+    ));
   return (
     <g opacity={opacity === 1 ? undefined : opacity}>
-      <path
-        data-soft-layer="extrude"
-        d={d}
-        fillRule={fillRule}
-        fill={`url(#${uid}-body)`}
-        opacity={BODY.shadowOpacity}
-        transform={`translate(${BODY.dx} ${BODY.dy})`}
-      />
-      <path data-soft-layer="face" d={d} fillRule={fillRule} fill={`url(#${uid}-face)`} />
-      <path
-        data-soft-layer="edge"
-        d={d}
-        fill="none"
-        stroke={`url(#${uid}-edge)`}
-        strokeWidth={BODY.edge}
-        strokeLinejoin="round"
-      />
-      <path
-        data-soft-layer="specular"
-        d={d}
-        fill="none"
-        stroke={`url(#${uid}-rim)`}
-        strokeWidth={BODY.rim}
-        strokeLinejoin="round"
-      />
-      {core ? (
-        <>
-          <mask id={maskId} maskUnits="userSpaceOnUse" x="-4" y="-4" width="56" height="56">
-            <path d={d} fillRule={fillRule} fill="white" />
-            <path d={d} fill="none" stroke="black" strokeWidth={inset * 2} strokeLinejoin="round" />
-          </mask>
-          <path
-            data-soft-layer="glyph"
-            d={d}
-            fillRule={fillRule}
-            fill={`url(#${uid}-core)`}
-            mask={`url(#${maskId})`}
-            opacity={0.92}
-          />
-        </>
-      ) : null}
+      <mask id={shape} maskUnits="userSpaceOnUse" x="-4" y="-4" width="56" height="56">
+        <path d={d} fillRule={fillRule} fill="white" />
+        {cutStrokes(0, "black")}
+      </mask>
+      <g transform={`translate(${BODY.dx} ${BODY.dy})`}>
+        <path
+          data-soft-layer="extrude"
+          d={d}
+          fillRule={fillRule}
+          fill={`url(#${uid}-body)`}
+          opacity={BODY.shadowOpacity}
+          mask={`url(#${shape})`}
+        />
+      </g>
+      <g mask={`url(#${shape})`}>
+        <path data-soft-layer="face" d={d} fillRule={fillRule} fill={`url(#${uid}-face)`} />
+        {core ? (
+          <>
+            <mask id={coreMask} maskUnits="userSpaceOnUse" x="-4" y="-4" width="56" height="56">
+              <g filter={`url(#${uid}-round)`}>
+                <rect x="-4" y="-4" width="56" height="56" fill="black" />
+                <path d={d} fillRule={fillRule} fill="white" />
+                <path d={d} fill="none" stroke="black" strokeWidth={inset * 2} strokeLinejoin="round" />
+                {cutStrokes(inset * 2, "black")}
+              </g>
+            </mask>
+            <path
+              data-soft-layer="glyph"
+              d={d}
+              fillRule={fillRule}
+              fill={`url(#${uid}-core)`}
+              mask={`url(#${coreMask})`}
+              opacity={0.94}
+            />
+          </>
+        ) : null}
+        <g data-soft-layer="edge" fill="none" stroke={`url(#${uid}-s-edge)`} strokeLinejoin="round">
+          <path d={d} strokeWidth={BODY.edge * 2} />
+          {cutStrokes(BODY.edge * 2, `url(#${uid}-s-edge)`)}
+        </g>
+        <path
+          data-soft-layer="specular"
+          d={d}
+          fill="none"
+          stroke={`url(#${uid}-rim)`}
+          strokeWidth={BODY.rim * 2}
+          strokeLinejoin="round"
+        />
+      </g>
     </g>
   );
 }
 
-function Ink({ uid, items, shadow }) {
+/** Open line in body material: shadow, accent edge, frost face, accent core, highlight. */
+function Rods({ uid, items }) {
+  const r = (w) => w + ROD.pad;
   return (
-    <g data-soft-layer="ink" fill="none" strokeLinecap="round" strokeLinejoin="round">
-      {shadow ? (
-        <StrokeLayer
-          items={items}
-          layer="extrude"
-          stroke={`url(#${uid}-s-body)`}
-          width={(w) => w + INK.shadowPad}
-          opacity={INK.shadowOpacity}
-          transform={`translate(${INK.dx} ${INK.dy})`}
-        />
-      ) : null}
-      <StrokeLayer items={items} layer="glyph" stroke={`url(#${uid}-s-core)`} width={(w) => w} />
+    <g data-soft-layer="body" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <StrokeLayer
+        items={items}
+        layer="extrude"
+        stroke={`url(#${uid}-s-body)`}
+        width={(w) => r(w)}
+        opacity={BODY.shadowOpacity}
+        transform={`translate(${BODY.dx} ${BODY.dy})`}
+      />
+      <StrokeLayer items={items} layer="edge" stroke={`url(#${uid}-s-edge-rod)`} width={(w) => r(w)} />
+      <StrokeLayer items={items} layer="face" stroke={`url(#${uid}-s-face)`} width={(w) => r(w) - BODY.edge * 2} />
+      <StrokeLayer items={items} layer="glyph" stroke={`url(#${uid}-s-core)`} width={(w) => r(w) * ROD.core} />
       <StrokeLayer
         items={items}
         layer="specular"
         stroke={`url(#${uid}-s-rim)`}
-        width={(w) => w * INK.spec}
-        opacity={INK.specOpacity}
+        width={(w) => r(w) * ROD.spec}
+        opacity={0.6}
       />
     </g>
   );
 }
 
-export function DuoGlyph({ uid, shapes = [], accent = [], lines = [], cut }) {
+export function DuoGlyph({ uid, bodies = [], cuts = [], rods = [], cut }) {
   if (cut) {
     return (
       <g>
         <CutMask uid={uid} cut={cut} />
         <g mask={`url(#${uid}-cut)`}>
-          <DuoGlyph uid={uid} shapes={shapes} accent={accent} lines={lines} />
+          <DuoGlyph uid={uid} bodies={bodies} cuts={cuts} rods={rods} />
         </g>
-        <Ink uid={uid} items={[{ d: cut }]} shadow />
+        <Rods uid={uid} items={[{ d: cut }]} />
       </g>
     );
   }
-  const bodies = shapes.map(norm);
-  const fills = accent.map(norm);
-  const strokes = lines.map(norm);
+  const gaps = cuts.map(norm).map((c) => ({ ...c, gap: c.gap ?? (c.w ?? W) - CUT_SHRINK }));
   return (
     <g data-soft-layer="body">
-      {bodies.map((item, i) => (
-        <Body key={i} uid={uid} item={item} index={i} />
+      {bodies.map(norm).map((item, i) => (
+        <Body key={i} uid={uid} item={item} index={i} cuts={gaps} />
       ))}
-      {fills.map((item, i) => (
-        <path
-          key={`a${i}`}
-          data-soft-layer="glyph"
-          d={item.d}
-          fillRule={item.fillRule}
-          fill={`url(#${uid}-core)`}
-          opacity={item.opacity ?? 0.92}
-        />
-      ))}
-      {strokes.length ? <Ink uid={uid} items={strokes} shadow={bodies.length === 0} /> : null}
+      {rods.length ? <Rods uid={uid} items={rods.map(norm)} /> : null}
     </g>
   );
 }
@@ -320,12 +359,11 @@ export function DuoGlyph({ uid, shapes = [], accent = [], lines = [], cut }) {
  * Resolve an icon spec to the path data for a finish.
  *
  * Spec fields:
- *   shapes  closed silhouettes (outline: tubes · duo: frost bodies)
- *   lines   open strokes / details (outline: tubes · duo: accent ink)
- *   accent  duo-only accent fills
- *   core    duo auto core inset on shapes (default: true when the icon has no lines/accent)
+ *   shapes  closed silhouettes (outline: tubes · duo: glass bodies)
+ *   lines   open strokes / details (outline: tubes · duo: cuts when the icon has bodies, else rods)
  *   outline full outline path list override
- *   duo     partial duo override { shapes, lines, accent }
+ *   duo     override { bodies, cuts, rods, inset } — bodies take { d, inset, opacity, core, fillRule }.
+ *           Overriding bodies or rods means cuts must be listed explicitly.
  *   cut     slash path drawn over a knocked-out gap (both finishes)
  */
 export function resolveSpec(spec, finish) {
@@ -333,12 +371,14 @@ export function resolveSpec(spec, finish) {
   const lines = (spec.lines ?? []).map(norm);
   if (finish === "duo") {
     const o = spec.duo ?? {};
-    const autoCore = spec.core ?? (lines.length === 0 && !(spec.accent ?? []).length);
-    const duoShapes = (o.shapes ?? shapes).map(norm).map((s) => ({ core: autoCore, ...s }));
+    const bodies = (o.bodies ?? shapes).map(norm).map((b) => (o.inset ? { inset: o.inset, ...b } : b));
+    const solid = bodies.length > 0;
+    // Lines become cuts only when the override leaves the composition alone.
+    const derived = !o.bodies && !o.rods;
     return {
-      shapes: duoShapes,
-      lines: o.lines ?? lines,
-      accent: o.accent ?? spec.accent ?? [],
+      bodies,
+      cuts: (o.cuts ?? (solid && derived ? lines : [])).map(norm),
+      rods: (o.rods ?? (solid ? [] : lines)).map(norm),
       cut: spec.cut,
     };
   }

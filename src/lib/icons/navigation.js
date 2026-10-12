@@ -7,19 +7,12 @@ export const navigation = {
     label: "Home",
     shapes: [poly([[10, 21], [24, 9.5], [38, 21], [38, 40], [10, 40]], [2.5, 3, 2.5, 5, 5])],
     lines: ["M20 40v-8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"],
-    duo: { lines: [], accent: [rect(20, 28.5, 8, 8, 2.5)] },
+    duo: { cuts: [{ d: "M24 34.5V41", w: 7.2 }] },
   },
   dashboard: {
     label: "Dashboard",
     shapes: [rect(9, 9, 12, 15, 4), rect(27, 9, 12, 9, 4), rect(27, 24, 12, 15, 4), rect(9, 30, 12, 9, 4)],
-    duo: {
-      shapes: [
-        rect(9, 9, 12, 15, 4),
-        { d: rect(27, 9, 12, 9, 4), inset: 2.6 },
-        rect(27, 24, 12, 15, 4),
-        { d: rect(9, 30, 12, 9, 4), inset: 2.6 },
-      ],
-    },
+    duo: { bodies: [rect(9, 9, 12, 15, 4), { d: rect(27, 9, 12, 9, 4), inset: 2.4 }, rect(27, 24, 12, 15, 4), { d: rect(9, 30, 12, 9, 4), inset: 2.4 }] },
   },
   grid: {
     label: "Grid",
@@ -29,16 +22,13 @@ export const navigation = {
     label: "Layout",
     shapes: [frame],
     lines: ["M8 18.5h32", "M19 18.5V39"],
-    duo: {
-      shapes: [{ d: rect(8, 9, 32, 8, 3.5), core: true, inset: 2.3 }, rect(8, 20, 9, 19, 3.5), rect(20, 20, 20, 19, 3.5)],
-      lines: [],
-    },
+    duo: { inset: 2.4 },
   },
   sidebar: {
     label: "Sidebar",
     shapes: [frame],
     lines: ["M19 9v30"],
-    duo: { shapes: [{ d: rect(8, 9, 9, 30, 3.5), core: true, inset: 2.3 }, rect(20, 9, 20, 30, 4)], lines: [] },
+    duo: { inset: 2.4 },
   },
   panels: {
     label: "Panels",
@@ -48,16 +38,7 @@ export const navigation = {
     label: "Table",
     shapes: [frame],
     lines: ["M8 18.5h32", "M8 28.5h32", "M19.5 18.5V39"],
-    duo: {
-      shapes: [
-        { d: rect(8, 9, 32, 8, 3.5), core: true, inset: 2.3 },
-        rect(8, 20, 9.5, 8.5, 3),
-        rect(20.5, 20, 19.5, 8.5, 3),
-        rect(8, 30.5, 9.5, 8.5, 3),
-        rect(20.5, 30.5, 19.5, 8.5, 3),
-      ],
-      lines: [],
-    },
+    duo: { inset: 2.2 },
   },
   list: {
     label: "List",
@@ -74,10 +55,7 @@ export const navigation = {
     label: "Columns",
     shapes: [frame],
     lines: ["M18.7 9v30", "M29.3 9v30"],
-    duo: {
-      shapes: [rect(8, 9, 8.7, 30, 3), { d: rect(19.65, 9, 8.7, 30, 3), core: true, inset: 2.3 }, rect(31.3, 9, 8.7, 30, 3)],
-      lines: [],
-    },
+    duo: { inset: 2.4 },
   },
   menu: {
     label: "Menu",

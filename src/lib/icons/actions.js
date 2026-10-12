@@ -13,12 +13,11 @@ export const actions = {
     label: "Search",
     shapes: [circle(21.5, 21.5, 12.5)],
     lines: ["M30.6 30.6 39 39"],
-    core: true,
+    duo: { cuts: [], rods: ["M30.6 30.6 39 39"] },
   },
   filter: {
     label: "Filter",
     shapes: [poly([[8, 10], [40, 10], [28, 24], [28, 39], [20, 35], [20, 24]], [3, 3, 3, 1.5, 1.5, 3])],
-    duo: { shapes: [{ d: poly([[8, 10], [40, 10], [28, 24], [28, 39], [20, 35], [20, 24]], [3, 3, 3, 1.5, 1.5, 3]), inset: 3 }] },
   },
   sort: {
     label: "Sort",
@@ -27,6 +26,7 @@ export const actions = {
   more: {
     label: "More",
     lines: [{ d: dot(13, 24), w: 5 }, { d: dot(24, 24), w: 5 }, { d: dot(35, 24), w: 5 }],
+    duo: { bodies: [circle(13, 24, 4), circle(24, 24, 4), circle(35, 24, 4)].map((d) => ({ d, inset: 1.15 })) },
   },
   close: {
     label: "Close",
@@ -48,30 +48,23 @@ export const actions = {
     label: "Edit",
     shapes: [pencilBody],
     lines: [pencilBand],
-    duo: { lines: [], accent: [pencilCap] },
   },
   trash: {
     label: "Trash",
     shapes: [poly([[11.5, 13], [36.5, 13], [34.5, 40], [13.5, 40]], [0, 0, 4, 4])],
     lines: ["M8 13h32", "M18 13v-2.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V13", "M20 20.5v12", "M28 20.5v12"],
+    duo: { cuts: ["M20 20.5v12", "M28 20.5v12"], rods: ["M8 13h32", "M18 13v-2.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V13"] },
   },
   copy: {
     label: "Copy",
     shapes: [rect(17, 17, 23, 23, 5)],
     lines: ["M10.5 31A3.5 3.5 0 0 1 7 27.5V12a5 5 0 0 1 5-5h15.5a3.5 3.5 0 0 1 3.5 3.5"],
-    duo: {
-      shapes: [{ d: rect(7, 7, 24, 24, 5), opacity: 0.72, core: false }, { d: rect(17, 17, 23, 23, 5), core: true }],
-      lines: [],
-    },
+    duo: { bodies: [{ d: rect(7, 7, 24, 24, 5), opacity: 0.62, core: false }, rect(17, 17, 23, 23, 5)], cuts: [] },
   },
   save: {
     label: "Save",
     shapes: [poly([[8, 8], [32, 8], [40, 16], [40, 40], [8, 40]], [5, 2.5, 2.5, 5, 5])],
     lines: ["M15 40v-9.5a2.5 2.5 0 0 1 2.5-2.5h13a2.5 2.5 0 0 1 2.5 2.5V40", "M15 8v5.5a2.5 2.5 0 0 0 2.5 2.5H28"],
-    duo: {
-      lines: ["M15 8v5.5a2.5 2.5 0 0 0 2.5 2.5H28"],
-      accent: [rect(15, 28, 18, 12, 2.5)],
-    },
   },
   download: {
     label: "Download",

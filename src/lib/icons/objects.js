@@ -36,67 +36,48 @@ export const objects = {
     label: "Camera",
     shapes: [cameraBody],
     lines: [circle(24, 26, 6.5)],
-    duo: { lines: [], accent: [circle(24, 26, 7)] },
   },
   video: {
     label: "Video",
     shapes: [rect(7, 13, 24, 22, 5)],
     lines: [videoLens],
-    core: true,
+    duo: { bodies: [rect(7, 13, 24, 22, 5), { d: `${videoLens}Z`, inset: 2.2 }], cuts: [] },
   },
   printer: {
     label: "Printer",
     shapes: [],
     lines: [printerBody, "M14 16V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v7", rect(14, 26, 20, 15, 2.5)],
-    duo: {
-      shapes: [{ d: rect(8, 16, 32, 17, 4), core: false }, { d: rect(14, 26, 20, 15, 2.5), core: true, inset: 3 }],
-      lines: ["M14 16V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v7"],
-    },
+    duo: { bodies: [rect(8, 16, 32, 17, 4), { d: rect(14, 26, 20, 15, 2.5), inset: 2.6 }], rods: ["M14 16V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v7"] },
   },
   battery: {
     label: "Battery",
     shapes: [rect(7, 14, 29, 20, 5)],
     lines: ["M40.5 21v6", "M14 21v6", "M20 21v6"],
-    duo: { lines: ["M40.5 21v6"], accent: [rect(11.5, 18.5, 12, 11, 2)] },
+    duo: { cuts: ["M14 21v6", "M20 21v6"], rods: ["M40.5 21v6"] },
   },
   gift: {
     label: "Gift",
     shapes: [rect(7, 16, 34, 8, 3)],
     lines: [giftBox, "M24 16v24", "M24 16c-2-4.5-5-8-8.5-8a4 4 0 0 0 0 8", "M24 16c2-4.5 5-8 8.5-8a4 4 0 0 1 0 8"],
-    duo: {
-      shapes: [{ d: `${giftBox}Z`, core: false }, { d: rect(7, 16, 34, 8, 3), core: false }],
-      lines: ["M24 16v24", "M24 16c-2-4.5-5-8-8.5-8a4 4 0 0 0 0 8", "M24 16c2-4.5 5-8 8.5-8a4 4 0 0 1 0 8"],
-    },
+    duo: { bodies: [`${giftBox}Z`, { d: rect(7, 16, 34, 8, 3), inset: 2.2 }], cuts: ["M24 16v24"], rods: ["M24 16c-2-4.5-5-8-8.5-8a4 4 0 0 0 0 8", "M24 16c2-4.5 5-8 8.5-8a4 4 0 0 1 0 8"] },
   },
   truck: {
     label: "Truck",
     shapes: [circle(15, 34, 3.5), circle(33, 34, 3.5)],
     lines: ["M11.5 34H9a2 2 0 0 1-2-2V14a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v20", "M18.5 34h11", truckCab],
-    duo: {
-      shapes: [
-        { d: rect(7, 10, 20, 24, 4), core: true },
-        { d: "M27 17h6.4a2 2 0 0 1 1.6.8l5.6 7a2 2 0 0 1 .4 1.2V32a2 2 0 0 1-2 2H27Z", core: false },
-      ],
-      accent: [circle(15, 34, 4), circle(33, 34, 4)],
-      lines: [],
-    },
+    duo: { bodies: [rect(7, 10, 20, 24, 4), "M27 17h6.4a2 2 0 0 1 1.6.8l5.6 7a2 2 0 0 1 .4 1.2V32a2 2 0 0 1-2 2H27Z", { d: circle(15, 34, 4.2), inset: 1.2 }, { d: circle(33, 34, 4.2), inset: 1.2 }], rods: [] },
   },
   store: {
     label: "Store",
     shapes: [],
     lines: [awning, "M7 17h34", scallops, "M10 25v11a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V25", "M20 40v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"],
-    duo: {
-      shapes: [
-        { d: "M10 22v14a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22Z", core: false },
-        { d: awningBody, core: true, inset: 3 },
-      ],
-      lines: ["M20 40v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"],
-    },
+    duo: { bodies: ["M10 22v14a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22Z", { d: awningBody, inset: 2.4 }], cuts: ["M20 40v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"], rods: [] },
   },
   briefcase: {
     label: "Briefcase",
     shapes: [rect(7, 15, 34, 25, 5)],
     lines: ["M18 15v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3", "M7 26h34"],
+    duo: { cuts: ["M7 26h34"], rods: ["M18 15v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3"] },
   },
   building: {
     label: "Building",
@@ -107,38 +88,36 @@ export const objects = {
     label: "Compass",
     shapes: [circle(24, 24, 15)],
     lines: [poly([[30.5, 17.5], [26.8, 26.8], [17.5, 30.5], [21.2, 21.2]], [1.5, 2, 1.5, 2])],
-    duo: { lines: [], accent: [poly([[30.5, 17.5], [26.8, 26.8], [17.5, 30.5], [21.2, 21.2]], [1.5, 2, 1.5, 2])] },
   },
   coffee: {
     label: "Coffee",
     shapes: [cup],
     lines: ["M32 21h2.5a5.5 5.5 0 0 1 0 11H32", "M14 8v4.5", "M20 8v4.5", "M26 8v4.5"],
-    core: true,
+    duo: { cuts: [], rods: ["M32 21h2.5a5.5 5.5 0 0 1 0 11H32", "M14 8v4.5", "M20 8v4.5", "M26 8v4.5"] },
   },
   umbrella: {
     label: "Umbrella",
     shapes: [canopy],
     lines: ["M24 24v12a3.5 3.5 0 0 0 7 0"],
-    core: true,
+    duo: { cuts: [], rods: ["M24 24v12a3.5 3.5 0 0 0 7 0"] },
   },
   headphones: {
     label: "Headphones",
     shapes: [cupL, cupR],
     lines: ["M8 33V24a16 16 0 0 1 32 0v9"],
-    duo: { shapes: [cupL, cupR], lines: ["M8 28v-4a16 16 0 0 1 32 0v4"] },
-    core: true,
+    duo: { bodies: [cupL, cupR].map((d) => ({ d, inset: 2.2 })), cuts: [], rods: ["M8 28v-4a16 16 0 0 1 32 0v4"] },
   },
   pin: {
     label: "Pin",
     shapes: [pinHead],
     lines: ["M24 31v10"],
-    core: true,
+    duo: { cuts: [], rods: ["M24 31v10"] },
   },
   paintBrush: {
     label: "Paint brush",
     shapes: [brushFerrule, brushTip],
     lines: [brushHandle],
-    duo: { shapes: [{ d: brushFerrule, core: false }, { d: brushTip, core: true, inset: 3 }] },
+    duo: { bodies: [{ d: brushFerrule, inset: 2.2 }, brushTip], cuts: [], rods: [brushHandle] },
   },
   heart: {
     label: "Heart",
@@ -148,41 +127,23 @@ export const objects = {
     label: "Newspaper",
     shapes: [],
     lines: [sheet, "M22 15h12", "M22 22h12", "M22 29h8"],
-    duo: {
-      shapes: [
-        { d: "M16 21h-4a3 3 0 0 0-3 3v12.5a3.5 3.5 0 0 0 7 0Z", core: false, opacity: 0.75 },
-        { d: "M16 12a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v23a5 5 0 0 1-5 5H12.5a3.5 3.5 0 0 0 3.5-3.5Z", core: false },
-      ],
-      lines: ["M22 15h12", "M22 22h12", "M22 29h8"],
-    },
+    duo: { bodies: [{ d: "M16 21h-4a3 3 0 0 0-3 3v12.5a3.5 3.5 0 0 0 7 0Z", opacity: 0.7, core: false }, "M16 12a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v23a5 5 0 0 1-5 5H12.5a3.5 3.5 0 0 0 3.5-3.5Z"], cuts: ["M22 15h12", "M22 22h12", "M22 29h8"] },
   },
   map: {
     label: "Map",
     shapes: [mapShape],
     lines: ["M18 7v29", "M30 12v29"],
-    duo: {
-      shapes: [{ d: mapShape, core: false }],
-      accent: [poly([[18, 7], [30, 12], [30, 41], [18, 36]], [2.5, 0, 2.5, 0])],
-      lines: [],
-    },
   },
   film: {
     label: "Film",
     shapes: [rect(8, 8, 32, 32, 5)],
     lines: ["M16 8v32", "M32 8v32", "M8 24h32", "M8 16h8", "M8 32h8", "M32 16h8", "M32 32h8"],
-    duo: {
-      shapes: [{ d: rect(8, 8, 32, 32, 5), core: false }],
-      accent: [rect(17.5, 12.5, 13, 23, 2.5)],
-      lines: [12.75, 35.25].flatMap((x) => [14, 24, 34].map((y) => ({ d: dot(x, y), w: 3.4 }))),
-    },
+    duo: { cuts: ["M16 8v32", "M32 8v32", ...[12, 36].flatMap((x) => [15, 24, 33].map((y) => ({ d: dot(x, y), w: 3.4 })))] },
   },
   cast: {
     label: "Cast",
     shapes: [],
     lines: [screen, "M8 23a13 13 0 0 1 13 13", "M8 29.5a6.5 6.5 0 0 1 6.5 6.5", { d: dot(8.5, 35.5), w: 3.6 }],
-    duo: {
-      shapes: [{ d: "M8 17v-4a5 5 0 0 1 5-5h22a5 5 0 0 1 5 5v18a5 5 0 0 1-5 5h-8A19 19 0 0 0 8 17Z", core: true }],
-      lines: ["M8 23a13 13 0 0 1 13 13", "M8 29.5a6.5 6.5 0 0 1 6.5 6.5", { d: dot(8.5, 35.5), w: 3.6 }],
-    },
+    duo: { bodies: ["M8 17v-4a5 5 0 0 1 5-5h22a5 5 0 0 1 5 5v18a5 5 0 0 1-5 5h-8A19 19 0 0 0 8 17Z"], rods: ["M8 23a13 13 0 0 1 13 13", "M8 29.5a6.5 6.5 0 0 1 6.5 6.5", { d: dot(8.5, 35.5), w: 3.6 }] },
   },
 };

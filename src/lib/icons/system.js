@@ -41,7 +41,7 @@ export const system = {
     label: "Settings",
     shapes: [gearBody],
     lines: [hub],
-    duo: { shapes: [{ d: join(gearBody, hub), fillRule: "evenodd", core: true, inset: 3 }], lines: [] },
+    duo: { bodies: [{ d: join(gearBody, hub), fillRule: "evenodd", inset: 2.6 }], cuts: [] },
   },
   info: {
     label: "Info",
@@ -72,16 +72,13 @@ export const system = {
     label: "Sparkles",
     shapes: [sparkle(20, 26, 13), sparkle(34, 13, 6)],
     lines: [{ d: dot(36, 34), w: 3.6 }],
-    core: true,
+    duo: { bodies: [sparkle(20, 26, 13), { d: sparkle(34, 13, 6), inset: 1.8 }, { d: circle(36, 34, 2.8), inset: 0.8 }], cuts: [] },
   },
   rocket: {
     label: "Rocket",
     shapes: [rocketBody],
     lines: [rocketWindow, finL, finR, "M21 40h6"],
-    duo: {
-      lines: ["M21 40h6"],
-      accent: [rocketWindow, `${finL}Z`, `${finR}Z`],
-    },
+    duo: { bodies: [{ d: `${finL}Z`, inset: 1.8 }, { d: `${finR}Z`, inset: 1.8 }, rocketBody], cuts: [rocketWindow], rods: ["M21 40h6"] },
   },
   zap: {
     label: "Zap",
@@ -91,11 +88,7 @@ export const system = {
     label: "Layers",
     shapes: [diamond(8)],
     lines: ["M8 24l16 8 16-8", "M8 32l16 8 16-8"],
-    duo: {
-      shapes: [{ d: diamond(24), opacity: 0.55 }, { d: diamond(16), opacity: 0.78 }, diamond(8)],
-      lines: [],
-    },
-    core: true,
+    duo: { bodies: [{ d: diamond(24), opacity: 0.55 }, { d: diamond(16), opacity: 0.78 }, diamond(8)], cuts: [] },
   },
   code: {
     label: "Code",
@@ -110,7 +103,7 @@ export const system = {
     label: "Support",
     shapes: [cupL, cupR],
     lines: ["M9 28v-5a15 15 0 0 1 30 0v5", "M39 34v1a5 5 0 0 1-5 5h-7"],
-    core: true,
+    duo: { bodies: [cupL, cupR].map((d) => ({ d, inset: 2.2 })), cuts: [], rods: ["M9 28v-5a15 15 0 0 1 30 0v5", "M39 34v1a5 5 0 0 1-5 5h-7"] },
   },
   book: {
     label: "Book",
@@ -119,7 +112,7 @@ export const system = {
       "M9 35a1.5 1.5 0 0 1-1.5-1.5v-22A1.5 1.5 0 0 1 9 10h8a7 7 0 0 1 7 7 7 7 0 0 1 7-7h8a1.5 1.5 0 0 1 1.5 1.5v22A1.5 1.5 0 0 1 39 35H29a5 5 0 0 0-5 5 5 5 0 0 0-5-5Z",
       "M24 17v23",
     ],
-    duo: { shapes: [{ d: pageL, core: true }, { d: pageR, core: true }], lines: [] },
+    duo: { bodies: [pageL, pageR], cuts: [] },
   },
   power: {
     label: "Power",

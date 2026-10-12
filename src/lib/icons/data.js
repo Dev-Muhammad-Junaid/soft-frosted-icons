@@ -11,7 +11,7 @@ export const data = {
   chart: {
     label: "Chart",
     shapes: bars,
-    duo: { shapes: bars.map((d) => ({ d, inset: 2.1 })) },
+    duo: { bodies: bars.map((d) => ({ d, inset: 2.1 })) },
   },
   trendingUp: {
     label: "Trending up",
@@ -24,7 +24,6 @@ export const data = {
   pieChart: {
     label: "Pie chart",
     shapes: [pie, wedge],
-    duo: { shapes: [{ d: pie, core: false }], accent: [wedge] },
   },
   activity: {
     label: "Activity",
@@ -39,16 +38,12 @@ export const data = {
     label: "Wallet",
     shapes: [rect(8, 13, 32, 27, 5)],
     lines: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13", "M40 20h-8a6 6 0 0 0 0 12h8", { d: dot(32, 26), w: 3.4 }],
-    duo: {
-      lines: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13"],
-      accent: ["M40 20h-8a6 6 0 0 0 0 12h8Z"],
-    },
+    duo: { cuts: ["M40 20h-8a6 6 0 0 0 0 12h8", { d: dot(32, 26), w: 3.4 }], rods: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13"] },
   },
   creditCard: {
     label: "Card",
     shapes: [rect(8, 12, 32, 24, 5)],
     lines: ["M8 20h32", "M14 29h7"],
-    duo: { accent: [rect(8, 18, 32, 5)], lines: ["M14 29h7"] },
   },
   dollar: {
     label: "Dollar",
@@ -62,10 +57,7 @@ export const data = {
       { d: dot(18.5, 38), w: 4.6 },
       { d: dot(32.5, 38), w: 4.6 },
     ],
-    duo: {
-      shapes: [{ d: cartBasket, core: true }],
-      lines: ["M7 8h4l5 23", { d: dot(18.5, 38), w: 4.6 }, { d: dot(32.5, 38), w: 4.6 }],
-    },
+    duo: { bodies: [cartBasket], rods: ["M7 8h4l5 23", { d: dot(18.5, 38), w: 4.6 }, { d: dot(32.5, 38), w: 4.6 }] },
   },
   receipt: {
     label: "Receipt",

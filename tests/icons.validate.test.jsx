@@ -36,7 +36,7 @@ function stripCssVars(html) {
 function specPaths(name) {
   const out = resolveSpec(ICONS[name], "outline");
   const duo = resolveSpec(ICONS[name], "duo");
-  const items = [...out.paths, ...duo.shapes, ...duo.lines, ...duo.accent, out.cut].filter(Boolean);
+  const items = [...out.paths, ...duo.bodies, ...duo.cuts, ...duo.rods, out.cut].filter(Boolean);
   return items.map((it) => (typeof it === "string" ? it : it.d));
 }
 
@@ -89,6 +89,12 @@ describe.each(FROSTED_ICON_KEYS)("%s", (name) => {
   it.each(FINISHES)("%s uses theme paints only (no raw hex)", (finish) => {
     const raw = stripCssVars(render(name, finish)).match(/#[0-9a-fA-F]{3,8}\b/g) || [];
     expect(raw).toEqual([]);
+  });
+
+  it("builds duo from one glass material (no flat accent fills)", () => {
+    const html = render(name, "duo");
+    const cores = html.match(/<path[^>]*fill="url\(#[^"]*-core\)"[^>]*>/g) ?? [];
+    for (const tag of cores) expect(tag, `${name} unmasked core`).toContain("mask=");
   });
 
   it("keeps every point inside the live area", () => {
