@@ -1,47 +1,71 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode, SVGProps } from "react";
 
 export type FrostedFinish = "outline" | "duo";
 
-export const FROSTED_VERSIONS: readonly ["bare"];
+export type FrostedIconName =
+  | "home" | "dashboard" | "grid" | "layout" | "sidebar" | "panels" | "table" | "list" | "columns" | "menu"
+  | "search" | "filter" | "sort" | "more" | "close" | "check" | "plus" | "minus" | "edit" | "trash" | "copy"
+  | "save" | "download" | "upload" | "refresh" | "externalLink" | "arrowLeft" | "arrowRight" | "arrowUp"
+  | "arrowDown" | "chevronRight" | "chevronLeft" | "chevronUp" | "chevronDown"
+  | "user" | "users" | "userPlus" | "lock" | "unlock" | "shield" | "key" | "eye" | "eyeOff" | "login" | "logout"
+  | "mail" | "send" | "inbox" | "chat" | "bell" | "phone" | "link" | "share" | "at"
+  | "chart" | "trendingUp" | "trendingDown" | "pieChart" | "activity" | "report" | "wallet" | "creditCard"
+  | "dollar" | "cart" | "receipt" | "package"
+  | "calendar" | "clock" | "folder" | "file" | "files" | "image" | "database" | "cloud" | "server" | "tag"
+  | "bookmark" | "star" | "flag" | "mapPin" | "globe"
+  | "settings" | "info" | "help" | "alert" | "warning" | "ban" | "sparkles" | "rocket" | "zap" | "layers"
+  | "code" | "terminal" | "support" | "book" | "power"
+  | "play" | "pause" | "stop" | "skipNext" | "skipPrev" | "volume" | "mic" | "wifi" | "hash" | "expand"
+  | "paperclip" | "scissors" | "repeat" | "shuffle" | "thumbsUp" | "thumbsDown" | "megaphone" | "bluetooth"
+  | "sun" | "moon"
+  | "camera" | "video" | "printer" | "battery" | "gift" | "truck" | "store" | "briefcase" | "building"
+  | "compass" | "coffee" | "umbrella" | "headphones" | "pin" | "paintBrush" | "heart" | "newspaper" | "map"
+  | "film" | "cast";
 
-export const FROSTED_ICON_KEYS: string[];
-export const FROSTED_LABELS: Record<string, string>;
-export const LAB_SET2_KEYS: string[];
-export const LAB_SET2_DUO_KEYS: string[];
-export const LAB_SET2_LABELS: Record<string, string>;
-export const FROSTED_CATALOG_OUTLINE_KEYS: string[];
+export const FROSTED_ICON_KEYS: FrostedIconName[];
+export const FROSTED_LABELS: Record<FrostedIconName, string>;
 
 export const FROSTED_CATEGORIES: Array<{
   id: string;
   label: string;
   hint?: string;
-  icons: string[];
+  icons: FrostedIconName[];
 }>;
 
-export const FROSTED_STANDARDS: {
+/** The grid contract every icon is drawn against (48 × 48 viewBox). */
+export const FROSTED_GRID: {
   viewBox: string;
-  tile: { x: number; y: number; w: number; h: number; rx: number };
-  glyphInset: { min: number; max: number };
-  strokeWidth: { min: number; max: number };
-  bareGlyphScale: number;
-  layers: string[];
-  checklist: string[];
+  size: number;
+  live: { min: number; max: number };
+  stroke: number;
+  keyshapes: Record<"circle" | "square" | "landscape" | "portrait", Record<string, number>>;
+  minGap: number;
+  coreInset: number;
+  cutGap: number;
 };
 
-export function FrostedIcon(props: {
-  name: string;
+type SvgPassthrough = Omit<SVGProps<SVGSVGElement>, "name" | "color" | "title" | "style" | "className">;
+
+export interface FrostedIconProps extends SvgPassthrough {
+  name: FrostedIconName;
   finish?: FrostedFinish;
-  size?: number;
+  size?: number | string;
+  /** Specular strength, 0–1. */
   intensity?: number;
+  /** Idle specular pulse. */
   animate?: boolean;
+  /** Overrides `currentColor` / `--accent`. */
   color?: string;
+  /** Accessible name. Omit for decorative icons (rendered aria-hidden). */
   title?: string;
   className?: string;
   style?: CSSProperties;
-}): ReactNode;
+}
+
+export function FrostedIcon(props: FrostedIconProps): ReactNode;
 
 export function FrostedIconSet(props: {
-  names: string[];
+  names: FrostedIconName[];
   finish?: FrostedFinish;
   size?: number;
   animate?: boolean;
@@ -58,18 +82,16 @@ export function FrostedCatalog(props: {
   categories?: typeof FROSTED_CATEGORIES;
 }): ReactNode;
 
+/** Hook-free render (SSR / static export). `uid` must be unique per SVG on the page. */
 export function renderFrostedIcon(
-  name: string,
-  props: {
-    uid: string;
-    size?: number;
+  name: FrostedIconName,
+  props?: {
+    uid?: string;
+    size?: number | string;
     finish?: FrostedFinish;
-    plate?: boolean;
-    version?: "bare";
     color?: string;
     title?: string;
     className?: string;
     style?: CSSProperties;
-    optical?: number;
-  }
+  } & SvgPassthrough
 ): ReactNode;

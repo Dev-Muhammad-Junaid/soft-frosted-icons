@@ -1,7 +1,7 @@
 {
   "name": "soft-frosted-icons",
-  "version": "0.1.0",
-  "description": "Frosted SoftMark icons for React — outline and duo-tone glass marks.",
+  "version": "0.2.0",
+  "description": "Frosted glass icons for React and plain SVG — 136 icons, outline and duo-tone finishes on one 48px grid.",
   "type": "module",
   "license": "MIT",
   "author": "Dev-Muhammad-Junaid",
@@ -17,16 +17,18 @@
     "react",
     "icons",
     "svg",
+    "icon-set",
     "frosted",
     "glassmorphism",
-    "soft-ui",
-    "softmark"
+    "duotone",
+    "soft-ui"
   ],
   "sideEffects": [
     "**/*.css"
   ],
   "files": [
     "dist/lib",
+    "svg",
     "README.md",
     "LICENSE"
   ],
@@ -40,18 +42,20 @@
       "default": "./dist/lib/soft-frosted-icons.js"
     },
     "./styles.css": "./dist/lib/soft-frosted-icons.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./svg/*": "./svg/*"
   },
   "scripts": {
     "dev": "vite",
     "build:demo": "vite build",
     "build:lib": "vite build --config vite.lib.config.js",
-    "build": "npm run build:demo && npm run build:lib",
+    "build": "npm run build:demo && npm run build:lib && npm run build:svg",
     "prepare": "npm run build:lib",
     "prepublishOnly": "npm run test && npm run build:lib",
     "test": "vitest run",
     "test:watch": "vitest",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:svg": "vite build --ssr scripts/export-svg.jsx --outDir .svg-build --emptyOutDir --logLevel warn && node .svg-build/export-svg.js svg"
   },
   "peerDependencies": {
     "react": ">=18",

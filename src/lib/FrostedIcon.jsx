@@ -1,6 +1,33 @@
 import { useId } from "react";
-import { FROSTED_CATEGORIES, FROSTED_LABELS } from "./frostedRegistry";
-import { renderFrostedIcon } from "./renderFrostedIcon";
+import { DuoGlyph, GlassDefs, OutlineGlyph, SoftSvg, resolveSpec } from "./material.jsx";
+import { FROSTED_CATEGORIES, FROSTED_LABELS, ICONS } from "./registry.js";
+
+/**
+ * Render an icon by name without hooks (SSR, static export, custom wrappers).
+ * `uid` must be unique per rendered SVG on the page — it namespaces the gradients.
+ */
+export function renderFrostedIcon(name, { uid, finish = "outline", size = 24, title, className, style, color, ...props } = {}) {
+  const spec = ICONS[name];
+  if (!spec) return null;
+  const key = finish === "duo" ? "duo" : "outline";
+  const resolved = resolveSpec(spec, key);
+  const id = uid ?? `sfi-${name}-${key}`;
+  return (
+    <SoftSvg
+      size={size}
+      title={title}
+      className={className}
+      style={style}
+      color={color}
+      finish={key}
+      data-soft-icon={name}
+      {...props}
+    >
+      <GlassDefs uid={id} />
+      {key === "duo" ? <DuoGlyph uid={id} {...resolved} /> : <OutlineGlyph uid={id} {...resolved} />}
+    </SoftSvg>
+  );
+}
 
 /**
  * Frosted SoftMark icon.
@@ -8,11 +35,11 @@ import { renderFrostedIcon } from "./renderFrostedIcon";
  * @param {object} props
  * @param {string} props.name — registry key (`home`, `check`, `play`, …)
  * @param {"outline"|"duo"} [props.finish="outline"]
- * @param {number} [props.size=24]
- * @param {number} [props.intensity=1]
- * @param {boolean} [props.animate=false]
+ * @param {number|string} [props.size=24]
+ * @param {number} [props.intensity=1] — specular strength, 0–1
+ * @param {boolean} [props.animate=false] — idle specular pulse
  * @param {string} [props.color] — overrides `currentColor` / `--accent`
- * @param {string} [props.title] — accessible name; defaults to the label
+ * @param {string} [props.title] — accessible name; omit for decorative icons
  */
 export function FrostedIcon({
   name = "check",
@@ -26,47 +53,24 @@ export function FrostedIcon({
   color,
   ...props
 }) {
-  const uid = useId().replace(/:/g, "");
+  const uid = `sfi${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const node = renderFrostedIcon(name, {
     uid,
     size,
-    plate: false,
-    version: "bare",
     finish,
     color,
-    title: title ?? FROSTED_LABELS[name] ?? name,
-    className: ["soft-cx", "soft-cx--bare", animate ? "soft-cx--animate" : "", className]
-      .filter(Boolean)
-      .join(" "),
-    style: {
-      "--soft-cx-intensity": intensity,
-      ...(color != null ? { color } : null),
-      ...style,
-    },
+    title,
+    className: ["soft-cx", animate ? "soft-cx--animate" : "", className].filter(Boolean).join(" "),
+    style: { "--soft-cx-intensity": intensity, ...style },
     ...props,
   });
-
   if (!node) {
-    return (
-      <span
-        className={className}
-        style={{ width: size, height: size, display: "inline-block" }}
-        aria-hidden={!title}
-      />
-    );
+    return <span className={className} style={{ width: size, height: size, display: "inline-block" }} aria-hidden />;
   }
-
   return node;
 }
 
-export function FrostedIconSet({
-  names,
-  finish = "outline",
-  size = 48,
-  animate = false,
-  intensity = 1,
-  className,
-}) {
+export function FrostedIconSet({ names, finish = "outline", size = 48, animate = false, intensity = 1, className }) {
   return (
     <div className={["soft-cx-set", className].filter(Boolean).join(" ")} data-frosted-finish={finish}>
       {names.map((name) => (
@@ -79,14 +83,7 @@ export function FrostedIconSet({
   );
 }
 
-export function FrostedCatalog({
-  size = 48,
-  animate = false,
-  intensity = 1,
-  finish = "outline",
-  className,
-  categories,
-}) {
+export function FrostedCatalog({ size = 48, animate = false, intensity = 1, finish = "outline", className, categories }) {
   const cats = categories ?? FROSTED_CATEGORIES;
   return (
     <div className={["soft-frosted-catalog", className].filter(Boolean).join(" ")} data-frosted-finish={finish}>
@@ -97,13 +94,7 @@ export function FrostedCatalog({
             {cat.hint ? <p>{cat.hint}</p> : null}
             <span className="soft-frosted-catalog__count">{cat.icons.length}</span>
           </header>
-          <FrostedIconSet
-            names={cat.icons}
-            finish={finish}
-            size={size}
-            animate={animate}
-            intensity={intensity}
-          />
+          <FrostedIconSet names={cat.icons} finish={finish} size={size} animate={animate} intensity={intensity} />
         </section>
       ))}
     </div>

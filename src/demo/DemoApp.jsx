@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { FrostedCatalog, FrostedIcon } from "../lib/FrostedIcon.jsx";
-import { FROSTED_ICON_KEYS, FROSTED_LABELS } from "../lib/frostedRegistry.js";
+import { renderToStaticMarkup } from "react-dom/server";
+import { FrostedIcon, renderFrostedIcon } from "../lib/FrostedIcon.jsx";
+import { GRID } from "../lib/material.jsx";
+import { FROSTED_CATEGORIES, FROSTED_ICON_KEYS, FROSTED_LABELS } from "../lib/registry.js";
 
 const THEMES = [
   { id: "soft-glass", label: "Soft Glass" },
@@ -9,113 +11,206 @@ const THEMES = [
   { id: "dusk", label: "Dusk" },
   { id: "midnight", label: "Midnight" },
 ];
+const FINISHES = [
+  { id: "outline", label: "Outline" },
+  { id: "duo", label: "Duo-tone" },
+  { id: "both", label: "Side by side" },
+];
+const SIZES = [20, 24, 32, 48];
+
+function Seg({ label, value, options, onChange }) {
+  return (
+    <div className="demo__seg" role="group" aria-label={label}>
+      <span>{label}</span>
+      {options.map((o) => (
+        <button key={o.id} type="button" className={value === o.id ? "is-on" : ""} onClick={() => onChange(o.id)}>
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Keyline overlay: live area, circle and square keyshapes on the 48 grid. */
+function Keylines() {
+  const { live, keyshapes: k } = GRID;
+  return (
+    <svg className="demo__keylines" viewBox="0 0 48 48" aria-hidden>
+      {Array.from({ length: 49 }, (_, i) => (
+        <g key={i} opacity={i % 8 === 0 ? 0.5 : 0.18}>
+          <line x1={i} y1={0} x2={i} y2={48} />
+          <line x1={0} y1={i} x2={48} y2={i} />
+        </g>
+      ))}
+      <rect x={live.min} y={live.min} width={live.max - live.min} height={live.max - live.min} className="is-live" />
+      <circle cx={k.circle.cx} cy={k.circle.cy} r={k.circle.r} className="is-key" />
+      <rect x={k.square.x} y={k.square.y} width={k.square.w} height={k.square.h} rx={k.square.r} className="is-key" />
+    </svg>
+  );
+}
+
+function Inspector({ name, onClose, onCopy }) {
+  const jsx = (finish) => `<FrostedIcon name="${name}"${finish === "duo" ? ' finish="duo"' : ""} />`;
+  const svg = (finish) =>
+    renderToStaticMarkup(renderFrostedIcon(name, { uid: `sfi-${name}-${finish}`, finish, size: 24 }));
+  return (
+    <aside className="demo__inspector" aria-label={`${FROSTED_LABELS[name]} details`}>
+      <header>
+        <h2>{FROSTED_LABELS[name]}</h2>
+        <code>{name}</code>
+        <button type="button" className="demo__close" onClick={onClose} aria-label="Close">
+          <FrostedIcon name="close" size={20} />
+        </button>
+      </header>
+      <div className="demo__stage">
+        {["outline", "duo"].map((finish) => (
+          <figure key={finish}>
+            <div className="demo__canvas">
+              <Keylines />
+              <FrostedIcon name={name} finish={finish} size={160} />
+            </div>
+            <figcaption>
+              <span>{finish === "duo" ? "Duo-tone" : "Outline"}</span>
+              <span className="demo__ramp">
+                {[16, 20, 24, 32].map((s) => (
+                  <FrostedIcon key={s} name={name} finish={finish} size={s} />
+                ))}
+              </span>
+              <span className="demo__copy">
+                <button type="button" onClick={() => onCopy(jsx(finish))}>
+                  Copy JSX
+                </button>
+                <button type="button" onClick={() => onCopy(svg(finish))}>
+                  Copy SVG
+                </button>
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </aside>
+  );
+}
 
 export function DemoApp() {
-  const [finish, setFinish] = useState("outline");
+  const [finish, setFinish] = useState("both");
+  const [size, setSize] = useState(32);
   const [themeId, setThemeId] = useState("soft-glass");
   const [query, setQuery] = useState("");
   const [animate, setAnimate] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [toast, setToast] = useState("");
 
   useEffect(() => {
     document.documentElement.dataset.theme = themeId;
   }, [themeId]);
 
-  const filtered = useMemo(() => {
+  useEffect(() => {
+    if (!toast) return undefined;
+    const t = setTimeout(() => setToast(""), 1400);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  const sections = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return null;
-    return FROSTED_ICON_KEYS.filter((name) => {
-      const label = (FROSTED_LABELS[name] ?? name).toLowerCase();
-      return name.toLowerCase().includes(q) || label.includes(q);
-    });
+    if (!q) return FROSTED_CATEGORIES;
+    const hits = FROSTED_ICON_KEYS.filter(
+      (n) => n.toLowerCase().includes(q) || FROSTED_LABELS[n].toLowerCase().includes(q)
+    );
+    return [{ id: "results", label: `${hits.length} matches`, icons: hits }];
   }, [query]);
 
+  const copy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setToast("Copied");
+    } catch {
+      setToast("Copy blocked by the browser");
+    }
+  };
+
+  const finishes = finish === "both" ? ["outline", "duo"] : [finish];
+
   return (
-    <div className="demo" data-theme={themeId}>
+    <div className="demo">
       <header className="demo__hero">
-        <p className="demo__eyebrow">npm · GitHub Pages</p>
+        <p className="demo__eyebrow">
+          {FROSTED_ICON_KEYS.length} icons · 2 finishes · 48 grid
+        </p>
         <h1>soft-frosted-icons</h1>
         <p className="demo__lede">
-          Frosted SoftMark icons for React. Outline and duo-tone finishes, themed
-          through <code>currentColor</code> and <code>--accent</code>. Independent of{" "}
-          <a href="https://github.com/Dev-Muhammad-Junaid/soft-ui-kit">soft-ui-kit</a>{" "}
-          — the kit keeps Phosphor.
+          Frosted glass icons for React and plain SVG. One drawing per icon, two finishes: <b>outline</b> glass
+          tubes and <b>duo-tone</b> frost bodies with an accent core. Every mark sits on the same 48 px grid,
+          3-unit stroke and keyshapes, and paints from <code>currentColor</code>.
         </p>
-        <pre className="demo__install">
-          <code>npm install soft-frosted-icons</code>
-        </pre>
         <pre className="demo__code">
-          <code>{`import { FrostedIcon } from "soft-frosted-icons";
+          <code>{`npm install soft-frosted-icons
+
+import { FrostedIcon } from "soft-frosted-icons";
 import "soft-frosted-icons/styles.css";
 
-<FrostedIcon name="home" finish="${finish}" size={24} />`}</code>
+<FrostedIcon name="bell" />                 // outline
+<FrostedIcon name="bell" finish="duo" />    // duo-tone`}</code>
         </pre>
       </header>
 
       <div className="demo__toolbar">
         <label className="demo__search">
           <span>Search</span>
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={`${FROSTED_ICON_KEYS.length} marks`}
-          />
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="bell, arrow, file…" />
         </label>
-        <div className="demo__seg" role="group" aria-label="Finish">
-          <span>Finish</span>
-          <button type="button" className={finish === "outline" ? "is-on" : ""} onClick={() => setFinish("outline")}>
-            Outline
-          </button>
-          <button type="button" className={finish === "duo" ? "is-on" : ""} onClick={() => setFinish("duo")}>
-            Duo-tone
-          </button>
-        </div>
-        <div className="demo__seg" role="group" aria-label="Theme">
-          <span>Theme</span>
-          {THEMES.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              className={themeId === t.id ? "is-on" : ""}
-              onClick={() => setThemeId(t.id)}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+        <Seg label="Finish" value={finish} options={FINISHES} onChange={setFinish} />
+        <Seg
+          label="Size"
+          value={size}
+          options={SIZES.map((s) => ({ id: s, label: `${s}` }))}
+          onChange={setSize}
+        />
+        <Seg label="Theme" value={themeId} options={THEMES} onChange={setThemeId} />
         <label className="demo__toggle">
           <input type="checkbox" checked={animate} onChange={(e) => setAnimate(e.target.checked)} />
           Idle FX
         </label>
       </div>
 
-      <section className="demo__preview">
-        <FrostedIcon name="home" finish={finish} size={64} animate={animate} />
-        <FrostedIcon name="check" finish={finish} size={64} animate={animate} />
-        <FrostedIcon name="bell" finish={finish} size={64} animate={animate} />
-        <FrostedIcon name="play" finish={finish} size={64} animate={animate} />
-      </section>
+      {selected ? <Inspector name={selected} onClose={() => setSelected(null)} onCopy={copy} /> : null}
 
-      {filtered ? (
-        <section className="demo__results">
-          <h2>{filtered.length} matches</h2>
-          <div className="soft-cx-set">
-            {filtered.map((name) => (
-              <figure key={name} className="soft-cx-set__cell">
-                <FrostedIcon name={name} finish={finish} size={48} animate={animate} />
-                <figcaption>{FROSTED_LABELS[name] ?? name}</figcaption>
-              </figure>
+      {sections.map((cat) => (
+        <section key={cat.id} className="demo__section">
+          <header>
+            <h3>{cat.label}</h3>
+            {cat.hint ? <p>{cat.hint}</p> : null}
+          </header>
+          <div className="demo__grid" style={{ "--cell": `${Math.max(88, size * finishes.length + 52)}px` }}>
+            {cat.icons.map((name) => (
+              <button
+                key={name}
+                type="button"
+                className={`demo__cell${selected === name ? " is-on" : ""}`}
+                onClick={() => setSelected(name)}
+                title={`${FROSTED_LABELS[name]} — inspect`}
+              >
+                <span className="demo__pair">
+                  {finishes.map((f) => (
+                    <FrostedIcon key={f} name={name} finish={f} size={size} animate={animate} />
+                  ))}
+                </span>
+                <span className="demo__name">{name}</span>
+              </button>
             ))}
           </div>
         </section>
-      ) : (
-        <FrostedCatalog size={48} finish={finish} animate={animate} />
-      )}
+      ))}
 
       <footer className="demo__foot">
         <a href="https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons">GitHub</a>
         <a href="https://www.npmjs.com/package/soft-frosted-icons">npm</a>
-        <a href="https://dev-muhammad-junaid.github.io/soft-ui-kit/">soft-ui-kit demo</a>
+        <span>MIT</span>
       </footer>
+
+      <div className={`demo__toast${toast ? " is-on" : ""}`} role="status">
+        {toast}
+      </div>
     </div>
   );
 }

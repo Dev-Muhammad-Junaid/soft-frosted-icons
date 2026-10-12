@@ -1,4 +1,10 @@
-/* soft-frosted-icons — theme tokens + SoftMark paints */
+/* soft-frosted-icons — theme tokens + SoftMark paints.
+ *
+ * Icons paint with currentColor (--accent by default) plus two frost tokens:
+ *   --soft-cx-frost  glass highlight / face colour
+ *   --soft-cx-mark   lower face tint
+ * Override them on any ancestor to restyle a subtree.
+ */
 
 :root {
   --t-accent-h: 199;
@@ -66,8 +72,8 @@
   --soft-cx-intensity: 1;
   --soft-cx-frost: color-mix(in srgb, #fff 78%, var(--bg-elevated));
   --soft-cx-mark: color-mix(in srgb, var(--accent-soft) 70%, #fff);
-  --soft-cx-cut: var(--soft-cx-frost);
-  display: block;
+  display: inline-block;
+  flex-shrink: 0;
   color: var(--accent);
 }
 
@@ -75,7 +81,6 @@
 [data-theme="midnight"] .soft-cx {
   --soft-cx-frost: color-mix(in srgb, #fff 40%, var(--bg-elevated));
   --soft-cx-mark: color-mix(in srgb, var(--accent-ink) 50%, var(--bg-elevated));
-  --soft-cx-cut: color-mix(in srgb, #fff 68%, var(--accent-soft));
 }
 
 [data-theme="aurora"] .soft-cx {
