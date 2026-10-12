@@ -45,21 +45,23 @@ export const media = {
     label: "Volume",
     shapes: [speaker],
     lines: [arc(26, 24, 7, -50, 50), arc(26, 24, 14, -50, 50)],
-    duo: { cuts: [], rods: [arc(26, 24, 7, -50, 50), arc(26, 24, 14, -50, 50)] },
+    duo: { cuts: [], frost: [arc(26, 24, 7, -50, 50), arc(26, 24, 14, -50, 50)] },
   },
   mic: {
     label: "Mic",
     shapes: [rect(17, 7, 14, 20, 7)],
     lines: ["M11 22a13 13 0 0 0 26 0", "M24 35v6"],
-    duo: { cuts: [], rods: ["M11 22a13 13 0 0 0 26 0", "M24 35v6"] },
+    duo: { cuts: [], frost: ["M11 22a13 13 0 0 0 26 0", "M24 35v6"] },
   },
   wifi: {
     label: "Wifi",
     lines: [arc(24, 35, 8, -135, -45), arc(24, 35, 16, -135, -45), arc(24, 35, 24, -135, -45), { d: dot(24, 35), w: 4.4 }],
+    duo: { rods: [arc(24, 35, 8, -135, -45), { d: dot(24, 35), w: 4.4 }], frost: [arc(24, 35, 16, -135, -45), arc(24, 35, 24, -135, -45)] },
   },
   hash: {
     label: "Hash",
     lines: ["M10 18.5h29", "M9 29.5h29", "M21 8l-3.5 32", "M31 8l-3.5 32"],
+    duo: { rods: ["M10 18.5h29", "M9 29.5h29"], frost: ["M21 8l-3.5 32", "M31 8l-3.5 32"] },
   },
   expand: {
     label: "Expand",
@@ -78,11 +80,12 @@ export const media = {
     label: "Scissors",
     shapes: [circle(13, 13, 5), circle(13, 35, 5)],
     lines: ["M16.5 31.5 40 8", "M16.5 16.5 20.5 20.5", "M27.5 27.5 40 40"],
-    duo: { bodies: [[13, 13], [13, 35]].map(([x, y]) => ({ d: join(circle(x, y, 5.5), circle(x, y, 2)), fillRule: "evenodd", inset: 1.2 })), cuts: [], rods: ["M17.2 30.8 40 8", "M17.2 17.2 20.5 20.5", "M27.5 27.5 40 40"] },
+    duo: { bodies: [[13, 13], [13, 35]].map(([x, y]) => ({ d: join(circle(x, y, 5.5), circle(x, y, 2)), fillRule: "evenodd", inset: 1.2 })), cuts: [], rods: ["M17.2 30.8 40 8"], frost: ["M17.2 17.2 20.5 20.5", "M27.5 27.5 40 40"] },
   },
   repeat: {
     label: "Repeat",
     lines: ["M33 7l6 6-6 6", "M9 23v-3a7 7 0 0 1 7-7h23", "M15 41l-6-6 6-6", "M39 25v3a7 7 0 0 1-7 7H9"],
+    duo: { rods: ["M33 7l6 6-6 6", "M15 41l-6-6 6-6"], frost: ["M9 23v-3a7 7 0 0 1 7-7h23", "M39 25v3a7 7 0 0 1-7 7H9"] },
   },
   shuffle: {
     label: "Shuffle",
@@ -93,6 +96,7 @@ export const media = {
       "M34 8l6 6-6 6",
       "M34 28l6 6-6 6",
     ],
+    duo: { rods: ["M34 8l6 6-6 6", "M34 28l6 6-6 6"], frost: ["M8 34h3.5a6 6 0 0 0 5-2.8l9-14.4a6 6 0 0 1 5-2.8H40", "M8 14h3.5a6 6 0 0 1 5 2.7l1.3 2", "M40 34h-9.5a6 6 0 0 1-5-2.7l-1.3-2"] },
   },
   thumbsUp: {
     label: "Thumbs up",
@@ -108,7 +112,7 @@ export const media = {
     label: "Megaphone",
     shapes: [horn],
     lines: ["M23 32.1a6 6 0 1 1-11-3.6"],
-    duo: { cuts: [], rods: ["M23 32.1a6 6 0 1 1-11-3.6"] },
+    duo: { cuts: [], frost: ["M23 32.1a6 6 0 1 1-11-3.6"] },
   },
   bluetooth: {
     label: "Bluetooth",
@@ -118,7 +122,7 @@ export const media = {
     label: "Sun",
     shapes: [circle(24, 24, 6.5)],
     lines: rays,
-    duo: { cuts: [], rods: rays },
+    duo: { cuts: [], frost: rays },
   },
   moon: {
     label: "Moon",

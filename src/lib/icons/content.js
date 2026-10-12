@@ -95,7 +95,7 @@ export const content = {
     label: "Flag",
     shapes: [],
     lines: ["M11 41V9", flagCloth],
-    duo: { bodies: [`${flagCloth}Z`], rods: ["M11 41V9"] },
+    duo: { bodies: [`${flagCloth}Z`], cuts: [], frost: ["M11 41V9"] },
   },
   mapPin: {
     label: "Map pin",

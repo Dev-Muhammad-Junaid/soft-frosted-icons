@@ -16,10 +16,12 @@ export const data = {
   trendingUp: {
     label: "Trending up",
     lines: ["M7 34 18 23l7 7L40 15", "M30 15h10v10"],
+    duo: { rods: ["M30 15h10v10"], frost: ["M7 34 18 23l7 7L40 15"] },
   },
   trendingDown: {
     label: "Trending down",
     lines: ["M7 14 18 25l7-7L40 33", "M30 33h10V23"],
+    duo: { rods: ["M30 33h10V23"], frost: ["M7 14 18 25l7-7L40 33"] },
   },
   pieChart: {
     label: "Pie chart",
@@ -38,7 +40,7 @@ export const data = {
     label: "Wallet",
     shapes: [rect(8, 13, 32, 27, 5)],
     lines: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13", "M40 20h-8a6 6 0 0 0 0 12h8", { d: dot(32, 26), w: 3.4 }],
-    duo: { cuts: ["M40 20h-8a6 6 0 0 0 0 12h8", { d: dot(32, 26), w: 3.4 }], rods: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13"] },
+    duo: { cuts: ["M40 20h-8a6 6 0 0 0 0 12h8", { d: dot(32, 26), w: 3.4 }], frost: ["M12.5 13 30.6 7.6a3 3 0 0 1 3.9 2.9V13"] },
   },
   creditCard: {
     label: "Card",
@@ -48,6 +50,7 @@ export const data = {
   dollar: {
     label: "Dollar",
     lines: ["M24 7v34", "M32.5 13.5h-12a6 6 0 0 0 0 12h7a6 6 0 0 1 0 12h-13"],
+    duo: { rods: ["M32.5 13.5h-12a6 6 0 0 0 0 12h7a6 6 0 0 1 0 12h-13"], frost: ["M24 7v34"] },
   },
   cart: {
     label: "Cart",
@@ -57,7 +60,7 @@ export const data = {
       { d: dot(18.5, 38), w: 4.6 },
       { d: dot(32.5, 38), w: 4.6 },
     ],
-    duo: { bodies: [cartBasket], rods: ["M7 8h4l5 23", { d: dot(18.5, 38), w: 4.6 }, { d: dot(32.5, 38), w: 4.6 }] },
+    duo: { bodies: [cartBasket], cuts: [], rods: [{ d: dot(18.5, 38), w: 4.6 }, { d: dot(32.5, 38), w: 4.6 }], frost: ["M7 8h4l5 23"] },
   },
   receipt: {
     label: "Receipt",

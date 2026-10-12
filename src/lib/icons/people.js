@@ -44,13 +44,13 @@ export const people = {
     label: "Lock",
     shapes: [lockBody],
     lines: ["M16 21v-5a8 8 0 0 1 16 0v5", "M24 28.5v4"],
-    duo: { cuts: ["M24 28.5v4"], rods: ["M16 21v-5a8 8 0 0 1 16 0v5"] },
+    duo: { cuts: ["M24 28.5v4"], frost: ["M16 22v-6a8 8 0 0 1 16 0v6"] },
   },
   unlock: {
     label: "Unlock",
     shapes: [lockBody],
     lines: ["M16 21v-5a8 8 0 0 1 15.4-3", "M24 28.5v4"],
-    duo: { cuts: ["M24 28.5v4"], rods: ["M16 21v-5a8 8 0 0 1 15.4-3"] },
+    duo: { cuts: ["M24 28.5v4"], frost: ["M16 22v-6a8 8 0 0 1 15.4-3"] },
   },
   shield: {
     label: "Shield",
@@ -61,7 +61,7 @@ export const people = {
     label: "Key",
     shapes: [circle(16.5, 31.5, 8)],
     lines: ["M22.2 25.8 39.5 8.5", "M34 14l4.5 4.5", "M28.5 19.5l3.5 3.5"],
-    duo: { cuts: [{ d: "M16.5 31.5h0.01", w: 4.6 }], rods: ["M22.2 25.8 39.5 8.5", "M34 14l4.5 4.5", "M28.5 19.5l3.5 3.5"] },
+    duo: { cuts: [{ d: "M16.5 31.5h0.01", w: 4.6 }], frost: ["M21 27 39.5 8.5", "M34 14l4.5 4.5", "M28.5 19.5l3.5 3.5"] },
   },
   eye: {
     label: "Eye",
@@ -77,10 +77,12 @@ export const people = {
   login: {
     label: "Login",
     lines: ["M28 8h7a5 5 0 0 1 5 5v22a5 5 0 0 1-5 5h-7", "M8 24h20", "M19.5 15.5 28 24l-8.5 8.5"],
+    duo: { rods: ["M8 24h20", "M19.5 15.5 28 24l-8.5 8.5"], frost: ["M28 8h7a5 5 0 0 1 5 5v22a5 5 0 0 1-5 5h-7"] },
   },
   logout: {
     label: "Logout",
     lines: ["M20 8h-7a5 5 0 0 0-5 5v22a5 5 0 0 0 5 5h7", "M20 24h20", "M31.5 15.5 40 24l-8.5 8.5"],
+    duo: { rods: ["M20 24h20", "M31.5 15.5 40 24l-8.5 8.5"], frost: ["M20 8h-7a5 5 0 0 0-5 5v22a5 5 0 0 0 5 5h7"] },
   },
 };
 

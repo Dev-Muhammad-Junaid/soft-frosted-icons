@@ -49,7 +49,7 @@ function Keylines() {
   );
 }
 
-function Inspector({ name, onClose, onCopy }) {
+function Inspector({ name, onClose, onCopy, themeId, onTheme }) {
   const jsx = (finish) => `<FrostedIcon name="${name}"${finish === "duo" ? ' finish="duo"' : ""} />`;
   const svg = (finish) =>
     renderToStaticMarkup(renderFrostedIcon(name, { uid: `sfi-${name}-${finish}`, finish, size: 24 }));
@@ -58,6 +58,22 @@ function Inspector({ name, onClose, onCopy }) {
       <header>
         <h2>{FROSTED_LABELS[name]}</h2>
         <code>{name}</code>
+        <div className="demo__swatches" role="group" aria-label="Theme">
+          {THEMES.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              data-theme={t.id}
+              className={themeId === t.id ? "is-on" : ""}
+              onClick={() => onTheme(t.id)}
+              title={t.label}
+              aria-label={`${t.label} theme`}
+              aria-pressed={themeId === t.id}
+            >
+              <span />
+            </button>
+          ))}
+        </div>
         <button type="button" className="demo__close" onClick={onClose} aria-label="Close">
           <FrostedIcon name="close" size={20} />
         </button>
@@ -173,7 +189,13 @@ import "soft-frosted-icons/styles.css";
         </label>
       </div>
 
-      {selected ? <Inspector name={selected} onClose={() => setSelected(null)} onCopy={copy} /> : null}
+      {selected ? <Inspector
+          name={selected}
+          onClose={() => setSelected(null)}
+          onCopy={copy}
+          themeId={themeId}
+          onTheme={setThemeId}
+        /> : null}
 
       {sections.map((cat) => (
         <section key={cat.id} className="demo__section">

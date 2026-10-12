@@ -3,7 +3,7 @@
 Frosted glass icons for React and plain SVG. **136 icons**, each drawn once and rendered in two finishes:
 
 - **Outline**: every stroke is a glass tube with a frost face, an accent core, a soft offset shadow and a specular rim.
-- **Duo-tone**: filled glass. Every part is the same glass material: a frost body with an accent edge and a soft accent core. Interior details are cut through the glass, and open lines become glass rods.
+- **Duo-tone**: filled glass. Every part is the same glass material: a frost body with an accent edge and a soft accent core. Interior details are cut through the glass. Open lines become glass rods in two tones: primary parts carry a thin accent core, and secondary parts (trays, shafts, arcs, handles) are clear frost.
 
 <p align="center">
   <a href="https://dev-muhammad-junaid.github.io/soft-frosted-icons/"><strong>Browse the set →</strong></a>
@@ -110,17 +110,17 @@ bell: {
   label: "Bell",
   shapes: [bellDome],             // closed silhouettes: tubes in outline, glass bodies in duo
   lines: ["M20.5 38.5a3.8 …"],    // open strokes: tubes in outline, cuts through the bodies in duo
-  duo: { cuts: [], rods: [clapper] }, // optional: which lines are cuts vs. glass rods
+  duo: { cuts: [], frost: [clapper] }, // optional: cuts, primary `rods`, secondary `frost` rods
 }
 ```
 
-`src/lib/material.jsx` turns a spec into SVG. The outline finish draws each layer across all paths at once (all shadows, then all faces, cores and highlights), so crossings fuse like one piece of glass. In duo, every body gets a shadow, a frost face, an accent edge, a white rim and an accent core inset by the same distance. Cuts knock gaps through the bodies, and every piece they create gets its own walls and core. Rods carry the same layers, so a duo icon is always one material.
+`src/lib/material.jsx` turns a spec into SVG. The outline finish draws each layer across all paths at once (all shadows, then all faces, cores and highlights), so crossings fuse like one piece of glass. In duo, every body gets a shadow, a frost face, an accent edge, a white rim and an accent core inset by the same distance. Cuts knock gaps through the bodies, and every piece they create gets its own walls and core. Rods carry the same layers, so a duo icon is always one material. Primary rods get a thin accent core, while frost rods stay clear and sit behind the bodies. That is what gives line icons a real second tone instead of a bold stroke.
 
 ### Adding an icon
 
 1. Draw it on the grid above, reusing a keyshape where one fits.
 2. Add a spec to the right group in `src/lib/icons/` using the helpers in `geometry.js` (`rect`, `circle`, `poly` with true corner radii, `arc`, `dot`, `rotate`, `flipX`, …).
-3. Decide the duo read. By default, lines inside a shape are cut through it. Use a `duo` override to turn outside lines into `rods`, or to recompose `bodies`. Overriding `bodies` or `rods` means listing `cuts` explicitly.
+3. Decide the duo read. By default, lines inside a shape are cut through it. Use a `duo` override to turn outside lines into `rods` (primary) or `frost` (secondary), or to recompose `bodies` as separate rounded tiles. Overriding `bodies` or `rods` means listing `cuts` explicitly.
 4. Run `npm test` and `npm run build:svg`, then check both finishes in `npm run dev`.
 
 ## Scripts

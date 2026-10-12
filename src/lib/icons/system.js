@@ -78,7 +78,7 @@ export const system = {
     label: "Rocket",
     shapes: [rocketBody],
     lines: [rocketWindow, finL, finR, "M21 40h6"],
-    duo: { bodies: [{ d: `${finL}Z`, inset: 1.8 }, { d: `${finR}Z`, inset: 1.8 }, rocketBody], cuts: [rocketWindow], rods: ["M21 40h6"] },
+    duo: { bodies: [{ d: `${finL}Z`, inset: 1.8 }, { d: `${finR}Z`, inset: 1.8 }, rocketBody], cuts: [rocketWindow], frost: ["M21 40h6"] },
   },
   zap: {
     label: "Zap",
@@ -93,6 +93,7 @@ export const system = {
   code: {
     label: "Code",
     lines: ["M32 16l8 8-8 8", "M16 16l-8 8 8 8", "M27 11 21 37"],
+    duo: { rods: ["M32 16l8 8-8 8", "M16 16l-8 8 8 8"], frost: ["M27 11 21 37"] },
   },
   terminal: {
     label: "Terminal",
@@ -103,7 +104,7 @@ export const system = {
     label: "Support",
     shapes: [cupL, cupR],
     lines: ["M9 28v-5a15 15 0 0 1 30 0v5", "M39 34v1a5 5 0 0 1-5 5h-7"],
-    duo: { bodies: [cupL, cupR].map((d) => ({ d, inset: 2.2 })), cuts: [], rods: ["M9 28v-5a15 15 0 0 1 30 0v5", "M39 34v1a5 5 0 0 1-5 5h-7"] },
+    duo: { bodies: [cupL, cupR].map((d) => ({ d, inset: 2.2 })), cuts: [], frost: ["M9 28v-5a15 15 0 0 1 30 0v5", "M39 34v1a5 5 0 0 1-5 5h-7"] },
   },
   book: {
     label: "Book",
@@ -117,5 +118,6 @@ export const system = {
   power: {
     label: "Power",
     lines: ["M24 7v15", arc(24, 25, 14, -52, 232)],
+    duo: { rods: ["M24 7v15"], frost: [arc(24, 25, 14, -52, 232)] },
   },
 };

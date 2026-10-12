@@ -39,7 +39,7 @@ export const comms = {
     label: "Bell",
     shapes: [bellDome],
     lines: ["M20.5 38.5a3.8 3.8 0 0 0 7 0"],
-    duo: { cuts: [], rods: ["M20.5 38.5a3.8 3.8 0 0 0 7 0"] },
+    duo: { cuts: [], frost: ["M20.5 37.5a3.8 3.8 0 0 0 7 0"] },
   },
   phone: {
     label: "Phone",
@@ -48,17 +48,18 @@ export const comms = {
   link: {
     label: "Link",
     lines: linkLoops,
+    duo: { rods: [linkLoops[2]], frost: [linkLoops[0], linkLoops[1]] },
   },
   share: {
     label: "Share",
     shapes: nodes,
     lines: edges,
-    duo: { bodies: nodes.map((d) => ({ d, inset: 1.9 })), cuts: [], rods: edges },
+    duo: { bodies: nodes.map((d) => ({ d, inset: 1.9 })), cuts: [], frost: edges },
   },
   at: {
     label: "Mention",
     shapes: [circle(24, 24, 6.5)],
     lines: ["M30.5 17.5v8a4.5 4.5 0 0 0 9 0V24A15.5 15.5 0 1 0 33 36.5"],
-    duo: { cuts: [], rods: ["M30.5 17.5v8a4.5 4.5 0 0 0 9 0V24A15.5 15.5 0 1 0 33 36.5"] },
+    duo: { cuts: [], frost: ["M30.5 17.5v8a4.5 4.5 0 0 0 9 0V24A15.5 15.5 0 1 0 33 36.5"] },
   },
 };

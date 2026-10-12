@@ -22,13 +22,13 @@ export const navigation = {
     label: "Layout",
     shapes: [frame],
     lines: ["M8 18.5h32", "M19 18.5V39"],
-    duo: { inset: 2.4 },
+    duo: { bodies: [{ d: rect(8, 9, 32, 8, 3.5), inset: 2.3 }, { d: rect(8, 20, 9, 19, 3.5), inset: 2.3 }, rect(20, 20, 20, 19, 4)] },
   },
   sidebar: {
     label: "Sidebar",
     shapes: [frame],
     lines: ["M19 9v30"],
-    duo: { inset: 2.4 },
+    duo: { bodies: [{ d: rect(8, 9, 9, 30, 3.5), inset: 2.3 }, rect(20, 9, 20, 30, 4)] },
   },
   panels: {
     label: "Panels",
@@ -38,7 +38,7 @@ export const navigation = {
     label: "Table",
     shapes: [frame],
     lines: ["M8 18.5h32", "M8 28.5h32", "M19.5 18.5V39"],
-    duo: { inset: 2.2 },
+    duo: { bodies: [{ d: rect(8, 9, 32, 8, 3.5), inset: 2.3 }, ...[20, 30.5].flatMap((y) => [rect(8, y, 9.5, 8.5, 3), rect(20.5, y, 19.5, 8.5, 3)]).map((d) => ({ d, inset: 2.2 }))] },
   },
   list: {
     label: "List",
@@ -50,15 +50,17 @@ export const navigation = {
       "M18 24h21",
       "M18 34h21",
     ],
+    duo: { rods: [{ d: dot(10.5, 14), w: 4 }, { d: dot(10.5, 24), w: 4 }, { d: dot(10.5, 34), w: 4 }], frost: ["M18 14h21", "M18 24h21", "M18 34h21"] },
   },
   columns: {
     label: "Columns",
     shapes: [frame],
     lines: ["M18.7 9v30", "M29.3 9v30"],
-    duo: { inset: 2.4 },
+    duo: { bodies: [rect(8, 9, 8.7, 30, 3.2), rect(19.65, 9, 8.7, 30, 3.2), rect(31.3, 9, 8.7, 30, 3.2)].map((d) => ({ d, inset: 2.3 })) },
   },
   menu: {
     label: "Menu",
     lines: ["M10 14h28", "M10 24h28", "M10 34h28"],
+    duo: { rods: ["M10 24h28"], frost: ["M10 14h28", "M10 34h28"] },
   },
 };
