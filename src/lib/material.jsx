@@ -52,6 +52,7 @@ const TUBE = {
 /* Duo recipe. */
 /* Duo recipe. Edge and rim widths are the visible band inside the body. */
 const BODY = { dx: 1, dy: 1.3, shadowOpacity: 0.42, edge: 0.9, rim: 0.55 };
+const INLAY = { k: 0.9, groove: 1, grooveOpacity: 0.3, dx: 0.45, dy: 0.65, margin: 2.2 };
 const ROD = { pad: 1.9, edge: 0.65, core: 0.4, tint: 0.42, tintOpacity: 0.26, spec: 0.85, catch: [-0.55, -0.75] };
 /** A cut is a little narrower than the stroke it replaces, so walls keep the line weight. */
 const CUT_SHRINK = 0.2;
@@ -89,6 +90,8 @@ export function SoftSvg({ size = 24, className, title, children, style, color, f
 
 const FROST = "var(--soft-cx-frost, white)";
 const MARK = "var(--soft-cx-mark, var(--soft-cx-frost, white))";
+/* Inlay glyphs must stay light on the accent core in every theme (frost turns grey in dark ones). */
+const INLAY_PAINT = "var(--soft-cx-inlay, var(--soft-cx-frost, white))";
 
 export function GlassDefs({ uid }) {
   const box = { gradientUnits: "userSpaceOnUse" };
@@ -171,6 +174,10 @@ export function GlassDefs({ uid }) {
           <feFuncB type="linear" slope="8" intercept="-3.5" />
         </feComponentTransfer>
       </filter>
+      <linearGradient id={`${uid}-s-inlay`} {...box} x1="24" y1={min} x2="24" y2={max}>
+        <stop offset="0" stopColor={INLAY_PAINT} stopOpacity="1" />
+        <stop offset="1" stopColor={INLAY_PAINT} stopOpacity="0.86" />
+      </linearGradient>
       <linearGradient id={`${uid}-s-rim`} {...box} x1={min} y1={min} x2={max} y2={max}>
         <stop offset="0" stopColor={FROST} stopOpacity="0.95" />
         <stop offset="0.55" stopColor={FROST} stopOpacity="0.32" />
@@ -366,13 +373,46 @@ function Rods({ uid, items, tone = "core" }) {
   );
 }
 
-export function DuoGlyph({ uid, bodies = [], cuts = [], rods = [], frost = [], cut }) {
+/**
+ * Inlay: a glyph set into the glass instead of cut through it (symbols, text lines, dots,
+ * windows, a terminal prompt). Crisp frost strokes over the unbroken core with a soft emboss
+ * groove, clipped to the bodies so nothing spills past the silhouette.
+ */
+function Inlays({ uid, items, bodies }) {
+  const clip = `${uid}-inlay`;
+  return (
+    <g data-soft-layer="inlay">
+      <mask id={clip} maskUnits="userSpaceOnUse" x="-4" y="-4" width="56" height="56">
+        {bodies.map((b, i) => (
+          <path key={i} d={b.d} fillRule={b.fillRule} fill="white" />
+        ))}
+        {/* Stop just inside the rim so a glyph that reaches the edge reads as set into the glass. */}
+        {bodies.map((b, i) => (
+          <path key={`m${i}`} d={b.d} fill="none" stroke="black" strokeWidth={INLAY.margin * 2} strokeLinejoin="round" />
+        ))}
+      </mask>
+      <g mask={`url(#${clip})`} fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <StrokeLayer
+          items={items}
+          layer="extrude"
+          stroke="currentColor"
+          width={(w) => w * INLAY.k + INLAY.groove}
+          opacity={INLAY.grooveOpacity}
+          transform={`translate(${INLAY.dx} ${INLAY.dy})`}
+        />
+        <StrokeLayer items={items} layer="inlay" stroke={`url(#${uid}-s-inlay)`} width={(w) => w * INLAY.k} />
+      </g>
+    </g>
+  );
+}
+
+export function DuoGlyph({ uid, bodies = [], cuts = [], rods = [], frost = [], inlays = [], cut }) {
   if (cut) {
     return (
       <g>
         <CutMask uid={uid} cut={cut} />
         <g mask={`url(#${uid}-cut)`}>
-          <DuoGlyph uid={uid} bodies={bodies} cuts={cuts} rods={rods} frost={frost} />
+          <DuoGlyph uid={uid} bodies={bodies} cuts={cuts} rods={rods} frost={frost} inlays={inlays} />
         </g>
         <Rods uid={uid} items={[{ d: cut }]} />
       </g>
@@ -386,6 +426,7 @@ export function DuoGlyph({ uid, bodies = [], cuts = [], rods = [], frost = [], c
       {bodies.map(norm).map((item, i) => (
         <Body key={i} uid={uid} item={item} index={i} cuts={gaps} />
       ))}
+      {inlays.length ? <Inlays uid={uid} items={inlays.map(norm)} bodies={bodies.map(norm)} /> : null}
       {rods.length ? <Rods uid={uid} items={rods.map(norm)} /> : null}
     </g>
   );
@@ -400,8 +441,9 @@ export function DuoGlyph({ uid, bodies = [], cuts = [], rods = [], frost = [], c
  *   shapes  closed silhouettes (outline: tubes · duo: glass bodies)
  *   lines   open strokes / details (outline: tubes · duo: cuts when the icon has bodies, else rods)
  *   outline full outline path list override
- *   duo     override { bodies, cuts, rods, frost, inset, hug } — bodies take { d, inset, opacity, core, fillRule }.
+ *   duo     override { bodies, cuts, rods, frost, inlay, inset, hug } — bodies take { d, inset, opacity, core, fillRule }.
  *           rods = primary lines (accent core) · frost = secondary lines (clear glass, behind bodies).
+ *           inlay = glyph set into the glass (true = use the cuts, or an explicit list).
  *           Overriding bodies or rods means cuts must be listed explicitly.
  *   cut     slash path drawn over a knocked-out gap (both finishes)
  */
@@ -416,9 +458,13 @@ export function resolveSpec(spec, finish) {
     const solid = bodies.length > 0;
     // Lines become cuts only when the override leaves the composition alone.
     const derived = !o.bodies && !o.rods && !o.frost;
+    const cutList = (o.cuts ?? (solid && derived ? lines : [])).map(norm);
+    // inlay: true turns the cuts into inlays; an array lists inlays explicitly.
+    const inlays = Array.isArray(o.inlay) ? o.inlay.map(norm) : o.inlay ? cutList : [];
     return {
       bodies,
-      cuts: (o.cuts ?? (solid && derived ? lines : [])).map(norm),
+      inlays,
+      cuts: o.inlay === true ? [] : cutList,
       rods: (o.rods ?? (solid || o.frost ? [] : lines)).map(norm),
       frost: (o.frost ?? []).map(norm),
       cut: spec.cut,

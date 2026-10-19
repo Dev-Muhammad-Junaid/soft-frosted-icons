@@ -36,13 +36,13 @@ export const content = {
       { d: dot(16, 33.5), w: 3.6 },
       { d: dot(24, 33.5), w: 3.6 },
     ],
-    duo: { bodies: [{ d: rect(8, 11, 32, 8, 3.5), inset: 2.1 }, rect(8, 22, 32, 18, 4.5)], cuts: [{ d: dot(16, 28), w: 3.6 }, { d: dot(24, 28), w: 3.6 }, { d: dot(32, 28), w: 3.6 }, { d: dot(16, 34), w: 3.6 }, { d: dot(24, 34), w: 3.6 }], frost: ["M16 7.5v7", "M32 7.5v7"], hug: false },
+    duo: { bodies: [{ d: rect(8, 11, 32, 8, 3.5), inset: 2.1 }, rect(8, 22, 32, 18, 4.5)], cuts: [{ d: dot(16, 28), w: 3.6 }, { d: dot(24, 28), w: 3.6 }, { d: dot(32, 28), w: 3.6 }, { d: dot(16, 34), w: 3.6 }, { d: dot(24, 34), w: 3.6 }], frost: ["M16 7.5v7", "M32 7.5v7"], inlay: true },
   },
   clock: {
     label: "Clock",
     shapes: [circle(24, 24, 15)],
     lines: ["M24 14.5V24l6.5 4"],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   folder: {
     label: "Folder",
@@ -63,12 +63,13 @@ export const content = {
     label: "Image",
     shapes: [rect(8, 9, 32, 30, 5)],
     lines: [circle(18, 18.5, 3.5), "M40 30 33.1 23.1a3 3 0 0 0-4.2 0L13 39"],
+    duo: { inlay: true },
   },
   database: {
     label: "Database",
     shapes: [ellipse(24, 12, 15, 5)],
     lines: ["M9 12v24a15 5 0 0 0 30 0V12", "M9 24a15 5 0 0 0 30 0"],
-    duo: { bodies: [cylinder], cuts: ["M9 12a15 5 0 0 0 30 0", "M9 24a15 5 0 0 0 30 0"] },
+    duo: { bodies: [cylinder], cuts: ["M9 12a15 5 0 0 0 30 0", "M9 24a15 5 0 0 0 30 0"], inlay: true },
   },
   cloud: {
     label: "Cloud",
@@ -78,13 +79,13 @@ export const content = {
     label: "Server",
     shapes: [rect(8, 8, 32, 13, 4), rect(8, 27, 32, 13, 4)],
     lines: [{ d: dot(15, 14.5), w: 3.6 }, { d: dot(15, 33.5), w: 3.6 }, "M22 14.5h11", "M22 33.5h11"],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   tag: {
     label: "Tag",
     shapes: [tagBody],
     lines: [{ d: dot(16, 16), w: 4.2 }],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   bookmark: {
     label: "Bookmark",
@@ -110,5 +111,6 @@ export const content = {
     label: "Globe",
     shapes: [circle(24, 24, 15)],
     lines: ["M24 9a23 23 0 0 0 0 30 23 23 0 0 0 0-30", "M9 24h30"],
+    duo: { inlay: true },
   },
 };

@@ -36,6 +36,7 @@ export const objects = {
     label: "Camera",
     shapes: [cameraBody],
     lines: [circle(24, 26, 6.5)],
+    duo: { inlay: true },
   },
   video: {
     label: "Video",
@@ -53,13 +54,13 @@ export const objects = {
     label: "Battery",
     shapes: [rect(7, 14, 29, 20, 5)],
     lines: ["M40.5 21v6", "M14 21v6", "M20 21v6"],
-    duo: { cuts: ["M14 21v6", "M20 21v6"], frost: ["M40.5 21v6"], hug: false },
+    duo: { cuts: ["M14 21v6", "M20 21v6"], frost: ["M40.5 21v6"], inlay: true },
   },
   gift: {
     label: "Gift",
     shapes: [rect(7, 16, 34, 8, 3)],
     lines: [giftBox, "M24 16v24", "M24 16c-2-4.5-5-8-8.5-8a4 4 0 0 0 0 8", "M24 16c2-4.5 5-8 8.5-8a4 4 0 0 1 0 8"],
-    duo: { bodies: [`${giftBox}Z`, { d: rect(7, 16, 34, 8, 3), inset: 2.2 }], cuts: ["M24 16v24"], frost: ["M24 16c-2-4.5-5-8-8.5-8a4 4 0 0 0 0 8", "M24 16c2-4.5 5-8 8.5-8a4 4 0 0 1 0 8"] },
+    duo: { bodies: [`${giftBox}Z`, { d: rect(7, 16, 34, 8, 3), inset: 2.2 }], cuts: ["M24 16v24"], frost: ["M24 16c-2-4.5-5-8-8.5-8a4 4 0 0 0 0 8", "M24 16c2-4.5 5-8 8.5-8a4 4 0 0 1 0 8"], inlay: true },
   },
   truck: {
     label: "Truck",
@@ -83,13 +84,13 @@ export const objects = {
     label: "Building",
     shapes: [rect(10, 7, 28, 34, 5)],
     lines: [...windows, "M20.5 41v-6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v6"],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   compass: {
     label: "Compass",
     shapes: [circle(24, 24, 15)],
     lines: [poly([[30.5, 17.5], [26.8, 26.8], [17.5, 30.5], [21.2, 21.2]], [1.5, 2, 1.5, 2])],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   coffee: {
     label: "Coffee",
@@ -129,7 +130,7 @@ export const objects = {
     label: "Newspaper",
     shapes: [],
     lines: [sheet, "M22 15h12", "M22 22h12", "M22 29h8"],
-    duo: { bodies: [{ d: "M16 21h-4a3 3 0 0 0-3 3v12.5a3.5 3.5 0 0 0 7 0Z", opacity: 0.7, core: false }, "M16 12a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v23a5 5 0 0 1-5 5H12.5a3.5 3.5 0 0 0 3.5-3.5Z"], cuts: ["M22 15h12", "M22 22h12", "M22 29h8"], hug: false },
+    duo: { bodies: [{ d: "M16 21h-4a3 3 0 0 0-3 3v12.5a3.5 3.5 0 0 0 7 0Z", opacity: 0.7, core: false }, "M16 12a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v23a5 5 0 0 1-5 5H12.5a3.5 3.5 0 0 0 3.5-3.5Z"], cuts: ["M22 15h12", "M22 22h12", "M22 29h8"], inlay: true },
   },
   map: {
     label: "Map",
@@ -140,7 +141,7 @@ export const objects = {
     label: "Film",
     shapes: [rect(8, 8, 32, 32, 5)],
     lines: ["M16 8v32", "M32 8v32", "M8 24h32", "M8 16h8", "M8 32h8", "M32 16h8", "M32 32h8"],
-    duo: { cuts: ["M16 8v32", "M32 8v32", ...[12, 36].flatMap((x) => [15, 24, 33].map((y) => ({ d: dot(x, y), w: 3.4 })))], hug: false },
+    duo: { cuts: ["M16 8v32", "M32 8v32", ...[12, 36].flatMap((x) => [15, 24, 33].map((y) => ({ d: dot(x, y), w: 3.4 })))], inlay: true },
   },
   cast: {
     label: "Cast",

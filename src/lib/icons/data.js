@@ -35,7 +35,7 @@ export const data = {
     label: "Report",
     shapes: [rect(10, 7, 28, 34, 5)],
     lines: ["M17 33v-5", "M24 33V18", "M31 33v-9"],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   wallet: {
     label: "Wallet",
@@ -47,7 +47,7 @@ export const data = {
     label: "Card",
     shapes: [rect(8, 12, 32, 24, 5)],
     lines: ["M8 20h32", "M14 29h7"],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   dollar: {
     label: "Dollar",
@@ -68,11 +68,12 @@ export const data = {
     label: "Receipt",
     shapes: [receiptBody],
     lines: ["M17 16h14", "M17 23h14", "M17 30h8"],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   package: {
     label: "Package",
     shapes: [box],
     lines: ["M9.5 15.8 24 24l14.5-8.2", "M24 24v16.5", "M16.5 11.3l15 8.5"],
+    duo: { inlay: true },
   },
 };

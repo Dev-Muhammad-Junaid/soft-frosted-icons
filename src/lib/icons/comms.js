@@ -19,22 +19,25 @@ export const comms = {
     label: "Mail",
     shapes: [rect(8, 12, 32, 24, 5)],
     lines: ["M9.5 15.5 21.2 24.6a4.5 4.5 0 0 0 5.6 0L38.5 15.5"],
+    duo: { inlay: true },
   },
   send: {
     label: "Send",
     shapes: [plane],
     lines: ["M22.5 25.5 33.5 14.5"],
+    duo: { inlay: true },
   },
   inbox: {
     label: "Inbox",
     shapes: ["M15 9h18a3 3 0 0 1 2.8 1.9L40 23v12a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5V23l4.2-12.1A3 3 0 0 1 15 9Z"],
     lines: ["M8 23h8.5l3 5h9l3-5H40"],
+    duo: { inlay: true },
   },
   chat: {
     label: "Chat",
     shapes: [bubble],
     lines: [{ d: dot(16, 20.5), w: 4 }, { d: dot(24, 20.5), w: 4 }, { d: dot(32, 20.5), w: 4 }],
-    duo: { hug: false },
+    duo: { inlay: true },
   },
   bell: {
     label: "Bell",

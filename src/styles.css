@@ -3,6 +3,7 @@
  * Icons paint with currentColor (--accent by default) plus two frost tokens:
  *   --soft-cx-frost  glass highlight / face colour
  *   --soft-cx-mark   lower face tint
+ *   --soft-cx-inlay  glyphs set into duo cores (stays light in dark themes)
  * Override them on any ancestor to restyle a subtree.
  */
 
@@ -72,6 +73,7 @@
   --soft-cx-intensity: 1;
   --soft-cx-frost: color-mix(in srgb, #fff 78%, var(--bg-elevated));
   --soft-cx-mark: color-mix(in srgb, var(--accent-soft) 70%, #fff);
+  --soft-cx-inlay: color-mix(in srgb, #fff 92%, var(--accent));
   display: inline-block;
   flex-shrink: 0;
   color: var(--accent);
@@ -79,6 +81,7 @@
 
 [data-theme="dusk"] .soft-cx,
 [data-theme="midnight"] .soft-cx {
+  --soft-cx-inlay: color-mix(in srgb, #fff 84%, var(--accent));
   --soft-cx-frost: color-mix(in srgb, #fff 40%, var(--bg-elevated));
   --soft-cx-mark: color-mix(in srgb, var(--accent-ink) 50%, var(--bg-elevated));
 }
