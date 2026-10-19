@@ -137,6 +137,7 @@ Each icon is drawn once. Both finishes are rendered from that one drawing, so th
 | `tools/build-svg.js` | Rebuilds `svg/` from `src/icons/`. |
 | `tools/check.js` | Grid and output checks. Runs before every publish. |
 | `preview.png`, `media/` | Social preview and the icon sheet above. |
+| `.github/workflows/` | `deploy-pages.yml` publishes the demo to GitHub Pages on every push to `main`; `release.yml` publishes to npm when a GitHub release is published. |
 
 ## Develop
 
@@ -147,6 +148,16 @@ npm run check            # grid + output checks
 ```
 
 To add an icon, add its spec to the right file in `src/icons/` and its name to the `IconName` union in `src/index.d.ts`. Then run `build` and `check`.
+
+## Releasing
+
+Releases publish to npm from GitHub Actions with [trusted publishing](https://docs.npmjs.com/trusted-publishers), so no npm token is stored anywhere. Every release also gets a provenance statement linking it to the commit that built it.
+
+1. Bump the version: `npm version patch` (or `minor` / `major`). This updates `package.json` and creates the `vX.Y.Z` tag.
+2. Push the commit and tag: `git push --follow-tags`.
+3. On GitHub, create a release from that tag and publish it.
+
+`.github/workflows/release.yml` then checks the tag matches `package.json`, runs `tools/check.js`, confirms `svg/` is up to date, and runs `npm publish`. A release marked as a pre-release publishes under the `next` dist-tag instead of `latest`.
 
 ## License
 
