@@ -53,7 +53,7 @@ const TUBE = {
 
 /* Duo recipe. Edge and rim widths are the visible band inside the body. */
 const BODY = { dx: 1, dy: 1.3, shadowOpacity: 0.42, edge: 0.9, rim: 0.55 };
-const INLAY = { k: 0.9, groove: 1, grooveOpacity: 0.3, dx: 0.45, dy: 0.65, margin: 2.2 };
+const INLAY = { k: 0.9, groove: 1, grooveOpacity: 0.34, dx: 0.45, dy: 0.65, margin: 2.2, tint: 0.42, tintOpacity: 0.34, spec: 0.55, catch: [-0.3, -0.4] };
 const ROD = { pad: 1.9, edge: 0.65, core: 0.4, tint: 0.42, tintOpacity: 0.26, spec: 0.85, catch: [-0.55, -0.75] };
 /** A cut is a little narrower than the stroke it replaces, so walls keep the line weight. */
 const CUT_SHRINK = 0.2;
@@ -123,7 +123,7 @@ function defs(id) {
     el("linearGradient", { id: `${id}-s-face`, ...vertical }, stops([[0, FROST, 0.9], [0.45, "currentColor", 0.32], [1, MARK, 0.7]])),
     el("linearGradient", { id: `${id}-s-core`, ...vertical }, stops([[0, "currentColor", 1], [1, "currentColor", 0.68]])),
     el("linearGradient", { id: `${id}-s-edge`, ...vertical }, stops([[0, "currentColor", 0.42], [1, "currentColor", 0.78]])),
-    el("linearGradient", { id: `${id}-s-inlay`, ...vertical }, stops([[0, INLAY_PAINT, 1], [1, INLAY_PAINT, 0.86]])),
+    el("linearGradient", { id: `${id}-s-inlay`, ...vertical }, stops([[0, INLAY_PAINT, 0.92], [0.5, INLAY_PAINT, 0.72], [1, INLAY_PAINT, 0.6]])),
     el("linearGradient", { id: `${id}-s-rim`, ...box, x1: min, y1: min, x2: max, y2: max }, stops([[0, FROST, 0.95], [0.55, FROST, 0.32], [1, FROST, 0]])),
     // Blur + threshold: rounds the corners a core inset or a cut would otherwise leave sharp.
     threshold(`${id}-round`, 0.9, 5, -2),
@@ -252,7 +252,7 @@ function rods(id, items, tone = "core") {
   );
 }
 
-/** Glyph set into the glass: crisp light strokes over the core, kept just inside the rim. */
+/** Glyph set into the glass: a light glass tube tinted by the accent, kept just inside the rim. */
 function inlays(id, items, bodies) {
   const clip = `${id}-inlay`;
   return el(
@@ -268,7 +268,9 @@ function inlays(id, items, bodies) {
       "g",
       { mask: `url(#${clip})`, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" },
       strokeLayer(items, "extrude", "currentColor", (w) => w * INLAY.k + INLAY.groove, INLAY.grooveOpacity, `translate(${INLAY.dx} ${INLAY.dy})`),
-      strokeLayer(items, "inlay", `url(#${id}-s-inlay)`, (w) => w * INLAY.k)
+      strokeLayer(items, "inlay", `url(#${id}-s-inlay)`, (w) => w * INLAY.k),
+      strokeLayer(items, "glyph", `url(#${id}-s-core)`, (w) => w * INLAY.k * INLAY.tint, INLAY.tintOpacity),
+      strokeLayer(items, "specular", INLAY_PAINT, () => INLAY.spec, 0.85, `translate(${INLAY.catch[0]} ${INLAY.catch[1]})`)
     )
   );
 }

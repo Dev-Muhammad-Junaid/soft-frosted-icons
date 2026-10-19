@@ -103,7 +103,7 @@ Files are named in kebab-case (`svg/outline/arrow-right.svg`, `svg/duo/arrow-rig
 | `--sfi-color` | Accent. Every gradient, edge and core follows it. |
 | `--sfi-frost` | Glass face and highlight colour. |
 | `--sfi-mark` | Lower face tint. |
-| `--sfi-inlay` | Glyphs set into duo-tone cores (the `!` in alert, text lines, dots). Keep it light. |
+| `--sfi-inlay` | Base of the glass glyphs set into duo-tone cores (the `!` in alert, text lines, dots). The icon colour tints it; keep it light. |
 | `--sfi-intensity` | Specular strength, `0`–`1`. |
 
 ## The two finishes
@@ -111,7 +111,7 @@ Files are named in kebab-case (`svg/outline/arrow-right.svg`, `svg/duo/arrow-rig
 Each icon is drawn once. Both finishes are rendered from that one drawing, so they always line up.
 
 - **Outline**: every stroke is a glass tube with a frost face, an accent core, a specular rim and a soft shadow. Layers are drawn across all strokes at once, so crossings fuse like one piece of glass. Use it for resting states, toolbars and dense UI.
-- **Duo-tone**: filled glass. Bodies get a frost face, an accent edge, a white rim and an inset accent core. Glyphs are inlaid into the core as crisp light strokes. Secondary parts such as handles and trays are clear frost glass, which is the second tone. Use it for active states, tiles, dashboards and empty states.
+- **Duo-tone**: filled glass. Bodies get a frost face, an accent edge, a glass rim and an inset accent core. Glyphs are inlaid into the core as light glass tubes tinted by the same colour, so they follow any accent. Secondary parts such as handles and trays are clear frost glass, which is the second tone. Use it for active states, tiles, dashboards and empty states.
 
 ## The grid
 
