@@ -72,7 +72,7 @@ export const objects = {
     label: "Store",
     shapes: [],
     lines: [awning, "M7 17h34", scallops, "M10 25v11a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V25", "M20 40v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"],
-    duo: { bodies: ["M10 22v14a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V22Z", { d: awningBody, inset: 2.4 }], cuts: ["M20 40v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"] },
+    duo: { bodies: ["M10 23.6v12.4a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V23.6Z", { d: awningBody, inset: 2.4 }], cuts: [{ d: "M24 36V41", w: 7 }] },
   },
   briefcase: {
     label: "Briefcase",
