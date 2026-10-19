@@ -25,24 +25,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
-      - name: Install
-        run: npm ci
-
-      - name: Test
-        run: npm test
-
-      - name: Build demo + library
-        run: npm run build
-
-      - name: SPA 404 fallback
-        run: cp dist/index.html dist/404.html
+      - name: Check icons
+        run: node tools/check.js
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: .
 
   deploy:
     needs: build

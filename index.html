@@ -1,18 +1,700 @@
 <!doctype html>
-<html lang="en" data-theme="soft-glass">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>soft-frosted-icons</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/demo/main.jsx"></script>
-  </body>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Soft Frosted Icons</title>
+<meta name="description" content="136 frosted glass SVG icons in two finishes, outline and duo-tone, on one 48px grid. Web component, SVG strings, React and plain SVG files. No dependencies. MIT licensed.">
+<meta property="og:title" content="Soft Frosted Icons">
+<meta property="og:description" content="136 frosted glass icons, outline and duo-tone, themeable through one colour. Free to use.">
+<meta property="og:image" content="https://dev-muhammad-junaid.github.io/soft-frosted-icons/preview.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="svg/duo/sparkles.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#e8edf5; --bg2:#f1f4fa; --card:#f7f9fc; --line:#d9e0ec; --line2:#c8d2e2;
+  --ink:#1f2a3c; --muted:#5f6b80; --dim:#8a95a8;
+  --dark:#141a26; --dark2:#1c2433; --dark-ink:#e6edf8; --dark-muted:#9aa8bf;
+  --f-body:'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --radius:22px;
+  --shadow:0 1px 0 rgb(255 255 255 / .7) inset, 0 18px 40px -28px rgb(31 42 60 / .35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%, #dbe8f7 0, transparent 60%),radial-gradient(900px 500px at -10% 10%, #ece6f8 0, transparent 55%),var(--bg);color:var(--ink);font:15px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:28px 96px;display:grid;gap:88px}
+.wrap>*,section>*{min-width:0}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(38px,6vw,64px);line-height:1;font-weight:800}
+h2{font-size:clamp(26px,3.4vw,34px);line-height:1.1;font-weight:800}
+h3{font-size:16px;line-height:1.3;font-weight:700}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:hsl(199 80% 38%)}
+.lede{color:var(--muted);font-size:17px;max-width:60ch}
+section{display:grid;gap:28px}
+.sec-head{display:grid;gap:10px;max-width:68ch}
+.sec-head p{color:var(--muted)}
+.card{background:linear-gradient(180deg,rgb(255 255 255 / .75),rgb(255 255 255 / .45));border:1px solid rgb(255 255 255 / .8);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.01em;text-decoration:none}
+.top nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.top nav a{text-decoration:none;font-weight:700;font-size:14px;color:var(--muted);padding:6px 12px;border-radius:999px}
+.top nav a:hover{background:rgb(255 255 255 / .7);color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:center}
+.hero-copy{display:grid;gap:20px;align-content:start}
+.install{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:14px;padding:10px 14px;border-radius:14px;background:var(--dark);color:var(--dark-ink);border:0;cursor:pointer}
+.pill:hover{background:#0f141e}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 14px var(--f-body);padding:10px 16px;border-radius:14px;text-decoration:none;color:var(--ink);background:rgb(255 255 255 / .75);border:1px solid var(--line);cursor:pointer}
+.btn:hover{background:#fff}
+.stats{display:flex;gap:22px;flex-wrap:wrap;color:var(--muted);font-weight:600;font-size:14px}
+.stats b{color:var(--ink);font-size:20px;display:block;line-height:1.2}
+
+/* lab */
+.lab{padding:18px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+.stage{border-radius:18px;padding:26px 18px;min-height:268px;display:grid;place-items:center;transition:background .3s;background:var(--stage-bg,#e6ebf3);position:relative;overflow:hidden}
+.stage-grid{display:grid;grid-template-columns:repeat(6,auto);gap:clamp(10px,2.4vw,22px);justify-content:center;align-items:center}
+.controls{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row>label,.row>.lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);min-width:64px}
+.seg{display:inline-flex;padding:3px;border-radius:12px;background:rgb(31 42 60 / .06);gap:2px;flex-wrap:wrap}
+.seg button{appearance:none;border:0;background:transparent;font:700 13px var(--f-body);color:var(--muted);padding:6px 12px;border-radius:9px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgb(31 42 60 / .15)}
+.swatches{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sw{appearance:none;width:26px;height:26px;border-radius:999px;border:2px solid #fff;background:var(--c);cursor:pointer;box-shadow:0 0 0 1px var(--line2)}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--c)}
+.custom{position:relative;width:26px;height:26px;border-radius:999px;overflow:hidden;box-shadow:0 0 0 1px var(--line2);background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)}
+.custom input{position:absolute;inset:-8px;width:44px;height:44px;opacity:0;cursor:pointer}
+input[type=range]{accent-color:hsl(199 85% 48%);width:min(220px,100%)}
+.out{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);min-width:42px}
+pre{margin:0;overflow-x:auto;padding:14px 16px;border-radius:14px;background:var(--dark);color:var(--dark-ink);font:12.5px/1.6 var(--f-mono)}
+pre .c{color:#7d8aa3}
+pre .k{color:#8fd3ff}
+pre .s{color:#ffd68a}
+.code-wrap{position:relative}
+.code-wrap pre{padding-right:76px}
+#lab-code{white-space:pre-wrap;overflow-wrap:anywhere}
+.copy{position:absolute;top:8px;right:8px;font:700 12px var(--f-body);padding:5px 10px;border-radius:9px;border:0;background:rgb(255 255 255 / .12);color:var(--dark-ink);cursor:pointer}
+.copy:hover{background:rgb(255 255 255 / .2)}
+
+/* use cases */
+.uses{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:18px}
+.use{display:grid;grid-template-rows:auto 1fr;overflow:hidden}
+.use-demo{padding:22px;min-height:200px;display:grid;place-items:center;border-bottom:1px solid var(--line)}
+.use-body{padding:16px 20px 20px;display:grid;gap:6px;align-content:start}
+.use-body p{color:var(--muted);font-size:14px}
+.use-body code{color:var(--ink)}
+
+/* mock: sidebar */
+.m-side{width:100%;max-width:240px;display:grid;gap:4px;background:#fff;border-radius:16px;padding:10px;box-shadow:0 10px 30px -18px rgb(31 42 60 / .4)}
+.m-side a{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:11px;font-weight:700;font-size:14px;color:var(--muted);text-decoration:none}
+.m-side a.on{background:hsl(199 90% 95%);color:var(--ink)}
+.m-side .badge{margin-left:auto;font-size:11px;background:hsl(345 80% 56%);color:#fff;border-radius:999px;padding:1px 7px}
+/* mock: toolbar */
+.m-tool{display:grid;gap:14px;width:100%;justify-items:center}
+.m-bar{display:flex;gap:4px;background:#fff;border-radius:14px;padding:6px;box-shadow:0 10px 30px -18px rgb(31 42 60 / .4)}
+.m-bar button{appearance:none;border:0;background:transparent;border-radius:10px;padding:7px;cursor:pointer;line-height:0}
+.m-bar button:hover{background:#eef3f9}
+.m-bar .sep{width:1px;background:var(--line);margin:4px 2px}
+.m-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.m-btn{display:inline-flex;align-items:center;gap:8px;font:700 14px var(--f-body);border-radius:12px;padding:9px 14px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.m-btn.primary{background:hsl(199 85% 48%);border-color:transparent;color:#fff;--sfi-color:#fff;--sfi-frost:rgb(255 255 255 / .55);--sfi-mark:rgb(255 255 255 / .35);--sfi-inlay:hsl(199 85% 48%)}
+/* mock: status */
+.m-status{width:100%;display:grid;gap:10px}
+.m-toast{display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 10px 30px -20px rgb(31 42 60 / .45);font-size:14px}
+.m-toast b{display:block;font-size:14px}
+.m-toast span{color:var(--muted);font-size:13px}
+/* mock: tab bar (dark) */
+.m-phone{width:100%;max-width:300px;background:var(--dark);border-radius:22px;padding:14px 10px 10px;display:grid;gap:12px}
+.m-phone .screen{height:70px;border-radius:14px;background:linear-gradient(135deg,#1f2a3c,#141a26);display:flex;align-items:center;gap:12px;padding:0 14px;color:var(--dark-ink);font-weight:700;font-size:14px}
+.m-tabs{display:flex;justify-content:space-around;background:var(--dark2);border-radius:16px;padding:8px 4px}
+.m-tabs span{display:grid;justify-items:center;gap:3px;font-size:10.5px;font-weight:700;color:var(--dark-muted)}
+.m-tabs span.on{color:var(--dark-ink)}
+/* mock: KPI */
+.m-kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}
+.m-kpi div{background:#fff;border-radius:14px;padding:12px;display:grid;gap:6px;box-shadow:0 10px 30px -22px rgb(31 42 60 / .45)}
+.m-kpi b{font-size:20px;letter-spacing:-.02em}
+.m-kpi span{color:var(--muted);font-size:12px;font-weight:600}
+/* mock: list */
+.m-list{width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px -18px rgb(31 42 60 / .4)}
+.m-list div{display:flex;align-items:center;gap:12px;padding:10px 14px;font-size:14px;font-weight:600;border-top:1px solid #eef1f6}
+.m-list div:first-child{border-top:0}
+.m-list small{margin-left:auto;color:var(--dim);font-weight:600}
+.m-empty{display:grid;justify-items:center;gap:6px;text-align:center}
+.m-empty b{font-size:16px;margin-top:6px}
+.m-empty span{color:var(--muted);font-size:13px;margin-bottom:8px}
+.m-inline{font-size:18px;line-height:1.7;max-width:30ch;text-align:center;color:var(--ink)}
+.m-inline frosted-icon{vertical-align:-.2em}
+
+/* finishes */
+.finishes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.fin{padding:22px;display:grid;gap:14px}
+.fin-art{display:flex;gap:18px;justify-content:center;padding:18px;border-radius:16px;background:#e6ebf3}
+.fin ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:4px}
+
+/* colours / themes / sizes */
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,108px),1fr));gap:12px}
+.palette div{padding:16px 10px 12px;display:grid;justify-items:center;gap:10px;border-radius:18px;background:rgb(255 255 255 / .6);border:1px solid rgb(255 255 255 / .8)}
+.palette small{font-size:12px;font-weight:700;color:var(--muted)}
+.themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px}
+.theme{border-radius:18px;padding:16px;display:grid;gap:12px}
+.theme .ic{display:flex;gap:8px;flex-wrap:wrap}
+.theme small{font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.sizes{padding:24px;display:flex;align-items:flex-end;gap:clamp(14px,3vw,34px);flex-wrap:wrap;justify-content:center}
+.sizes figure{margin:0;display:grid;justify-items:center;gap:8px}
+.sizes figcaption{font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+
+/* catalog */
+.cat-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{flex:1 1 220px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 12px}
+.search input{border:0;outline:0;font:600 15px var(--f-body);background:transparent;width:100%;color:var(--ink)}
+.cat-count{color:var(--dim);font-weight:700;font-size:13px}
+.cat-group{display:grid;gap:12px}
+.cat-group h3{font-size:14px;color:var(--muted);letter-spacing:.02em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,108px),1fr));gap:10px}
+.tile{appearance:none;border:1px solid rgb(255 255 255 / .8);background:rgb(255 255 255 / .55);border-radius:16px;padding:14px 6px 10px;display:grid;justify-items:center;gap:8px;cursor:pointer;font:inherit;color:inherit;transition:transform .15s, background .15s}
+.tile:hover,.tile:focus-visible{background:#fff;transform:translateY(-2px);outline:none}
+.tile[aria-pressed="true"]{box-shadow:0 0 0 2px hsl(199 85% 48%)}
+.tile small{font-size:11.5px;font-weight:700;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.detail{position:sticky;top:12px;z-index:5;padding:18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
+.detail[hidden]{display:none}
+.detail-art{display:flex;gap:14px;padding:16px;border-radius:16px;background:#e6ebf3}
+.detail-info{display:grid;gap:10px}
+.detail-info h3{font-size:20px}
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* get started */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:18px}
+.step{padding:20px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-content:start;min-width:0}
+.step p{color:var(--muted);font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+td code{color:hsl(199 80% 34%)}
+.table-card{padding:6px 8px;overflow-x:auto}
+
+footer{display:flex;gap:16px;flex-wrap:wrap;align-items:center;color:var(--muted);font-weight:600;font-size:14px;border-top:1px solid var(--line);padding-top:24px}
+footer nav{margin-left:auto;display:flex;gap:16px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;pointer-events:none;background:var(--dark);color:var(--dark-ink);font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;transition:.2s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .detail{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .stage-grid{grid-template-columns:repeat(3,auto)}
+  .top nav{display:none}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tile{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="brand" href="#"><frosted-icon name="sparkles" finish="duo" size="30"></frosted-icon> Soft Frosted Icons</a>
+    <nav aria-label="Sections">
+      <a href="#uses">Use cases</a>
+      <a href="#colours">Colours</a>
+      <a href="#catalog">Icons</a>
+      <a href="#start">Get started</a>
+      <a href="https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-copy">
+      <span class="eyebrow">SVG icons · web component · MIT</span>
+      <h1>Soft Frosted Icons</h1>
+      <p class="lede">136 frosted glass icons in two finishes. <b>Outline</b> is glass tubing; <b>duo-tone</b> is filled glass with an accent core. Every icon sits on one 48&nbsp;px grid with one stroke weight, and the whole set follows a single colour.</p>
+      <div class="install">
+        <button class="pill" data-copy="npm i soft-frosted-icons" aria-label="Copy install command">$ npm i soft-frosted-icons <frosted-icon name="copy" size="16" color="#8fd3ff"></frosted-icon></button>
+        <a class="btn" href="#catalog"><frosted-icon name="grid" size="18"></frosted-icon> Browse icons</a>
+        <a class="btn" href="https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons"><frosted-icon name="code" size="18"></frosted-icon> GitHub</a>
+      </div>
+      <div class="stats">
+        <span><b>136</b>icons</span>
+        <span><b>2</b>finishes</span>
+        <span><b>0</b>dependencies</span>
+        <span><b>5</b>themes</span>
+      </div>
+    </div>
+
+    <div class="lab card" aria-label="Icon lab">
+      <div class="stage" id="stage" data-sfi-theme="soft-glass">
+        <div class="stage-grid" id="stage-grid"></div>
+      </div>
+      <div class="controls">
+        <div class="row"><span class="lbl">Finish</span>
+          <div class="seg" id="lab-finish">
+            <button data-v="duo" aria-pressed="true">Duo-tone</button>
+            <button data-v="outline" aria-pressed="false">Outline</button>
+          </div>
+        </div>
+        <div class="row"><label for="lab-size">Size</label>
+          <input type="range" id="lab-size" min="16" max="72" step="4" value="44">
+          <span class="out" id="lab-size-out">44px</span>
+        </div>
+        <div class="row"><span class="lbl">Colour</span>
+          <div class="swatches" id="lab-colour"></div>
+        </div>
+        <div class="row"><span class="lbl">Surface</span>
+          <div class="seg" id="lab-theme"></div>
+        </div>
+        <div class="row"><span class="lbl">Glint</span>
+          <div class="seg" id="lab-glint">
+            <button data-v="off" aria-pressed="true">Still</button>
+            <button data-v="on" aria-pressed="false">Idle glint</button>
+          </div>
+        </div>
+        <div class="code-wrap"><pre id="lab-code"></pre><button class="copy" data-copy-from="lab-code">Copy</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="uses" aria-labelledby="h-uses">
+    <div class="sec-head">
+      <span class="eyebrow">01 · Use cases</span>
+      <h2 id="h-uses">Made for real interfaces</h2>
+      <p>The same icons in the places you would actually put them: navigation, toolbars, status messages, dark mobile UI, dashboards and running text.</p>
+    </div>
+    <div class="uses">
+      <article class="use card">
+        <div class="use-demo">
+          <nav class="m-side" aria-label="Example sidebar">
+            <a class="on" href="#uses"><frosted-icon name="home" finish="duo" size="22"></frosted-icon>Overview</a>
+            <a href="#uses"><frosted-icon name="inbox" size="22"></frosted-icon>Inbox <span class="badge">4</span></a>
+            <a href="#uses"><frosted-icon name="chart" size="22"></frosted-icon>Analytics</a>
+            <a href="#uses"><frosted-icon name="users" size="22"></frosted-icon>Team</a>
+            <a href="#uses"><frosted-icon name="settings" size="22"></frosted-icon>Settings</a>
+          </nav>
+        </div>
+        <div class="use-body"><h3>App navigation</h3><p>Outline for resting items, duo-tone for the active one. Same shape, so the switch never shifts the layout.</p></div>
+      </article>
+
+      <article class="use card">
+        <div class="use-demo">
+          <div class="m-tool">
+            <div class="m-bar" role="toolbar" aria-label="Example toolbar">
+              <button aria-label="Edit"><frosted-icon name="edit" size="20"></frosted-icon></button>
+              <button aria-label="Copy"><frosted-icon name="copy" size="20"></frosted-icon></button>
+              <button aria-label="Link"><frosted-icon name="link" size="20"></frosted-icon></button>
+              <span class="sep"></span>
+              <button aria-label="Image"><frosted-icon name="image" size="20"></frosted-icon></button>
+              <button aria-label="Attach"><frosted-icon name="paperclip" size="20"></frosted-icon></button>
+              <span class="sep"></span>
+              <button aria-label="Delete"><frosted-icon name="trash" size="20" color="hsl(345 75% 52%)"></frosted-icon></button>
+            </div>
+            <div class="m-btns">
+              <span class="m-btn primary"><frosted-icon name="upload" finish="duo" size="18"></frosted-icon>Upload</span>
+              <span class="m-btn"><frosted-icon name="download" size="18"></frosted-icon>Export</span>
+              <span class="m-btn"><frosted-icon name="share" size="18"></frosted-icon>Share</span>
+            </div>
+          </div>
+        </div>
+        <div class="use-body"><h3>Toolbars and buttons</h3><p>At 18–20&nbsp;px the outline finish stays crisp. On a filled button, set <code>--sfi-color</code> to white and the glass turns with it.</p></div>
+      </article>
+
+      <article class="use card">
+        <div class="use-demo">
+          <div class="m-status">
+            <div class="m-toast"><frosted-icon name="check" finish="duo" size="28" color="hsl(155 65% 40%)"></frosted-icon><div><b>Payment received</b><span>$1,240.00 from Northwind</span></div></div>
+            <div class="m-toast"><frosted-icon name="warning" finish="duo" size="28" color="hsl(38 92% 48%)"></frosted-icon><div><b>Storage almost full</b><span>92% of 50 GB used</span></div></div>
+            <div class="m-toast"><frosted-icon name="alert" finish="duo" size="28" color="hsl(350 78% 54%)"></frosted-icon><div><b>Sync failed</b><span>Retrying in 30 seconds</span></div></div>
+          </div>
+        </div>
+        <div class="use-body"><h3>Status and feedback</h3><p>One <code>color</code> per state. Every gradient, edge and core follows it, so success, warning and error need no extra assets.</p></div>
+      </article>
+
+      <article class="use card">
+        <div class="use-demo">
+          <div class="m-phone" data-sfi-theme="dusk">
+            <div class="screen"><frosted-icon name="headphones" finish="duo" size="34"></frosted-icon><div>Now playing<br><span style="color:var(--dark-muted);font-weight:600;font-size:12px">Frosted Hours · 2:41</span></div></div>
+            <div class="m-tabs">
+              <span class="on"><frosted-icon name="home" finish="duo" size="24"></frosted-icon>Home</span>
+              <span><frosted-icon name="search" size="24"></frosted-icon>Search</span>
+              <span><frosted-icon name="heart" size="24"></frosted-icon>Saved</span>
+              <span><frosted-icon name="bell" size="24"></frosted-icon>Alerts</span>
+              <span><frosted-icon name="user" size="24"></frosted-icon>You</span>
+            </div>
+          </div>
+        </div>
+        <div class="use-body"><h3>Dark mobile UI</h3><p>Wrap the screen in <code>data-sfi-theme="dusk"</code>. The frost darkens, glyphs stay light, nothing else changes.</p></div>
+      </article>
+
+      <article class="use card">
+        <div class="use-demo">
+          <div class="m-kpi">
+            <div><frosted-icon name="wallet" finish="duo" size="36"></frosted-icon><b>$48.2k</b><span>Revenue</span></div>
+            <div><frosted-icon name="users" finish="duo" size="36" color="hsl(270 70% 58%)"></frosted-icon><b>2,914</b><span>Active users</span></div>
+            <div><frosted-icon name="cart" finish="duo" size="36" color="hsl(14 85% 56%)"></frosted-icon><b>318</b><span>Orders</span></div>
+            <div><frosted-icon name="trendingUp" finish="duo" size="36" color="hsl(155 65% 40%)"></frosted-icon><b>+12.4%</b><span>Growth</span></div>
+          </div>
+        </div>
+        <div class="use-body"><h3>Dashboards</h3><p>At 32–48&nbsp;px duo-tone carries a tile on its own. Give each metric its own colour without redrawing anything.</p></div>
+      </article>
+
+      <article class="use card">
+        <div class="use-demo">
+          <div class="m-list" role="list">
+            <div role="listitem"><frosted-icon name="folder" finish="duo" size="26"></frosted-icon>Brand assets<small>24 files</small></div>
+            <div role="listitem"><frosted-icon name="file" finish="duo" size="26" color="hsl(234 70% 58%)"></frosted-icon>Q3 report.pdf<small>2.1 MB</small></div>
+            <div role="listitem"><frosted-icon name="image" finish="duo" size="26" color="hsl(330 70% 56%)"></frosted-icon>Hero shot.png<small>840 KB</small></div>
+            <div role="listitem"><frosted-icon name="film" finish="duo" size="26" color="hsl(14 85% 56%)"></frosted-icon>Launch cut.mp4<small>96 MB</small></div>
+          </div>
+        </div>
+        <div class="use-body"><h3>Files and lists</h3><p>Colour by type for quick scanning. Each row is one element, no sprite sheet and no icon font.</p></div>
+      </article>
+
+      <article class="use card">
+        <div class="use-demo">
+          <p class="m-inline">Press <frosted-icon name="search" size="1.1em"></frosted-icon> to find anything, <frosted-icon name="bookmark" finish="duo" size="1.1em"></frosted-icon> to save it, and <frosted-icon name="share" size="1.1em"></frosted-icon> to send it on.</p>
+        </div>
+        <div class="use-body"><h3>Inline with text</h3><p><code>size</code> takes any CSS length, so <code>size="1.1em"</code> scales with the surrounding type.</p></div>
+      </article>
+
+      <article class="use card">
+        <div class="use-demo">
+          <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center">
+            <img src="svg/duo/rocket.svg" width="48" height="48" alt="">
+            <img src="svg/duo/heart.svg" width="48" height="48" alt="">
+            <img src="svg/outline/globe.svg" width="48" height="48" alt="">
+            <img src="svg/outline/camera.svg" width="48" height="48" alt="">
+          </div>
+        </div>
+        <div class="use-body"><h3>Plain SVG files</h3><p>Every icon ships as a file in <code>svg/outline</code> and <code>svg/duo</code>. Use them as <code>&lt;img&gt;</code>, inline them, or drop them into Figma.</p></div>
+      </article>
+      <article class="use card">
+        <div class="use-demo">
+          <div class="m-empty">
+            <frosted-icon name="inbox" finish="duo" size="72"></frosted-icon>
+            <b>You're all caught up</b>
+            <span>New messages land here.</span>
+            <a class="btn" href="#uses"><frosted-icon name="refresh" size="18"></frosted-icon> Check again</a>
+          </div>
+        </div>
+        <div class="use-body"><h3>Empty states</h3><p>At 64&ndash;96&nbsp;px the duo-tone finish has room to show its glass, so one icon can carry an empty screen or onboarding step.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="finishes" aria-labelledby="h-fin">
+    <div class="sec-head">
+      <span class="eyebrow">02 · Finishes</span>
+      <h2 id="h-fin">One drawing, two finishes</h2>
+      <p>Each icon is drawn once on the grid. Both finishes come from that single drawing, so outline and duo-tone always line up.</p>
+    </div>
+    <div class="finishes">
+      <article class="fin card">
+        <div class="fin-art" id="fin-outline"></div>
+        <h3>Outline</h3>
+        <ul>
+          <li>Every stroke is a glass tube: frost face, accent core, specular rim and a soft shadow.</li>
+          <li>Layers are drawn across all strokes at once, so crossings fuse like one piece of glass.</li>
+          <li>Best for resting states, toolbars and dense UI.</li>
+        </ul>
+      </article>
+      <article class="fin card">
+        <div class="fin-art" id="fin-duo"></div>
+        <h3>Duo-tone</h3>
+        <ul>
+          <li>Filled glass. Bodies get a frost face, accent edge, white rim and an inset accent core.</li>
+          <li>Glyphs such as <code>!</code>, text lines and dots are inlaid into the core as crisp light strokes.</li>
+          <li>Secondary parts like handles and trays are clear frost glass, which is the second tone.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="colours" aria-labelledby="h-col">
+    <div class="sec-head">
+      <span class="eyebrow">03 · Colour and themes</span>
+      <h2 id="h-col">One colour drives the whole set</h2>
+      <p>Icons paint from <code>currentColor</code>. Set <code>color</code> on an icon, or <code>--sfi-color</code> on any ancestor, and every gradient follows. For dark UIs, the themes in <code>tokens.css</code> also retune the frost.</p>
+    </div>
+    <div class="palette" id="palette"></div>
+    <div class="themes" id="themes"></div>
+  </section>
+
+  <section id="sizes" aria-labelledby="h-size">
+    <div class="sec-head">
+      <span class="eyebrow">04 · Sizes</span>
+      <h2 id="h-size">Sharp from 16 to 96 pixels</h2>
+      <p>The grid is 48 units, so 24&nbsp;px renders on an exact half grid. One stroke weight and 6&nbsp;units of clear space between parallel strokes keep the glass from welding at small sizes.</p>
+    </div>
+    <div class="sizes card" id="size-row"></div>
+  </section>
+
+  <section id="catalog" aria-labelledby="h-cat">
+    <div class="sec-head">
+      <span class="eyebrow">05 · Icons</span>
+      <h2 id="h-cat">All 136 icons</h2>
+      <p>Click an icon to preview it at size and copy it as HTML, React or SVG.</p>
+    </div>
+    <div class="cat-bar">
+      <label class="search"><frosted-icon name="search" size="18"></frosted-icon><input id="q" type="search" placeholder="Search: bell, arrow, file…" aria-label="Search icons"></label>
+      <div class="seg" id="cat-finish">
+        <button data-v="outline" aria-pressed="true">Outline</button>
+        <button data-v="duo" aria-pressed="false">Duo-tone</button>
+      </div>
+      <span class="cat-count" id="cat-count"></span>
+    </div>
+    <div class="detail card" id="detail" hidden>
+      <div class="detail-art" id="detail-art"></div>
+      <div class="detail-info">
+        <h3 id="detail-name"></h3>
+        <div class="code-wrap"><pre id="detail-code"></pre></div>
+        <div class="detail-actions">
+          <button class="btn" id="copy-html"><frosted-icon name="code" size="16"></frosted-icon> Copy HTML</button>
+          <button class="btn" id="copy-react"><frosted-icon name="copy" size="16"></frosted-icon> Copy React</button>
+          <button class="btn" id="copy-svg"><frosted-icon name="file" size="16"></frosted-icon> Copy SVG</button>
+          <a class="btn" id="dl-svg" download><frosted-icon name="download" size="16"></frosted-icon> Download</a>
+          <button class="btn" id="detail-close" aria-label="Close preview"><frosted-icon name="close" size="16"></frosted-icon></button>
+        </div>
+      </div>
+    </div>
+    <div id="catalog-groups" style="display:grid;gap:26px"></div>
+  </section>
+
+  <section id="start" aria-labelledby="h-start">
+    <div class="sec-head">
+      <span class="eyebrow">06 · Get started</span>
+      <h2 id="h-start">Install, register, use</h2>
+      <p>No dependencies and no build step. Pick the entry that fits your stack.</p>
+    </div>
+    <div class="steps">
+      <div class="step card"><h3>1. Install</h3>
+        <div class="code-wrap"><pre>npm i soft-frosted-icons</pre><button class="copy" data-copy="npm i soft-frosted-icons">Copy</button></div>
+        <p>Or load it straight from a CDN with no build at all:</p>
+        <div class="code-wrap"><pre><span class="k">&lt;script</span> type=<span class="s">"module"</span> src=<span class="s">"https://cdn.jsdelivr.net/npm/soft-frosted-icons/src/define.js"</span><span class="k">&gt;&lt;/script&gt;</span></pre></div>
+      </div>
+      <div class="step card"><h3>2. Web component (any framework)</h3>
+<div class="code-wrap"><pre><span class="k">import</span> <span class="s">"soft-frosted-icons/define"</span>;
+<span class="k">import</span> <span class="s">"soft-frosted-icons/tokens.css"</span>; <span class="c">// optional themes</span></pre></div>
+<div class="code-wrap"><pre><span class="k">&lt;frosted-icon</span> name=<span class="s">"bell"</span><span class="k">&gt;&lt;/frosted-icon&gt;</span>
+<span class="k">&lt;frosted-icon</span> name=<span class="s">"bell"</span> finish=<span class="s">"duo"</span> size=<span class="s">"32"</span>
+  color=<span class="s">"#e11d48"</span> label=<span class="s">"Notifications"</span><span class="k">&gt;&lt;/frosted-icon&gt;</span></pre></div>
+      </div>
+      <div class="step card"><h3>3. React</h3>
+<div class="code-wrap"><pre><span class="k">import</span> { FrostedIcon } <span class="k">from</span> <span class="s">"soft-frosted-icons/react"</span>;
+
+&lt;<span class="k">FrostedIcon</span> name=<span class="s">"bell"</span> finish=<span class="s">"duo"</span> size={<span class="s">24</span>} /&gt;</pre></div>
+        <p>React is an optional peer dependency, and only this entry imports it.</p>
+      </div>
+      <div class="step card"><h3>4. SVG strings (SSR, Vue, Svelte, Node)</h3>
+<div class="code-wrap"><pre><span class="k">import</span> { iconSVG } <span class="k">from</span> <span class="s">"soft-frosted-icons"</span>;
+
+iconSVG(<span class="s">"bell"</span>, { finish: <span class="s">"duo"</span>, size: <span class="s">24</span> });
+<span class="c">// → '&lt;svg …&gt;' — runs in Node, no DOM</span></pre></div>
+      </div>
+    </div>
+    <div class="table-card card">
+      <table>
+        <thead><tr><th>Attribute / option</th><th>Values</th><th>Default</th></tr></thead>
+        <tbody>
+          <tr><td><code>name</code></td><td>Any of the 136 icon names (typed in TypeScript)</td><td>—</td></tr>
+          <tr><td><code>finish</code></td><td><code>outline</code> · <code>duo</code></td><td><code>outline</code></td></tr>
+          <tr><td><code>size</code></td><td>A px number or any CSS length (<code>1.2em</code>, <code>2rem</code>)</td><td><code>24</code></td></tr>
+          <tr><td><code>color</code></td><td>Any CSS colour. Or set <code>--sfi-color</code> / CSS <code>color</code></td><td>Soft Glass blue</td></tr>
+          <tr><td><code>label</code></td><td>Accessible name. Without it the icon is decorative (<code>aria-hidden</code>)</td><td>—</td></tr>
+          <tr><td><code>animate</code></td><td>Present = idle specular glint (respects reduced motion)</td><td>off</td></tr>
+          <tr><td><code>data-sfi-theme</code></td><td>On any ancestor: <code>soft-glass</code> <code>crystal</code> <code>aurora</code> <code>dusk</code> <code>midnight</code></td><td><code>soft-glass</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <span>Soft Frosted Icons · MIT</span>
+    <nav>
+      <a href="https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons">GitHub</a>
+      <a href="https://www.npmjs.com/package/soft-frosted-icons">npm</a>
+    </nav>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+import "./src/define.js";
+import { iconSVG, ICON_CATEGORIES, ICON_LABELS } from "./src/index.js";
+
+const $ = (s, r = document) => r.querySelector(s);
+const kebab = (s) => s.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+const escapeHTML = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/* toast + copy */
+const toast = $("#toast");
+let toastTimer;
+function say(msg) {
+  toast.textContent = msg;
+  toast.classList.add("on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("on"), 1500);
+}
+async function copy(text, msg = "Copied") {
+  try { await navigator.clipboard.writeText(text); say(msg); }
+  catch { say("Copy blocked by the browser"); }
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-copy],[data-copy-from]");
+  if (!b) return;
+  copy(b.dataset.copy ?? $("#" + b.dataset.copyFrom).textContent);
+});
+
+/* segmented control helper */
+function seg(el, onChange) {
+  el.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]");
+    if (!b) return;
+    el.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    onChange(b.dataset.v);
+  });
+}
+
+/* ---------- lab ---------- */
+const COLOURS = [
+  ["Sky", "hsl(199 85% 48%)"], ["Indigo", "hsl(234 75% 58%)"], ["Violet", "hsl(270 70% 58%)"],
+  ["Rose", "hsl(345 80% 56%)"], ["Coral", "hsl(14 85% 56%)"], ["Amber", "hsl(38 92% 48%)"],
+  ["Emerald", "hsl(155 65% 40%)"], ["Teal", "hsl(178 70% 38%)"], ["Slate", "hsl(215 20% 45%)"],
+];
+const THEMES = [
+  ["soft-glass", "Soft Glass", "#e6ebf3"], ["crystal", "Crystal", "#edf4fb"], ["aurora", "Aurora", "#ebe8f8"],
+  ["dusk", "Dusk", "#151a24"], ["midnight", "Midnight", "#121010"],
+];
+const LAB_ICONS = ["home", "bell", "heart", "calendar", "camera", "rocket", "mail", "settings", "cloud", "shield", "chart", "sparkles"];
+const lab = { finish: "duo", size: 44, colour: null, theme: "soft-glass", glint: false };
+
+const stage = $("#stage");
+const stageGrid = $("#stage-grid");
+stageGrid.innerHTML = LAB_ICONS.map((n) => `<frosted-icon name="${n}"></frosted-icon>`).join("");
+
+const sw = $("#lab-colour");
+sw.innerHTML = COLOURS.map(([label, c], i) => `<button class="sw" style="--c:${c}" data-c="${c}" aria-label="${label}" aria-pressed="${i === 0}" title="${label}"></button>`).join("")
+  + `<label class="custom" title="Custom colour"><input type="color" id="lab-custom" value="#e11d48" aria-label="Custom colour"></label>`;
+sw.addEventListener("click", (e) => {
+  const b = e.target.closest(".sw");
+  if (!b) return;
+  sw.querySelectorAll(".sw").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  lab.colour = b.dataset.c === COLOURS[0][1] ? null : b.dataset.c;
+  renderLab();
+});
+$("#lab-custom").addEventListener("input", (e) => {
+  sw.querySelectorAll(".sw").forEach((x) => x.setAttribute("aria-pressed", "false"));
+  lab.colour = e.target.value;
+  renderLab();
+});
+
+const themeSeg = $("#lab-theme");
+themeSeg.innerHTML = THEMES.map(([id, label], i) => `<button data-v="${id}" aria-pressed="${i === 0}">${label}</button>`).join("");
+seg(themeSeg, (v) => { lab.theme = v; renderLab(); });
+seg($("#lab-finish"), (v) => { lab.finish = v; renderLab(); });
+seg($("#lab-glint"), (v) => { lab.glint = v === "on"; renderLab(); });
+$("#lab-size").addEventListener("input", (e) => { lab.size = Number(e.target.value); renderLab(); });
+
+function renderLab() {
+  const theme = THEMES.find((t) => t[0] === lab.theme);
+  stage.dataset.sfiTheme = lab.theme;
+  stage.style.setProperty("--stage-bg", theme[2]);
+  if (lab.colour) stage.style.setProperty("--sfi-color", lab.colour);
+  else stage.style.removeProperty("--sfi-color");
+  $("#lab-size-out").textContent = `${lab.size}px`;
+  stageGrid.querySelectorAll("frosted-icon").forEach((el) => {
+    el.setAttribute("finish", lab.finish);
+    el.setAttribute("size", lab.size);
+    el.toggleAttribute("animate", lab.glint);
+  });
+  const attrs = [`name="bell"`];
+  if (lab.finish === "duo") attrs.push(`finish="duo"`);
+  if (lab.size !== 24) attrs.push(`size="${lab.size}"`);
+  if (lab.colour) attrs.push(`color="${lab.colour}"`);
+  if (lab.glint) attrs.push("animate");
+  const wrapOpen = lab.theme !== "soft-glass" ? `<div data-sfi-theme="${lab.theme}">\n  ` : "";
+  const wrapClose = lab.theme !== "soft-glass" ? `\n</div>` : "";
+  $("#lab-code").textContent = `${wrapOpen}<frosted-icon ${attrs.join(" ")}></frosted-icon>${wrapClose}`;
+}
+renderLab();
+
+/* ---------- finishes ---------- */
+const FIN_ICONS = ["mail", "lock", "package", "refresh"];
+$("#fin-outline").innerHTML = FIN_ICONS.map((n) => `<frosted-icon name="${n}" size="52"></frosted-icon>`).join("");
+$("#fin-duo").innerHTML = FIN_ICONS.map((n) => `<frosted-icon name="${n}" finish="duo" size="52"></frosted-icon>`).join("");
+
+/* ---------- colours + themes ---------- */
+$("#palette").innerHTML = COLOURS.map(([label, c]) => `<div><span style="display:flex;gap:6px"><frosted-icon name="star" size="36" color="${c}"></frosted-icon><frosted-icon name="star" finish="duo" size="36" color="${c}"></frosted-icon></span><small>${label}</small></div>`).join("");
+const TH_ICONS = ["bell", "calendar", "chat", "folder", "camera"];
+$("#themes").innerHTML = THEMES.map(([id, label, bg]) => {
+  const dark = id === "dusk" || id === "midnight";
+  return `<div class="theme" data-sfi-theme="${id}" style="background:${bg};color:${dark ? "#e6edf8" : "#1f2a3c"}"><small>${label}</small><div class="ic">${TH_ICONS.map((n, i) => `<frosted-icon name="${n}" ${i % 2 ? "" : 'finish="duo"'} size="28"></frosted-icon>`).join("")}</div></div>`;
+}).join("");
+
+/* ---------- sizes ---------- */
+$("#size-row").innerHTML = [16, 20, 24, 32, 48, 64, 96].map((s) =>
+  `<figure><span style="display:flex;gap:6px;align-items:flex-end"><frosted-icon name="camera" size="${s}"></frosted-icon><frosted-icon name="camera" finish="duo" size="${s}"></frosted-icon></span><figcaption>${s}px</figcaption></figure>`).join("");
+
+/* ---------- catalog ---------- */
+const cat = { finish: "outline", q: "", selected: null };
+const groups = $("#catalog-groups");
+function renderCatalog() {
+  const q = cat.q.trim().toLowerCase();
+  let total = 0;
+  groups.innerHTML = ICON_CATEGORIES.map((g) => {
+    const hits = g.icons.filter((n) => !q || n.toLowerCase().includes(q) || ICON_LABELS[n].toLowerCase().includes(q));
+    total += hits.length;
+    if (!hits.length) return "";
+    return `<div class="cat-group"><h3>${g.label}</h3><div class="grid">${hits.map((n) =>
+      `<button class="tile" data-name="${n}" aria-pressed="${cat.selected === n}" title="${ICON_LABELS[n]}">${iconSVG(n, { finish: cat.finish, size: 34 })}<small>${n}</small></button>`).join("")}</div></div>`;
+  }).join("") || `<p style="color:var(--muted)">No icons match “${escapeHTML(cat.q)}”.</p>`;
+  $("#cat-count").textContent = `${total} icon${total === 1 ? "" : "s"}`;
+}
+$("#q").addEventListener("input", (e) => { cat.q = e.target.value; renderCatalog(); });
+seg($("#cat-finish"), (v) => { cat.finish = v; renderCatalog(); if (cat.selected) showDetail(cat.selected); });
+
+const detail = $("#detail");
+function snippet(name) {
+  return cat.finish === "duo" ? `<frosted-icon name="${name}" finish="duo"></frosted-icon>` : `<frosted-icon name="${name}"></frosted-icon>`;
+}
+function showDetail(name) {
+  cat.selected = name;
+  detail.hidden = false;
+  $("#detail-name").textContent = `${ICON_LABELS[name]} · ${name}`;
+  $("#detail-art").innerHTML = [64, 32, 20].map((s) => `<frosted-icon name="${name}" finish="${cat.finish}" size="${s}"></frosted-icon>`).join("");
+  $("#detail-code").textContent = snippet(name);
+  const dl = $("#dl-svg");
+  dl.href = `svg/${cat.finish}/${kebab(name)}.svg`;
+  dl.setAttribute("download", `${kebab(name)}${cat.finish === "duo" ? "-duo" : ""}.svg`);
+  groups.querySelectorAll(".tile").forEach((t) => t.setAttribute("aria-pressed", String(t.dataset.name === name)));
+}
+groups.addEventListener("click", (e) => {
+  const t = e.target.closest(".tile");
+  if (t) showDetail(t.dataset.name);
+});
+$("#detail-close").addEventListener("click", () => {
+  detail.hidden = true;
+  cat.selected = null;
+  groups.querySelectorAll(".tile").forEach((t) => t.setAttribute("aria-pressed", "false"));
+});
+$("#copy-html").addEventListener("click", () => copy(snippet(cat.selected), "HTML copied"));
+$("#copy-react").addEventListener("click", () =>
+  copy(`<FrostedIcon name="${cat.selected}"${cat.finish === "duo" ? ' finish="duo"' : ""} />`, "React copied"));
+$("#copy-svg").addEventListener("click", () =>
+  copy(iconSVG(cat.selected, { finish: cat.finish, size: 24, id: `sfi-${kebab(cat.selected)}` }), "SVG copied"));
+renderCatalog();
+</script>
+</body>
 </html>

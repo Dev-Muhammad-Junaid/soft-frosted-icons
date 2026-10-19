@@ -1,140 +1,153 @@
-# soft-frosted-icons
+# Soft Frosted Icons
 
-Frosted glass icons for React and plain SVG. **136 icons**, each drawn once and rendered in two finishes:
+![Soft Frosted Icons: a board of frosted glass icons in outline and duo-tone, in several colours, on light and dark tiles](https://raw.githubusercontent.com/Dev-Muhammad-Junaid/soft-frosted-icons/main/preview.png)
 
-- **Outline**: every stroke is a glass tube with a frost face, an accent core, a soft offset shadow and a specular rim.
-- **Duo-tone**: filled glass. Every part is the same glass material: a frost body with an accent edge and a soft accent core. Interior details are cut through the glass. Open lines become glass rods in two tones: primary parts carry a thin accent core, and secondary parts (trays, shafts, arcs, handles) are clear frost.
+136 frosted glass SVG icons in two finishes, **outline** and **duo-tone**, drawn on one 48 px grid. One colour themes the whole set. Use them as a web component, as SVG strings, as a React component or as plain SVG files. No dependencies.
 
-<p align="center">
-  <a href="https://dev-muhammad-junaid.github.io/soft-frosted-icons/"><strong>Browse the set →</strong></a>
-</p>
-
----
-
-## Install
+**Live demo and catalog: https://dev-muhammad-junaid.github.io/soft-frosted-icons/**
 
 ```bash
-npm install soft-frosted-icons
-# or, before an npm release:
-npm install github:Dev-Muhammad-Junaid/soft-frosted-icons
+npm i soft-frosted-icons
 ```
 
-Peer deps: `react`, `react-dom` (≥ 18). The plain SVG files need nothing.
+The demo has a lab where you can try finish, size, colour, surface theme and the idle glint. It also has use cases (navigation, toolbars, toasts, dark mobile UI, dashboards, file lists, inline text and empty states) and a searchable catalog. Click any icon in the catalog to copy it as HTML, React or SVG, or to download it.
 
-## Use in React
+![Every icon in both finishes](https://raw.githubusercontent.com/Dev-Muhammad-Junaid/soft-frosted-icons/main/media/icons.png)
 
-```jsx
-import { FrostedIcon } from "soft-frosted-icons";
-import "soft-frosted-icons/styles.css";
+## Use it in your project
 
-<FrostedIcon name="bell" />                         // outline, 24px, decorative
-<FrostedIcon name="bell" finish="duo" size={32} />  // duo-tone
-<FrostedIcon name="bell" title="Notifications" />   // labelled for screen readers
-<FrostedIcon name="bell" color="#e11d48" />         // any CSS colour
-```
+### Web component (any framework)
 
-| Prop | Default | Notes |
-|---|---|---|
-| `name` | `"check"` | Icon key (see the list below). TypeScript users get autocomplete. |
-| `finish` | `"outline"` | `"outline"` or `"duo"` |
-| `size` | `24` | Width and height (px or any CSS length) |
-| `color` | `var(--accent)` | Sets `currentColor`; every paint derives from it |
-| `title` | none | Accessible name. Without it the icon is `aria-hidden`. |
-| `intensity` | `1` | Specular strength, 0–1 |
-| `animate` | `false` | Idle specular pulse |
-
-Any other prop (`className`, `style`, `onClick`, `data-*` and so on) is passed to the `<svg>`.
-
-Also exported: `renderFrostedIcon(name, opts)` (hook-free, for SSR or custom wrappers), `FrostedIconSet`, `FrostedCatalog`, `FROSTED_ICON_KEYS`, `FROSTED_LABELS`, `FROSTED_CATEGORIES` and `FROSTED_GRID`.
-
-## Use as SVG files
-
-Every icon ships as a standalone file in `svg/outline/` and `svg/duo/`, named in kebab-case (`arrow-left.svg`, `eye-off.svg`, …):
-
-```html
-<img src="node_modules/soft-frosted-icons/svg/duo/bell.svg" width="24" height="24" alt="" />
-```
-
-Inline the SVG and it inherits `color`. Used as an `<img>`, it falls back to the Soft Glass blue. The files also drop straight into Figma or Sketch.
-
-## Theming
-
-Paints resolve from `currentColor` plus two frost tokens. Importing `styles.css` sets defaults and five `[data-theme]` palettes: `soft-glass`, `crystal`, `aurora`, `dusk`, `midnight`.
-
-```css
-.my-toolbar {
-  --accent: hsl(262 80% 58%);                                   /* icon colour */
-  --soft-cx-frost: color-mix(in srgb, #fff 80%, transparent);   /* glass highlight */
-  --soft-cx-mark: color-mix(in srgb, var(--accent) 20%, #fff);  /* lower face tint */
-}
-```
-
-## Icons
-
-| Group | # | Icons |
-|---|---|---|
-| Navigation & layout | 10 | `home` `dashboard` `grid` `layout` `sidebar` `panels` `table` `list` `columns` `menu` |
-| Actions & arrows | 24 | `search` `filter` `sort` `more` `close` `check` `plus` `minus` `edit` `trash` `copy` `save` `download` `upload` `refresh` `externalLink` `arrowLeft` `arrowRight` `arrowUp` `arrowDown` `chevronRight` `chevronLeft` `chevronUp` `chevronDown` |
-| People & access | 11 | `user` `users` `userPlus` `lock` `unlock` `shield` `key` `eye` `eyeOff` `login` `logout` |
-| Communication | 9 | `mail` `send` `inbox` `chat` `bell` `phone` `link` `share` `at` |
-| Data & commerce | 12 | `chart` `trendingUp` `trendingDown` `pieChart` `activity` `report` `wallet` `creditCard` `dollar` `cart` `receipt` `package` |
-| Content & places | 15 | `calendar` `clock` `folder` `file` `files` `image` `database` `cloud` `server` `tag` `bookmark` `star` `flag` `mapPin` `globe` |
-| System & status | 15 | `settings` `info` `help` `alert` `warning` `ban` `sparkles` `rocket` `zap` `layers` `code` `terminal` `support` `book` `power` |
-| Media & controls | 20 | `play` `pause` `stop` `skipNext` `skipPrev` `volume` `mic` `wifi` `hash` `expand` `paperclip` `scissors` `repeat` `shuffle` `thumbsUp` `thumbsDown` `megaphone` `bluetooth` `sun` `moon` |
-| Objects | 20 | `camera` `video` `printer` `battery` `gift` `truck` `store` `briefcase` `building` `compass` `coffee` `umbrella` `headphones` `pin` `paintBrush` `heart` `newspaper` `map` `film` `cast` |
-
-## Design system
-
-Every icon follows the same contract (`FROSTED_GRID`), and the test suite enforces it.
-
-| Rule | Value |
-|---|---|
-| Canvas | 48 × 48 viewBox, so it renders at 24 px as a 2× grid |
-| Live area | Stroke centrelines stay within **7–41** |
-| Stroke | **3** units, round caps and joins, and one weight everywhere |
-| Keyshapes | Circle r 15 · Square 28 (r 6) · Landscape 32 × 24 (r 5) · Portrait 24 × 32 (r 5) |
-| Corner radii | 5 on large frames, 3–4 on medium parts, 2–2.5 on small ones |
-| Clearance | Parallel strokes at least **6** apart (centreline), so glass faces never weld |
-| Dots | Round-capped zero-length strokes, 3.4–5 wide |
-| Duo core | Accent inset **2.9** from every edge and cut (1–2.6 on small parts), corners smoothed |
-| Duo cuts | Structural lines become gaps through the glass, 0.2 narrower than the stroke |
-| Duo inlays | Glyph details are light strokes at 0.9× weight with a soft emboss, kept 2.2 inside the rim |
-| Slashes | A knockout band clears 1.6 either side (`eyeOff`) |
-| Paint | No raw colours: `currentColor` plus `--soft-cx-*` tokens only |
-
-### How the finishes are built
-
-Each icon is a small data spec in `src/lib/icons/*.js`:
+The package ships a `<frosted-icon>` custom element, so it works in plain HTML, Vue, Svelte, Angular, Astro or anything else that renders HTML.
 
 ```js
-bell: {
-  label: "Bell",
-  shapes: [bellDome],             // closed silhouettes: tubes in outline, glass bodies in duo
-  lines: ["M20.5 38.5a3.8 …"],    // open strokes: tubes in outline, cuts through the bodies in duo
-  duo: { cuts: [], frost: [clapper] }, // optional: cuts, primary `rods`, secondary `frost` rods
-}
+import 'soft-frosted-icons/define';
+import 'soft-frosted-icons/tokens.css'; // optional: themes and glint
 ```
 
-`src/lib/material.jsx` turns a spec into SVG. The outline finish draws each layer across all paths at once (all shadows, then all faces, cores and highlights), so crossings fuse like one piece of glass. In duo, every body gets a shadow, a frost face, an accent edge, a white rim and an accent core inset by the same distance. Cuts knock gaps through the bodies, and every piece they create gets its own walls and core. Rods carry the same layers, so a duo icon is always one material. Primary rods get a thin accent core, while frost rods stay clear and sit behind the bodies. That is what gives line icons a real second tone instead of a bold stroke.
+```html
+<frosted-icon name="bell"></frosted-icon>
+<frosted-icon name="bell" finish="duo" size="32" color="#e11d48" label="Notifications"></frosted-icon>
+```
 
-### Adding an icon
+If you don't have a build step, load it from a CDN:
 
-1. Draw it on the grid above, reusing a keyshape where one fits.
-2. Add a spec to the right group in `src/lib/icons/` using the helpers in `geometry.js` (`rect`, `circle`, `poly` with true corner radii, `arc`, `dot`, `rotate`, `flipX`, …).
-3. Decide the duo read. By default, lines inside a shape are cut through it. Use a `duo` override to turn outside lines into `rods` (primary) or `frost` (secondary), or to recompose `bodies` as separate rounded tiles. Set `inlay: true` when the details are a glyph (a symbol, text lines, dots, a window, seams): they are drawn as crisp light strokes set into the unbroken accent core instead of being cut. Keep plain cuts only where they split the object into real parts (map folds, a door, a wallet pocket). Overriding `bodies` or `rods` means listing `cuts` explicitly.
-4. Run `npm test` and `npm run build:svg`, then check both finishes in `npm run dev`.
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/soft-frosted-icons/src/define.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/soft-frosted-icons/tokens.css">
+```
 
-## Scripts
+#### Attributes
+
+| Attribute | Values | Default |
+| --- | --- | --- |
+| `name` | Any of the 136 icon names, for example `bell` or `arrowRight`. Names are typed in TypeScript. | — |
+| `finish` | `outline` `duo` | `outline` |
+| `size` | A px number or any CSS length (`1.2em`, `2rem`) | `24` |
+| `color` | Any CSS colour | `currentColor`, then `--sfi-color` |
+| `label` | Accessible name. Without it the icon is decorative (`aria-hidden`). | — |
+| `animate` | If present, the specular highlight glints while idle. Turned off when the viewer prefers reduced motion. | off |
+
+Icons paint from `currentColor`, so they pick up the text colour around them. Set `--sfi-color` on any ancestor to recolour every icon below it.
+
+### React
+
+```jsx
+import { FrostedIcon } from 'soft-frosted-icons/react';
+
+<FrostedIcon name="bell" finish="duo" size={32} label="Notifications" />
+```
+
+React is an optional peer dependency (18 or newer), and only this entry imports it. The component server-renders and uses `useId`, so gradient ids are stable across hydration.
+
+### SVG strings (SSR, Node, any templating)
+
+```js
+import { iconSVG, iconNames } from 'soft-frosted-icons';
+
+iconSVG('bell', { finish: 'duo', size: 24, color: 'hsl(152 60% 40%)', label: 'Alerts' });
+// → '<svg …>…</svg>'. Paint ids are unique per call; pass { id } for deterministic output.
+iconNames(); // all 136 names in catalog order
+```
+
+`iconSVG` runs in Node with no DOM and returns `""` for an unknown name. The package also exports `ICON_CATEGORIES`, `ICON_LABELS` and `GRID`.
+
+### Plain SVG files
+
+Every icon also ships as a standalone file:
+
+```html
+<img src="node_modules/soft-frosted-icons/svg/duo/rocket.svg" width="48" height="48" alt="">
+```
+
+Files are named in kebab-case (`svg/outline/arrow-right.svg`, `svg/duo/arrow-right.svg`) and use the Soft Glass blue when nothing overrides it. Each file has unique paint ids, so you can inline as many as you like on one page or drop them into Figma.
+
+## Themes and tokens
+
+`tokens.css` defines five surface themes. To use one, put `data-sfi-theme` on any element:
+
+```html
+<nav data-sfi-theme="dusk">…</nav>
+```
+
+| Theme | For |
+| --- | --- |
+| `soft-glass` | Default. Sky blue on cool white frost. |
+| `crystal` | Brighter, clearer frost for white UIs. |
+| `aurora` | Violet accent. |
+| `dusk` | Dark UIs. The frost darkens and glyphs stay light. |
+| `midnight` | Warm amber on near-black. |
+
+| Token | What it sets |
+| --- | --- |
+| `--sfi-color` | Accent. Every gradient, edge and core follows it. |
+| `--sfi-frost` | Glass face and highlight colour. |
+| `--sfi-mark` | Lower face tint. |
+| `--sfi-inlay` | Glyphs set into duo-tone cores (the `!` in alert, text lines, dots). Keep it light. |
+| `--sfi-intensity` | Specular strength, `0`–`1`. |
+
+## The two finishes
+
+Each icon is drawn once. Both finishes are rendered from that one drawing, so they always line up.
+
+- **Outline**: every stroke is a glass tube with a frost face, an accent core, a specular rim and a soft shadow. Layers are drawn across all strokes at once, so crossings fuse like one piece of glass. Use it for resting states, toolbars and dense UI.
+- **Duo-tone**: filled glass. Bodies get a frost face, an accent edge, a white rim and an inset accent core. Glyphs are inlaid into the core as crisp light strokes. Secondary parts such as handles and trays are clear frost glass, which is the second tone. Use it for active states, tiles, dashboards and empty states.
+
+## The grid
+
+| Rule | Value |
+| --- | --- |
+| Canvas | 48 × 48 (24 px renders on an exact half grid) |
+| Live area | 7–41 (3 units of padding on each side) |
+| Stroke | 3 units, round caps and joins |
+| Keyshapes | circle r 15 · square 28 r 6 · landscape 32 × 24 r 5 · portrait 24 × 32 r 5 |
+| Clear space | at least 6 units between parallel strokes |
+
+`npm run check` checks every icon against these rules in both finishes. It flags any point outside the live area, any raw colour outside a CSS variable, missing glass layers, duplicate paint ids and drift between the TypeScript names and the registry.
+
+## What's in here
+
+| Path | What it is |
+| --- | --- |
+| `src/` | The npm package. `render.js` (the glass engine and `iconSVG`), `element.js` (`<frosted-icon>`), `react.js`, `registry.js`, `geometry.js`, and type definitions. |
+| `src/icons/` | Every icon as data, in nine groups. Each icon has shapes, line paths and optional duo-tone overrides (bodies, cuts, rods, frost, inlays). |
+| `svg/outline/`, `svg/duo/` | 272 standalone SVG files. Generated, don't edit. |
+| `tokens.css` | Theme and motion tokens. |
+| `index.html` | The demo and catalog page. One file, no build step, served by GitHub Pages straight from the repo. |
+| `tools/build-svg.js` | Rebuilds `svg/` from `src/icons/`. |
+| `tools/check.js` | Grid and output checks. Runs before every publish. |
+| `preview.png`, `media/` | Social preview and the icon sheet above. |
+
+## Develop
 
 ```bash
-npm run dev        # catalog / inspector with keyline overlay
-npm test           # grid, paint and render checks for every icon
-npm run build:svg  # regenerate svg/outline + svg/duo
-npm run build      # demo site + library bundle + SVG files
+python3 -m http.server   # then open http://localhost:8000
+npm run build            # regenerate svg/ after editing src/icons/
+npm run check            # grid + output checks
 ```
 
-GitHub Pages deploys the catalog from `main` via `.github/workflows/deploy-pages.yml`.
+To add an icon, add its spec to the right file in `src/icons/` and its name to the `IconName` union in `src/index.d.ts`. Then run `build` and `check`.
 
 ## License
 
-MIT
+[MIT](LICENSE), for the code and the icons. Use them in personal or commercial work and change them as you like; just keep the copyright notice.

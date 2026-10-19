@@ -1,6 +1,6 @@
 /**
  * Icon registry — every icon is one spec rendered in two finishes.
- * See material.jsx for the grid contract and paint recipe.
+ * See render.js for the grid contract and paint recipe.
  */
 import { actions } from "./icons/actions.js";
 import { comms } from "./icons/comms.js";
@@ -27,13 +27,13 @@ const GROUPS = [
 /** name → spec */
 export const ICONS = Object.assign({}, ...GROUPS.map((g) => g.icons));
 
-export const FROSTED_CATEGORIES = GROUPS.map(({ id, label, hint, icons }) => ({
+export const ICON_CATEGORIES = GROUPS.map(({ id, label, hint, icons }) => ({
   id,
   label,
   hint,
   icons: Object.keys(icons),
 }));
 
-export const FROSTED_ICON_KEYS = FROSTED_CATEGORIES.flatMap((c) => c.icons);
+const KEYS = ICON_CATEGORIES.flatMap((c) => c.icons);
 
-export const FROSTED_LABELS = Object.fromEntries(FROSTED_ICON_KEYS.map((k) => [k, ICONS[k].label]));
+export const ICON_LABELS = Object.fromEntries(KEYS.map((k) => [k, ICONS[k].label]));

@@ -1,0 +1,82 @@
+/*
+ * soft-frosted-icons — theme tokens.
+ *
+ * Icons render without this file (they fall back to the Soft Glass blue on white frost).
+ * Import it to get theme palettes and the specular / idle-motion controls.
+ *
+ *   --sfi-color      accent (sets currentColor for every icon below it)
+ *   --sfi-frost      glass highlight and face colour
+ *   --sfi-mark       lower face tint
+ *   --sfi-inlay      glyphs set into duo cores — keep it light on the accent
+ *   --sfi-intensity  specular strength, 0–1
+ *
+ * Themes: put data-sfi-theme="soft-glass | crystal | aurora | dusk | midnight" on any element.
+ */
+
+:root,
+[data-sfi-theme="soft-glass"] {
+  --sfi-color: hsl(199 85% 48%);
+  --sfi-frost: color-mix(in srgb, #fff 78%, #eef2f8);
+  --sfi-mark: color-mix(in srgb, hsl(199 90% 92%) 70%, #fff);
+  --sfi-inlay: color-mix(in srgb, #fff 92%, var(--sfi-color));
+  --sfi-intensity: 1;
+}
+
+[data-sfi-theme="crystal"] {
+  --sfi-color: hsl(198 85% 46%);
+  --sfi-frost: color-mix(in srgb, #fff 78%, #f5f9fd);
+  --sfi-mark: color-mix(in srgb, hsl(198 90% 92%) 70%, #fff);
+  --sfi-inlay: color-mix(in srgb, #fff 92%, var(--sfi-color));
+}
+
+[data-sfi-theme="aurora"] {
+  --sfi-color: hsl(280 75% 52%);
+  --sfi-frost: color-mix(in srgb, #fff 78%, #f3f0fc);
+  --sfi-mark: color-mix(in srgb, hsl(280 90% 94%) 60%, #fff);
+  --sfi-inlay: color-mix(in srgb, #fff 92%, var(--sfi-color));
+}
+
+[data-sfi-theme="dusk"] {
+  --sfi-color: hsl(205 85% 58%);
+  --sfi-frost: color-mix(in srgb, #fff 40%, #1c2331);
+  --sfi-mark: color-mix(in srgb, hsl(205 90% 78%) 50%, #1c2331);
+  --sfi-inlay: color-mix(in srgb, #fff 84%, var(--sfi-color));
+}
+
+[data-sfi-theme="midnight"] {
+  --sfi-color: hsl(32 90% 52%);
+  --sfi-frost: color-mix(in srgb, #fff 40%, #1a1716);
+  --sfi-mark: color-mix(in srgb, hsl(32 90% 72%) 50%, #1a1716);
+  --sfi-inlay: color-mix(in srgb, #fff 84%, var(--sfi-color));
+}
+
+frosted-icon {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0;
+  color: var(--sfi-color);
+}
+
+.sfi [data-layer="specular"] {
+  opacity: calc(0.4 + 0.55 * var(--sfi-intensity, 1));
+}
+
+.sfi-animate [data-layer="specular"] {
+  animation: sfi-glint 2.8s ease-in-out infinite;
+}
+
+@keyframes sfi-glint {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sfi-animate [data-layer="specular"] {
+    animation: none;
+  }
+}

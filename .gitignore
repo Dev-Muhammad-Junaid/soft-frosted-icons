@@ -1,7 +1,4 @@
-node_modules
-dist
-.svg-build
+node_modules/
+.scratch/
 .DS_Store
 *.log
-.vite
-coverage

@@ -1,72 +1,32 @@
 {
   "name": "soft-frosted-icons",
-  "version": "0.2.0",
-  "description": "Frosted glass icons for React and plain SVG — 136 icons, outline and duo-tone finishes on one 48px grid.",
+  "version": "1.0.0",
+  "description": "136 frosted glass SVG icons in two finishes, outline and duo-tone, on one 48px grid. Web component, SVG strings, React wrapper and plain SVG files. No dependencies.",
   "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": { "types": "./src/index.d.ts", "default": "./src/index.js" },
+    "./define": { "types": "./src/define.d.ts", "default": "./src/define.js" },
+    "./react": { "types": "./src/react.d.ts", "default": "./src/react.js" },
+    "./tokens.css": "./tokens.css",
+    "./svg/*": "./svg/*",
+    "./package.json": "./package.json"
+  },
+  "files": ["src", "svg/outline/*.svg", "svg/duo/*.svg", "tokens.css", "LICENSE"],
+  "sideEffects": ["./src/define.js", "*.css"],
+  "scripts": {
+    "build": "node tools/build-svg.js",
+    "check": "node tools/check.js",
+    "prepublishOnly": "node tools/check.js"
+  },
+  "peerDependencies": { "react": ">=18" },
+  "peerDependenciesMeta": { "react": { "optional": true } },
   "license": "MIT",
   "author": "Dev-Muhammad-Junaid",
   "homepage": "https://dev-muhammad-junaid.github.io/soft-frosted-icons/",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons/issues"
-  },
-  "keywords": [
-    "react",
-    "icons",
-    "svg",
-    "icon-set",
-    "frosted",
-    "glassmorphism",
-    "duotone",
-    "soft-ui"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "files": [
-    "dist/lib",
-    "svg",
-    "README.md",
-    "LICENSE"
-  ],
-  "main": "./dist/lib/soft-frosted-icons.js",
-  "module": "./dist/lib/soft-frosted-icons.js",
-  "types": "./dist/lib/soft-frosted-icons.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/lib/soft-frosted-icons.d.ts",
-      "import": "./dist/lib/soft-frosted-icons.js",
-      "default": "./dist/lib/soft-frosted-icons.js"
-    },
-    "./styles.css": "./dist/lib/soft-frosted-icons.css",
-    "./package.json": "./package.json",
-    "./svg/*": "./svg/*"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build:demo": "vite build",
-    "build:lib": "vite build --config vite.lib.config.js",
-    "build": "npm run build:demo && npm run build:lib && npm run build:svg",
-    "prepare": "npm run build:lib",
-    "prepublishOnly": "npm run test && npm run build:lib",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "preview": "vite preview",
-    "build:svg": "vite build --ssr scripts/export-svg.jsx --outDir .svg-build --emptyOutDir --logLevel warn && node .svg-build/export-svg.js svg"
-  },
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^6.0.3",
-    "jsdom": "^29.0.1",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "vite": "^8.1.1",
-    "vitest": "^4.1.2"
-  }
+  "repository": { "type": "git", "url": "git+https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons.git" },
+  "bugs": { "url": "https://github.com/Dev-Muhammad-Junaid/soft-frosted-icons/issues" },
+  "keywords": ["icons", "svg", "icon-set", "frosted", "glass", "glassmorphism", "duotone", "web-component", "custom-element", "react", "soft-ui"]
 }

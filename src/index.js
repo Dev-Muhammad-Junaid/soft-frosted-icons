@@ -1,15 +1,12 @@
 /**
- * soft-frosted-icons — frosted SoftMark icons in two finishes.
+ * soft-frosted-icons — frosted glass icons, outline and duo-tone, no dependencies.
  *
- * @example
- * import { FrostedIcon } from "soft-frosted-icons";
- * import "soft-frosted-icons/styles.css";
+ *   import { iconSVG } from "soft-frosted-icons";
+ *   el.innerHTML = iconSVG("bell", { finish: "duo", size: 24 });
  *
- * <FrostedIcon name="home" finish="outline" size={24} />
+ *   import "soft-frosted-icons/define";      // <frosted-icon name="bell"></frosted-icon>
+ *   import { FrostedIcon } from "soft-frosted-icons/react";
  */
-
-import "./styles.css";
-
-export { FrostedIcon, FrostedIconSet, FrostedCatalog, renderFrostedIcon } from "./lib/FrostedIcon.jsx";
-export { FROSTED_CATEGORIES, FROSTED_ICON_KEYS, FROSTED_LABELS } from "./lib/registry.js";
-export { GRID as FROSTED_GRID } from "./lib/material.jsx";
+export { iconSVG, iconNames, resolveSpec, GRID, DEFAULT_COLOR } from "./render.js";
+export { ICONS, ICON_CATEGORIES, ICON_LABELS } from "./registry.js";
+export { FrostedIconElement, defineFrostedIcon } from "./element.js";
