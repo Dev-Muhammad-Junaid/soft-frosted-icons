@@ -6,6 +6,8 @@
 
 **Live demo and catalog: https://dev-muhammad-junaid.github.io/soft-frosted-icons/**
 
+**Promo video:** [landscape 16:9](docs/promo/soft-frosted-icons-landscape-16x9.mp4) · [vertical 9:16 for Reels and Shorts](docs/promo/soft-frosted-icons-vertical-9x16.mp4). Built with HyperFrames from the package's own icons; see [`promo/`](promo/README.md).
+
 ```bash
 npm i soft-frosted-icons
 ```

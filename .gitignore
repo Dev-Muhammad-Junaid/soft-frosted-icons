@@ -2,3 +2,8 @@ node_modules/
 .scratch/
 .DS_Store
 *.log
+
+# Promo video: generated HyperFrames projects + scratch renders (finals live in docs/promo)
+promo/video/
+promo/renders/
+promo/assets/soundtrack.wav
