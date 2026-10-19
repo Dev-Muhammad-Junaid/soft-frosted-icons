@@ -169,12 +169,44 @@ pre .s{color:#ffd68a}
 .tile:hover,.tile:focus-visible{background:#fff;transform:translateY(-2px);outline:none}
 .tile[aria-pressed="true"]{box-shadow:0 0 0 2px hsl(199 85% 48%)}
 .tile small{font-size:11.5px;font-weight:700;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.detail{position:sticky;top:12px;z-index:5;padding:18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
-.detail[hidden]{display:none}
-.detail-art{display:flex;gap:14px;padding:16px;border-radius:16px;background:#e6ebf3}
-.detail-info{display:grid;gap:10px}
-.detail-info h3{font-size:20px}
-.detail-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* large view */
+.viewer{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;display:none;grid-template-rows:auto minmax(0,1fr) auto;grid-template-columns:minmax(0,1fr);background:var(--v-bg);color:var(--v-ink);font:inherit}
+.viewer[open]{display:grid}
+.viewer::backdrop{background:transparent}
+body:has(.viewer[open]){overflow:hidden}
+.v-top{display:flex;align-items:center;gap:16px;padding:16px clamp(16px,3vw,32px)}
+.v-title{display:grid;gap:2px;min-width:0}
+.v-title h2{font-size:clamp(20px,2.6vw,30px)}
+.v-title span{font:500 13px var(--f-mono);color:var(--v-muted)}
+.v-nav{margin-left:auto;display:flex;align-items:center;gap:8px}
+.v-nav span{font:600 13px var(--f-mono);color:var(--v-muted);min-width:68px;text-align:center}
+.v-btn{appearance:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;border:1px solid var(--v-line);background:var(--v-chip);color:inherit;cursor:pointer}
+.v-btn:hover{background:var(--v-chip-hover)}
+.v-stage{display:grid;place-items:center;padding:8px 16px;min-height:0;overflow:hidden}
+.v-art{position:relative;line-height:0}
+.v-grid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:var(--v-ink)}
+.v-dock{margin:0 auto 18px;width:min(100% - 32px,1000px);display:grid;gap:12px;padding:16px;border-radius:22px;background:rgb(255 255 255 / .88);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:var(--ink);border:1px solid rgb(255 255 255 / .9);box-shadow:0 24px 60px -30px rgb(0 0 0 / .5)}
+.v-row{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;min-width:0}
+.v-row>*{min-width:0;max-width:100%}
+.v-size{display:flex;align-items:center;gap:10px;flex:1 1 260px}
+.v-size input[type=range]{flex:1;width:auto}
+.v-actions{border-top:1px solid var(--line);padding-top:12px;gap:8px}
+.v-size .lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.viewer .toast{bottom:auto;top:84px}
+.viewer.dark .v-dock{background:rgb(22 28 40 / .78);color:var(--dark-ink);border-color:rgb(255 255 255 / .08)}
+.viewer.dark .v-dock .seg{background:rgb(255 255 255 / .07)}
+.viewer.dark .v-dock .seg button{color:var(--dark-muted)}
+.viewer.dark .v-dock .seg button[aria-pressed="true"]{background:rgb(255 255 255 / .16);color:#fff;box-shadow:none}
+.viewer.dark .v-dock .btn{background:rgb(255 255 255 / .07);border-color:rgb(255 255 255 / .1);color:var(--dark-ink)}
+.viewer.dark .v-dock .btn:hover{background:rgb(255 255 255 / .14)}
+.viewer.dark .v-dock .out,.viewer.dark .v-size .lbl{color:var(--dark-muted)}
+.viewer.dark .v-dock .sw{border-color:#1c2433;box-shadow:0 0 0 1px rgb(255 255 255 / .14)}
+.viewer.dark .v-dock .sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--c)}
+.viewer.dark .v-actions{border-color:rgb(255 255 255 / .1)}
+.stage-grid button{appearance:none;border:0;background:none;padding:0;line-height:0;border-radius:12px;cursor:zoom-in;color:inherit;transition:transform .15s}
+.stage-grid button:hover,.stage-grid button:focus-visible{transform:scale(1.08)}
+.tile{cursor:zoom-in}
 
 /* get started */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:18px}
@@ -193,14 +225,18 @@ footer nav{margin-left:auto;display:flex;gap:16px}
 
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr)}
-  .detail{grid-template-columns:1fr}
+  .v-dock{margin-bottom:12px;padding:12px;gap:10px}
+  .v-dock .seg{flex-wrap:nowrap;overflow-x:auto;max-width:100%}
+  .v-dock .seg button{white-space:nowrap}
+  .v-actions .btn{padding:8px 11px;font-size:13px}
+  .v-nav span{display:none}
 }
 @media (max-width:520px){
   .stage-grid{grid-template-columns:repeat(3,auto)}
   .top nav{display:none}
   .grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tile{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tile,.stage-grid button{transition:none}}
 </style>
 </head>
 <body>
@@ -444,7 +480,7 @@ footer nav{margin-left:auto;display:flex;gap:16px}
     <div class="sec-head">
       <span class="eyebrow">05 · Icons</span>
       <h2 id="h-cat">All 136 icons</h2>
-      <p>Click an icon to preview it at size and copy it as HTML, React or SVG.</p>
+      <p>Click any icon to open it full screen. Change its size, finish, colour and background there, step through the set with the arrow keys, and copy it as HTML, React or SVG.</p>
     </div>
     <div class="cat-bar">
       <label class="search"><frosted-icon name="search" size="18"></frosted-icon><input id="q" type="search" placeholder="Search: bell, arrow, file…" aria-label="Search icons"></label>
@@ -453,20 +489,6 @@ footer nav{margin-left:auto;display:flex;gap:16px}
         <button data-v="duo" aria-pressed="false">Duo-tone</button>
       </div>
       <span class="cat-count" id="cat-count"></span>
-    </div>
-    <div class="detail card" id="detail" hidden>
-      <div class="detail-art" id="detail-art"></div>
-      <div class="detail-info">
-        <h3 id="detail-name"></h3>
-        <div class="code-wrap"><pre id="detail-code"></pre></div>
-        <div class="detail-actions">
-          <button class="btn" id="copy-html"><frosted-icon name="code" size="16"></frosted-icon> Copy HTML</button>
-          <button class="btn" id="copy-react"><frosted-icon name="copy" size="16"></frosted-icon> Copy React</button>
-          <button class="btn" id="copy-svg"><frosted-icon name="file" size="16"></frosted-icon> Copy SVG</button>
-          <a class="btn" id="dl-svg" download><frosted-icon name="download" size="16"></frosted-icon> Download</a>
-          <button class="btn" id="detail-close" aria-label="Close preview"><frosted-icon name="close" size="16"></frosted-icon></button>
-        </div>
-      </div>
     </div>
     <div id="catalog-groups" style="display:grid;gap:26px"></div>
   </section>
@@ -528,6 +550,36 @@ iconSVG(<span class="s">"bell"</span>, { finish: <span class="s">"duo"</span>, s
   </footer>
 </div>
 
+<dialog class="viewer" id="viewer" aria-labelledby="v-name">
+  <div class="v-top">
+    <div class="v-title"><h2 id="v-name"></h2><span id="v-meta"></span></div>
+    <div class="v-nav">
+      <button class="v-btn" id="v-prev" aria-label="Previous icon"><frosted-icon name="chevronLeft" size="20"></frosted-icon></button>
+      <span id="v-pos"></span>
+      <button class="v-btn" id="v-next" aria-label="Next icon"><frosted-icon name="chevronRight" size="20"></frosted-icon></button>
+      <button class="v-btn" id="v-close" aria-label="Close large view"><frosted-icon name="close" size="20"></frosted-icon></button>
+    </div>
+  </div>
+  <div class="v-stage" id="v-stage"><div class="v-art" id="v-art"><frosted-icon id="v-icon"></frosted-icon></div></div>
+  <div class="v-dock">
+    <div class="v-row">
+      <div class="seg" id="v-finish"><button data-v="outline">Outline</button><button data-v="duo">Duo-tone</button></div>
+      <label class="v-size"><span class="lbl">Size</span><input type="range" id="v-size" min="48" max="480" step="8" value="320" aria-label="Preview size"><span class="out" id="v-size-out"></span></label>
+      <div class="seg" id="v-grid"><button data-v="off">No grid</button><button data-v="on">Grid</button></div>
+    </div>
+    <div class="v-row">
+      <div class="swatches" id="v-colour"></div>
+      <div class="seg" id="v-theme"></div>
+    </div>
+    <div class="v-row v-actions">
+      <button class="btn" id="v-copy-html"><frosted-icon name="code" size="16"></frosted-icon> Copy HTML</button>
+      <button class="btn" id="v-copy-react"><frosted-icon name="copy" size="16"></frosted-icon> Copy React</button>
+      <button class="btn" id="v-copy-svg"><frosted-icon name="file" size="16"></frosted-icon> Copy SVG</button>
+      <a class="btn" id="v-download" download><frosted-icon name="download" size="16"></frosted-icon> Download SVG</a>
+    </div>
+  </div>
+</dialog>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
@@ -582,7 +634,11 @@ const lab = { finish: "duo", size: 44, colour: null, theme: "soft-glass", glint:
 
 const stage = $("#stage");
 const stageGrid = $("#stage-grid");
-stageGrid.innerHTML = LAB_ICONS.map((n) => `<frosted-icon name="${n}"></frosted-icon>`).join("");
+stageGrid.innerHTML = LAB_ICONS.map((n) => `<button data-name="${n}" aria-label="Open ${ICON_LABELS[n]} large"><frosted-icon name="${n}"></frosted-icon></button>`).join("");
+stageGrid.addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-name]");
+  if (b) openViewer(LAB_ICONS, b.dataset.name, { finish: lab.finish, colour: lab.colour, theme: lab.theme, glint: lab.glint });
+});
 
 const sw = $("#lab-colour");
 sw.innerHTML = COLOURS.map(([label, c], i) => `<button class="sw" style="--c:${c}" data-c="${c}" aria-label="${label}" aria-pressed="${i === 0}" title="${label}"></button>`).join("")
@@ -648,52 +704,146 @@ $("#size-row").innerHTML = [16, 20, 24, 32, 48, 64, 96].map((s) =>
   `<figure><span style="display:flex;gap:6px;align-items:flex-end"><frosted-icon name="camera" size="${s}"></frosted-icon><frosted-icon name="camera" finish="duo" size="${s}"></frosted-icon></span><figcaption>${s}px</figcaption></figure>`).join("");
 
 /* ---------- catalog ---------- */
-const cat = { finish: "outline", q: "", selected: null };
+const cat = { finish: "outline", q: "", visible: [] };
 const groups = $("#catalog-groups");
 function renderCatalog() {
   const q = cat.q.trim().toLowerCase();
-  let total = 0;
+  cat.visible = [];
   groups.innerHTML = ICON_CATEGORIES.map((g) => {
     const hits = g.icons.filter((n) => !q || n.toLowerCase().includes(q) || ICON_LABELS[n].toLowerCase().includes(q));
-    total += hits.length;
+    cat.visible.push(...hits);
     if (!hits.length) return "";
     return `<div class="cat-group"><h3>${g.label}</h3><div class="grid">${hits.map((n) =>
-      `<button class="tile" data-name="${n}" aria-pressed="${cat.selected === n}" title="${ICON_LABELS[n]}">${iconSVG(n, { finish: cat.finish, size: 34 })}<small>${n}</small></button>`).join("")}</div></div>`;
+      `<button class="tile" data-name="${n}" title="Open ${ICON_LABELS[n]} large">${iconSVG(n, { finish: cat.finish, size: 34 })}<small>${n}</small></button>`).join("")}</div></div>`;
   }).join("") || `<p style="color:var(--muted)">No icons match “${escapeHTML(cat.q)}”.</p>`;
-  $("#cat-count").textContent = `${total} icon${total === 1 ? "" : "s"}`;
+  $("#cat-count").textContent = `${cat.visible.length} icon${cat.visible.length === 1 ? "" : "s"}`;
 }
 $("#q").addEventListener("input", (e) => { cat.q = e.target.value; renderCatalog(); });
-seg($("#cat-finish"), (v) => { cat.finish = v; renderCatalog(); if (cat.selected) showDetail(cat.selected); });
-
-const detail = $("#detail");
-function snippet(name) {
-  return cat.finish === "duo" ? `<frosted-icon name="${name}" finish="duo"></frosted-icon>` : `<frosted-icon name="${name}"></frosted-icon>`;
-}
-function showDetail(name) {
-  cat.selected = name;
-  detail.hidden = false;
-  $("#detail-name").textContent = `${ICON_LABELS[name]} · ${name}`;
-  $("#detail-art").innerHTML = [64, 32, 20].map((s) => `<frosted-icon name="${name}" finish="${cat.finish}" size="${s}"></frosted-icon>`).join("");
-  $("#detail-code").textContent = snippet(name);
-  const dl = $("#dl-svg");
-  dl.href = `svg/${cat.finish}/${kebab(name)}.svg`;
-  dl.setAttribute("download", `${kebab(name)}${cat.finish === "duo" ? "-duo" : ""}.svg`);
-  groups.querySelectorAll(".tile").forEach((t) => t.setAttribute("aria-pressed", String(t.dataset.name === name)));
-}
+seg($("#cat-finish"), (v) => { cat.finish = v; renderCatalog(); });
 groups.addEventListener("click", (e) => {
   const t = e.target.closest(".tile");
-  if (t) showDetail(t.dataset.name);
+  if (t) openViewer(cat.visible, t.dataset.name, { finish: cat.finish });
 });
-$("#detail-close").addEventListener("click", () => {
-  detail.hidden = true;
-  cat.selected = null;
-  groups.querySelectorAll(".tile").forEach((t) => t.setAttribute("aria-pressed", "false"));
+
+/* ---------- large view ---------- */
+const VIEW_BG = {
+  "soft-glass": ["radial-gradient(120% 90% at 50% 32%, #f7f9fc 0, #dde4ef 100%)", false],
+  crystal: ["radial-gradient(120% 90% at 50% 32%, #ffffff 0, #e4edf8 100%)", false],
+  aurora: ["radial-gradient(120% 90% at 50% 32%, #f8f5fe 0, #e0d9f4 100%)", false],
+  dusk: ["radial-gradient(120% 90% at 50% 32%, #263042 0, #0f131b 100%)", true],
+  midnight: ["radial-gradient(120% 90% at 50% 32%, #2a2420 0, #0c0a09 100%)", true],
+};
+const viewer = $("#viewer");
+const vStage = $("#v-stage");
+const vIcon = $("#v-icon");
+const view = { list: [], i: 0, finish: "duo", size: 320, colour: null, theme: "soft-glass", grid: false, glint: false };
+let blobURL = null;
+
+const vColour = $("#v-colour");
+vColour.innerHTML = COLOURS.map(([label, c]) => `<button class="sw" style="--c:${c}" data-c="${c}" aria-label="${label}" title="${label}"></button>`).join("")
+  + `<label class="custom" title="Custom colour"><input type="color" id="v-custom" value="#e11d48" aria-label="Custom colour"></label>`;
+vColour.addEventListener("click", (e) => {
+  const b = e.target.closest(".sw");
+  if (!b) return;
+  view.colour = b.dataset.c === COLOURS[0][1] ? null : b.dataset.c;
+  syncViewer(); renderViewer();
 });
-$("#copy-html").addEventListener("click", () => copy(snippet(cat.selected), "HTML copied"));
-$("#copy-react").addEventListener("click", () =>
-  copy(`<FrostedIcon name="${cat.selected}"${cat.finish === "duo" ? ' finish="duo"' : ""} />`, "React copied"));
-$("#copy-svg").addEventListener("click", () =>
-  copy(iconSVG(cat.selected, { finish: cat.finish, size: 24, id: `sfi-${kebab(cat.selected)}` }), "SVG copied"));
+$("#v-custom").addEventListener("input", (e) => { view.colour = e.target.value; syncViewer(); renderViewer(); });
+$("#v-theme").innerHTML = THEMES.map(([id, label]) => `<button data-v="${id}">${label}</button>`).join("");
+seg($("#v-theme"), (v) => { view.theme = v; renderViewer(); });
+seg($("#v-finish"), (v) => { view.finish = v; renderViewer(); });
+seg($("#v-grid"), (v) => { view.grid = v === "on"; renderViewer(); });
+$("#v-size").addEventListener("input", (e) => { view.size = Number(e.target.value); renderViewer(); });
+
+function pressed(el, fn) { el.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(fn(b)))); }
+function syncViewer() {
+  pressed($("#v-finish"), (b) => b.dataset.v === view.finish);
+  pressed($("#v-theme"), (b) => b.dataset.v === view.theme);
+  pressed($("#v-grid"), (b) => (b.dataset.v === "on") === view.grid);
+  pressed(vColour, (b) => (b.dataset.c === COLOURS[0][1] && !view.colour) || b.dataset.c === view.colour);
+  $("#v-size").value = view.size;
+}
+function openViewer(list, name, opts = {}) {
+  Object.assign(view, { glint: false }, opts, { list, i: Math.max(0, list.indexOf(name)) });
+  syncViewer();
+  if (!viewer.open) { viewer.showModal(); viewer.append(toast); }
+  renderViewer();
+}
+function step(d) { view.i = (view.i + d + view.list.length) % view.list.length; renderViewer(); }
+
+function gridSVG(px) {
+  const w = (48 / px).toFixed(3);
+  let unit = "";
+  for (let k = 4; k < 48; k += 4) unit += `M${k} 0V48M0 ${k}H48`;
+  return `<svg class="v-grid" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="${w}" aria-hidden="true">
+    <path d="${unit}" opacity=".14"/><rect x="0" y="0" width="48" height="48" opacity=".35"/>
+    <rect x="7" y="7" width="34" height="34" opacity=".5" stroke-dasharray="${w * 6} ${w * 4}"/>
+    <path d="M24 0V48M0 24H48" opacity=".3"/><circle cx="24" cy="24" r="15" opacity=".3"/>
+    <rect x="10" y="10" width="28" height="28" rx="6" opacity=".3"/></svg>`;
+}
+function renderViewer() {
+  if (!viewer.open) return;
+  const name = view.list[view.i];
+  const [bg, dark] = VIEW_BG[view.theme];
+  const vs = viewer.style;
+  vs.setProperty("--v-bg", bg);
+  viewer.classList.toggle("dark", dark);
+  vs.setProperty("--v-ink", dark ? "#e6edf8" : "#1f2a3c");
+  vs.setProperty("--v-muted", dark ? "#9aa8bf" : "#5f6b80");
+  vs.setProperty("--v-line", dark ? "rgb(255 255 255 / .12)" : "rgb(31 42 60 / .12)");
+  vs.setProperty("--v-chip", dark ? "rgb(255 255 255 / .08)" : "rgb(255 255 255 / .7)");
+  vs.setProperty("--v-chip-hover", dark ? "rgb(255 255 255 / .16)" : "#fff");
+  vStage.dataset.sfiTheme = view.theme;
+  if (view.colour) vStage.style.setProperty("--sfi-color", view.colour);
+  else vStage.style.removeProperty("--sfi-color");
+
+  // Fit the requested size into the space between the header and the dock.
+  const r = vStage.getBoundingClientRect();
+  const px = Math.max(32, Math.min(view.size, Math.floor(r.width - 32), Math.floor(r.height - 16)));
+  vIcon.setAttribute("name", name);
+  vIcon.setAttribute("finish", view.finish);
+  vIcon.setAttribute("size", px);
+  vIcon.toggleAttribute("animate", view.glint);
+  $("#v-art").querySelector(".v-grid")?.remove();
+  if (view.grid) $("#v-art").insertAdjacentHTML("beforeend", gridSVG(px));
+
+  $("#v-name").textContent = ICON_LABELS[name];
+  $("#v-meta").textContent = `${name} · ${view.finish === "duo" ? "duo-tone" : "outline"}`;
+  $("#v-pos").textContent = `${view.i + 1} / ${view.list.length}`;
+  $("#v-size-out").textContent = px < view.size ? `${px}px · fit` : `${px}px`;
+
+  const dl = $("#v-download");
+  const file = `${kebab(name)}${view.finish === "duo" ? "-duo" : ""}.svg`;
+  if (blobURL) { URL.revokeObjectURL(blobURL); blobURL = null; }
+  if (view.colour) {
+    blobURL = URL.createObjectURL(new Blob([viewerSVG(name)], { type: "image/svg+xml" }));
+    dl.href = blobURL;
+  } else dl.href = `svg/${view.finish}/${kebab(name)}.svg`;
+  dl.setAttribute("download", file);
+}
+function viewerSVG(name) {
+  return iconSVG(name, { finish: view.finish, size: 48, color: view.colour || undefined, id: `sfi-${kebab(name)}-${view.finish}` });
+}
+function viewerAttrs(name, react) {
+  const a = [`name="${name}"`];
+  if (view.finish === "duo") a.push(`finish="duo"`);
+  if (view.colour) a.push(`color="${view.colour}"`);
+  return react ? `<FrostedIcon ${a.join(" ")} />` : `<frosted-icon ${a.join(" ")}></frosted-icon>`;
+}
+$("#v-copy-html").addEventListener("click", () => copy(viewerAttrs(view.list[view.i], false), "HTML copied"));
+$("#v-copy-react").addEventListener("click", () => copy(viewerAttrs(view.list[view.i], true), "React copied"));
+$("#v-copy-svg").addEventListener("click", () => copy(viewerSVG(view.list[view.i]), "SVG copied"));
+$("#v-prev").addEventListener("click", () => step(-1));
+$("#v-next").addEventListener("click", () => step(1));
+$("#v-close").addEventListener("click", () => viewer.close());
+viewer.addEventListener("keydown", (e) => {
+  if (e.target.matches("input")) return;
+  if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+});
+// Keep the toast visible above the modal while the viewer is open.
+viewer.addEventListener("close", () => document.body.append(toast));
+addEventListener("resize", renderViewer);
 renderCatalog();
 </script>
 </body>

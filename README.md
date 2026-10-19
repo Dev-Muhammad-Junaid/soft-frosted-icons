@@ -10,7 +10,7 @@
 npm i soft-frosted-icons
 ```
 
-The demo has a lab where you can try finish, size, colour, surface theme and the idle glint. It also has use cases (navigation, toolbars, toasts, dark mobile UI, dashboards, file lists, inline text and empty states) and a searchable catalog. Click any icon in the catalog to copy it as HTML, React or SVG, or to download it.
+The demo has a lab where you can try finish, size, colour, surface theme and the idle glint. It also has use cases (navigation, toolbars, toasts, dark mobile UI, dashboards, file lists, inline text and empty states) and a searchable catalog. Click any icon, in the catalog or the lab, to open it full screen. There you can resize it up to 480 px, switch finish and colour, change the whole background between the five surfaces, overlay the 48-unit grid, step through the set with the arrow keys, and copy it as HTML, React or SVG or download it.
 
 ![Every icon in both finishes](https://raw.githubusercontent.com/Dev-Muhammad-Junaid/soft-frosted-icons/main/media/icons.png)
 
